@@ -167,9 +167,18 @@
       });
       panel.addEventListener('mouseleave', () => { paused = false; });
       panel.addEventListener('click', (e) => {
+        const isTouch = matchMedia('(hover: none)').matches;
+        if (isTouch) {
+          // Touch: every tap activates only. The readout "Visit →" handles navigation.
+          e.preventDefault();
+          setActive(i);
+          paused = true;
+          setTimeout(() => { paused = false; }, 4000);
+          return;
+        }
+        // Desktop: tap an active panel to navigate; otherwise activate.
         if (panel.classList.contains('is-active')) {
-          const brand = panel.getAttribute('data-brand');
-          window.location.href = `brands.html#${brand}`;
+          window.location.href = `brands.html#${panel.getAttribute('data-brand')}`;
         } else {
           e.preventDefault();
           setActive(i);
@@ -210,7 +219,65 @@
   }
 
   /* ============================================================
-     5) LIVE CLOCK (Doha)
+     5) HERO SPOTLIGHT + HEADLINE + GHOST PARALLAX
+     ============================================================ */
+  const hero = document.getElementById('hero');
+  const heroHeadline = document.getElementById('heroHeadline');
+  const heroGhost = hero ? hero.querySelector('.hero__ghost') : null;
+  if (hero && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    let rafSpot = null;
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      if (rafSpot) cancelAnimationFrame(rafSpot);
+      rafSpot = requestAnimationFrame(() => {
+        hero.style.setProperty('--mx', `${(x * 100).toFixed(2)}%`);
+        hero.style.setProperty('--my', `${(y * 100).toFixed(2)}%`);
+        const px = x - 0.5;
+        const py = y - 0.5;
+        if (heroHeadline) {
+          heroHeadline.style.transform = `translate3d(${(px * 10).toFixed(2)}px, ${(py * 7).toFixed(2)}px, 0)`;
+        }
+        if (heroGhost) {
+          // Counter-direction, slightly slower — creates depth
+          heroGhost.style.transform = `translate3d(${(-px * 22).toFixed(2)}px, ${(-py * 14).toFixed(2)}px, 0)`;
+        }
+      });
+    });
+    hero.addEventListener('mouseleave', () => {
+      if (heroHeadline) heroHeadline.style.transform = '';
+      if (heroGhost) heroGhost.style.transform = '';
+      hero.style.setProperty('--mx', '50%');
+      hero.style.setProperty('--my', '30%');
+    });
+  }
+
+  /* ============================================================
+     6) 3D TILT — brand cards + gallery cells
+     ============================================================ */
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const attachTilt = (el, max) => {
+      let rafTilt = null;
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        if (rafTilt) cancelAnimationFrame(rafTilt);
+        rafTilt = requestAnimationFrame(() => {
+          el.style.transform = `perspective(900px) rotateY(${(x * max).toFixed(2)}deg) rotateX(${(-y * max).toFixed(2)}deg) translateZ(0)`;
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    };
+    document.querySelectorAll('.brand-card').forEach(el => attachTilt(el, 5));
+    document.querySelectorAll('.gallery__cell').forEach(el => attachTilt(el, 8));
+  }
+
+  /* ============================================================
+     7) LIVE CLOCK (Doha)
      ============================================================ */
   const clock = document.getElementById('clock');
   if (clock) {
@@ -228,7 +295,7 @@
   }
 
   /* ============================================================
-     6) MAGNETIC BUTTONS — subtle pull toward cursor
+     8) MAGNETIC BUTTONS — subtle pull toward cursor
      ============================================================ */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const STRENGTH = 0.25;
