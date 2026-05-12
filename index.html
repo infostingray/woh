@@ -38,12 +38,10 @@
   </div>
 </header>
 
-<!-- =============== HERO — Editorial Quadtych =============== -->
+<!-- =============== HERO — Editorial two-column =============== -->
 <section class="hero" id="hero">
   <div class="hero__atmos"></div>
-  <div class="hero__guides"></div>
   <div class="hero__spotlight"></div>
-  <div class="hero__ghost" aria-hidden="true">World of <em>Hospitality</em></div>
 
   <!-- Top meta -->
   <div class="hero__top">
@@ -51,82 +49,78 @@
     <span class="focus-tag"><span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
   </div>
 
-  <!-- Headline -->
-  <div class="hero__headline-wrap" id="heroHeadline">
-    <div class="hero__chapter">
-      <span class="hero__chapter-num">№ 01</span>
-      <span class="hero__chapter-line"></span>
-      <span class="hero__chapter-label">The Houses of Doha</span>
+  <!-- Two-column main -->
+  <div class="hero__main">
+    <!-- LEFT: text content -->
+    <div class="hero__content" id="heroHeadline">
+      <div>
+        <div class="hero__chapter">
+          <span class="hero__chapter-num">№ 01</span>
+          <span class="hero__chapter-line"></span>
+          <span class="hero__chapter-label">The Houses of Doha</span>
+        </div>
+        <h1 class="hero__headline">
+          <span class="line"><span>Restaurants</span></span>
+          <span class="line"><span>you <em>return</em> to.</span></span>
+        </h1>
+        <p class="hero__lede">
+          Four international F&amp;B brands, operated end to end. Doha, Qatar.
+        </p>
+      </div>
+
+      <div class="hero__active-card" id="readout">
+        <div class="hero__active-meta">
+          <div class="readout__item"><dt>Cuisine</dt><dd data-readout="cuisine">Turkish Steakhouse</dd></div>
+          <div class="readout__item"><dt>Status</dt><dd data-readout="status">Open in Doha</dd></div>
+        </div>
+        <a href="brands.html#gunaydin" class="btn btn--light" id="readoutCta" data-readout="link">
+          Visit the brand <span class="arr">→</span>
+        </a>
+      </div>
     </div>
-    <h1 class="hero__headline">
-      <span class="line"><span>Restaurants you</span></span>
-      <span class="line"><span><em>return</em> to.</span></span>
-    </h1>
-    <p class="hero__lede">
-      Four international F&amp;B brands, operated end to end. Doha, Qatar.
-    </p>
-  </div>
 
-  <!-- Quadtych -->
-  <div class="hero__triptych" id="triptych">
-    <button class="panel is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın — Turkish steakhouse">
-      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1558030006-450675393462?w=1200&auto=format&fit=crop&q=80');"></div>
-      <div class="panel__shine"></div>
-      <div class="panel__caption">
-        <span class="panel__num">01</span>
-        <h2 class="panel__name">Günaydın</h2>
-      </div>
-    </button>
+    <!-- RIGHT: 2x2 panel grid -->
+    <div class="hero__panels" id="triptych">
+      <button class="panel is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın — Turkish steakhouse">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1558030006-450675393462?w=1200&auto=format&fit=crop&q=80');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">01</span>
+          <h2 class="panel__name">Günaydın</h2>
+        </div>
+      </button>
 
-    <button class="panel" data-index="1" data-brand="kumar" aria-label="Kumar — modern Indian">
-      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=1200&auto=format&fit=crop&q=80');"></div>
-      <div class="panel__shine"></div>
-      <div class="panel__caption">
-        <span class="panel__num">02</span>
-        <h2 class="panel__name">Kumar</h2>
-      </div>
-    </button>
+      <button class="panel" data-index="1" data-brand="kumar" aria-label="Kumar — modern Indian">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=1200&auto=format&fit=crop&q=80');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">02</span>
+          <h2 class="panel__name">Kumar</h2>
+        </div>
+      </button>
 
-    <button class="panel" data-index="2" data-brand="eleven-green" aria-label="Eleven Green — burger bistro">
-      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1200&auto=format&fit=crop&q=80');"></div>
-      <div class="panel__shine"></div>
-      <div class="panel__caption">
-        <span class="panel__num">03</span>
-        <h2 class="panel__name">Eleven Green</h2>
-      </div>
-    </button>
+      <button class="panel" data-index="2" data-brand="eleven-green" aria-label="Eleven Green — burger bistro">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1200&auto=format&fit=crop&q=80');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">03</span>
+          <h2 class="panel__name">Eleven Green</h2>
+        </div>
+      </button>
 
-    <button class="panel" data-index="3" data-brand="al-beiruti" aria-label="Al Beiruti — Lebanese, opening late 2026">
-      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1574484284002-952d92456975?w=1200&auto=format&fit=crop&q=80');"></div>
-      <div class="panel__shine"></div>
-      <div class="panel__caption">
-        <span class="panel__num">04</span>
-        <h2 class="panel__name">Al Beiruti</h2>
-      </div>
-    </button>
-  </div>
-
-  <!-- Readout strip -->
-  <div class="hero__readout" id="readout">
-    <div class="readout__item"><dt>Cuisine</dt><dd data-readout="cuisine">Turkish Steakhouse</dd></div>
-    <div class="readout__item"><dt>Status</dt><dd data-readout="status">Open in Doha</dd></div>
-    <a href="brands.html#gunaydin" class="readout__cta" id="readoutCta" data-readout="link">Visit <span>→</span></a>
+      <button class="panel" data-index="3" data-brand="al-beiruti" aria-label="Al Beiruti — Lebanese, opening late 2026">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1574484284002-952d92456975?w=1200&auto=format&fit=crop&q=80');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">04</span>
+          <h2 class="panel__name">Al Beiruti</h2>
+        </div>
+      </button>
+    </div>
   </div>
 
   <span class="scroll-cue">Scroll</span>
   <div class="hero__progress" id="heroProgress"></div>
-</section>
-
-<!-- =============== INTRO =============== -->
-<section class="intro">
-  <div class="container">
-    <div class="intro__inner">
-      <h2 class="intro__title" data-reveal>Dining <em>destinations</em>, run with intent.</h2>
-      <div class="intro__body" data-reveal data-reveal-delay="1">
-        <p>Established international F&amp;B brands, brought to Qatar and run end to end. One team. One standard.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- =============== PILLARS =============== -->
@@ -219,28 +213,6 @@
   </div>
 </section>
 
-<!-- =============== MARQUEE — Brand names ticker =============== -->
-<section class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span class="marquee__item">Günaydın</span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item"><em>Kumar</em></span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item">Eleven Green</span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item"><em>Al Beiruti</em></span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item">Günaydın</span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item"><em>Kumar</em></span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item">Eleven Green</span>
-    <span class="marquee__dot"></span>
-    <span class="marquee__item"><em>Al Beiruti</em></span>
-    <span class="marquee__dot"></span>
-  </div>
-</section>
-
 <!-- =============== GALLERY — Inside the Rooms =============== -->
 <section class="gallery">
   <div class="container">
@@ -320,19 +292,6 @@
         <h4>Opening</h4>
         <p>Late 2026</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== PRESS / PARTNERS =============== -->
-<section class="press">
-  <div class="press__inner">
-    <p class="press__label" data-reveal>In partnership with</p>
-    <div class="press__items" data-reveal data-reveal-delay="1">
-      <span>Günaydın Et</span>
-      <span>MK Group</span>
-      <span>Tanos at 8</span>
-      <span>Eleven Green</span>
     </div>
   </div>
 </section>
