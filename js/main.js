@@ -79,25 +79,25 @@
       gunaydin: {
         name: 'Günaydın',
         cuisine: 'Turkish Steakhouse',
-        origin: 'Istanbul, 1961',
         status: 'Open in Doha',
-        signature: 'Dry-aged · charcoal',
         link: 'brands.html#gunaydin'
       },
       kumar: {
         name: 'Kumar',
         cuisine: 'Modern Indian',
-        origin: 'MK Group · Kuwait',
         status: 'Open in Doha',
-        signature: 'Regional menu',
         link: 'brands.html#kumar'
+      },
+      'eleven-green': {
+        name: 'Eleven Green',
+        cuisine: 'Burger Bistro',
+        status: 'Coming to Doha',
+        link: 'brands.html#eleven-green'
       },
       'al-beiruti': {
         name: 'Al Beiruti',
         cuisine: 'Lebanese · Levantine',
-        origin: 'Beirut neighbourhood',
         status: 'Opening late 2026',
-        signature: 'Mezze · saj · charcoal',
         link: 'brands.html#al-beiruti'
       }
     };
@@ -228,46 +228,7 @@
   }
 
   /* ============================================================
-     6) CUSTOM CURSOR — pointer-fine only
-     ============================================================ */
-  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor';
-    cursor.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(cursor);
-    document.body.classList.add('has-custom-cursor');
-
-    let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-    let tx = cx, ty = cy;
-    const FOLLOW = 0.22;
-
-    window.addEventListener('mousemove', (e) => {
-      tx = e.clientX; ty = e.clientY;
-    }, { passive: true });
-
-    const tickCursor = () => {
-      cx += (tx - cx) * FOLLOW;
-      cy += (ty - cy) * FOLLOW;
-      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
-      requestAnimationFrame(tickCursor);
-    };
-    tickCursor();
-
-    const interactive = 'a, button, input, textarea, select, [data-interactive]';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(interactive)) document.body.classList.add('is-hovering-interactive');
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest(interactive)) document.body.classList.remove('is-hovering-interactive');
-    });
-    document.addEventListener('mousedown', () => document.body.classList.add('is-pressing'));
-    document.addEventListener('mouseup',   () => document.body.classList.remove('is-pressing'));
-    document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-    document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
-  }
-
-  /* ============================================================
-     7) MAGNETIC BUTTONS — subtle pull toward cursor
+     6) MAGNETIC BUTTONS — subtle pull toward cursor
      ============================================================ */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const STRENGTH = 0.25;
