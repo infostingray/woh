@@ -38,32 +38,74 @@
   </div>
 </header>
 
-<!-- =============== HERO =============== -->
-<section class="hero">
-  <div class="hero__bg" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=2000&auto=format&fit=crop&q=80');"></div>
-  <div class="hero__grain"></div>
-  <div class="hero__inner">
-    <p class="eyebrow hero__eyebrow" data-reveal>F&amp;B Management · Doha, Qatar</p>
-    <h1 class="hero__headline" data-reveal data-reveal-delay="1">
-      Restaurants that earn <em>the seat</em> at the table.
-    </h1>
-    <div class="hero__meta" data-reveal data-reveal-delay="2">
-      <div class="hero__meta-item">
-        <small>Operating</small>
-        <span>3 international brands</span>
-      </div>
-      <div class="hero__meta-item">
-        <small>Based in</small>
-        <span>Doha, Qatar</span>
-      </div>
-      <div class="hero__meta-item">
-        <small>Now opening</small>
-        <span>Al Beiruti — late 2026</span>
-      </div>
-      <a href="brands.html" class="btn btn--light">Explore the brands <span class="arr">→</span></a>
-    </div>
+<!-- =============== HERO — Editorial Triptych =============== -->
+<section class="hero" id="hero">
+  <div class="hero__atmos"></div>
+  <div class="hero__guides"></div>
+
+  <!-- Top meta -->
+  <div class="hero__top">
+    <span>Doha · Qatar <span class="clock" id="clock">--:--</span></span>
+    <span class="focus-tag">Now showing · <span id="focusName">Günaydın</span> <span id="focusCount" style="color:var(--brass);">01 / 03</span></span>
   </div>
-  <div class="scroll-cue">Scroll</div>
+
+  <!-- Headline -->
+  <div class="hero__headline-wrap">
+    <p class="hero__eyebrow">A house of restaurants · Est. 2024</p>
+    <h1 class="hero__headline">
+      <span class="line"><span>Restaurants</span></span>
+      <span class="line"><span>that earn <em>the seat</em></span></span>
+      <span class="line"><span>at the table.</span></span>
+    </h1>
+  </div>
+
+  <!-- Triptych -->
+  <div class="hero__triptych" id="triptych">
+    <button class="panel is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın — Turkish steakhouse">
+      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1558030006-450675393462?w=1400&auto=format&fit=crop&q=80');"></div>
+      <div class="panel__caption">
+        <span class="panel__num">01 / Steakhouse</span>
+        <div>
+          <h2 class="panel__name">Günaydın</h2>
+          <span class="panel__cuisine">Istanbul · 1961</span>
+        </div>
+      </div>
+    </button>
+
+    <button class="panel" data-index="1" data-brand="kumar" aria-label="Kumar — modern Indian">
+      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=1400&auto=format&fit=crop&q=80');"></div>
+      <div class="panel__caption">
+        <span class="panel__num">02 / Indian</span>
+        <div>
+          <h2 class="panel__name">Kumar</h2>
+          <span class="panel__cuisine">Regional · Modern</span>
+        </div>
+      </div>
+    </button>
+
+    <button class="panel" data-index="2" data-brand="al-beiruti" aria-label="Al Beiruti — Lebanese, opening late 2026">
+      <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1574484284002-952d92456975?w=1400&auto=format&fit=crop&q=80');"></div>
+      <div class="panel__caption">
+        <span class="panel__num">03 / Levantine</span>
+        <div>
+          <h2 class="panel__name">Al Beiruti</h2>
+          <span class="panel__cuisine">Lebanese · Opening 2026</span>
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <!-- Readout strip -->
+  <div class="hero__readout" id="readout">
+    <div class="readout__item"><dt>Cuisine</dt><dd data-readout="cuisine">Turkish Steakhouse</dd></div>
+    <div class="readout__item"><dt>Origin</dt><dd data-readout="origin">Istanbul, 1961</dd></div>
+    <div class="readout__item"><dt>Status</dt><dd data-readout="status">Open in Doha</dd></div>
+    <div class="readout__item"><dt>Signature</dt><dd data-readout="signature">Dry-aged · charcoal</dd></div>
+    <a href="brands.html#gunaydin" class="readout__cta" id="readoutCta" data-readout="link">Visit the brand <span>→</span></a>
+  </div>
+
+  <span class="scroll-cue">Scroll</span>
+  <div class="hero__progress" id="heroProgress"></div>
 </section>
 
 <!-- =============== INTRO =============== -->

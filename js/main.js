@@ -1,11 +1,14 @@
 /* =========================================================
    World of Hospitality — Behavior
+   Editorial luxury interactions
    ========================================================= */
 
 (() => {
   'use strict';
 
-  /* ---- Nav: scroll state ---- */
+  /* ============================================================
+     1) NAV — scroll state + mobile toggle + active link
+     ============================================================ */
   const nav = document.querySelector('.nav');
   if (nav) {
     const onScroll = () => {
@@ -13,30 +16,33 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-  }
 
-  /* ---- Mobile nav toggle ---- */
-  const toggle = document.querySelector('.nav__toggle');
-  const navEl  = document.querySelector('.nav');
-  if (toggle && navEl) {
-    toggle.addEventListener('click', () => {
-      const open = navEl.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', String(open));
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    // Close when a link is tapped
-    navEl.querySelectorAll('.nav__panel a').forEach(a => {
-      a.addEventListener('click', () => {
-        navEl.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+    const toggle = nav.querySelector('.nav__toggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
       });
+      nav.querySelectorAll('.nav__panel a').forEach(a => {
+        a.addEventListener('click', () => {
+          nav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    document.querySelectorAll('.nav a[data-page]').forEach(a => {
+      if (a.getAttribute('data-page').toLowerCase() === path) a.classList.add('is-active');
     });
   }
 
-  /* ---- Intersection-based reveal ---- */
+  /* ============================================================
+     2) REVEAL — IntersectionObserver
+     ============================================================ */
   if ('IntersectionObserver' in window) {
-    const els = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -45,20 +51,244 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    els.forEach(el => io.observe(el));
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
   } else {
     document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('is-in'));
   }
 
-  /* ---- Year stamp ---- */
+  /* ============================================================
+     3) YEAR STAMP
+     ============================================================ */
   const y = document.querySelector('[data-year]');
   if (y) y.textContent = new Date().getFullYear();
 
-  /* ---- Active nav link based on filename ---- */
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  document.querySelectorAll('.nav a[data-page]').forEach(a => {
-    if (a.getAttribute('data-page').toLowerCase() === path) {
-      a.classList.add('is-active');
+  /* ============================================================
+     4) HERO TRIPTYCH — auto-rotating spotlight + hover override
+                       + 3D parallax tilt
+     ============================================================ */
+  const triptych = document.getElementById('triptych');
+  if (triptych) {
+    const panels = Array.from(triptych.querySelectorAll('.panel'));
+    const progressBar = document.getElementById('heroProgress');
+    const focusName = document.getElementById('focusName');
+    const focusCount = document.getElementById('focusCount');
+    const readoutEls = document.querySelectorAll('#readout [data-readout]');
+    const readoutCta = document.getElementById('readoutCta');
+
+    const BRAND_DATA = {
+      gunaydin: {
+        name: 'Günaydın',
+        cuisine: 'Turkish Steakhouse',
+        origin: 'Istanbul, 1961',
+        status: 'Open in Doha',
+        signature: 'Dry-aged · charcoal',
+        link: 'brands.html#gunaydin'
+      },
+      kumar: {
+        name: 'Kumar',
+        cuisine: 'Modern Indian',
+        origin: 'MK Group · Kuwait',
+        status: 'Open in Doha',
+        signature: 'Regional menu',
+        link: 'brands.html#kumar'
+      },
+      'al-beiruti': {
+        name: 'Al Beiruti',
+        cuisine: 'Lebanese · Levantine',
+        origin: 'Beirut neighbourhood',
+        status: 'Opening late 2026',
+        signature: 'Mezze · saj · charcoal',
+        link: 'brands.html#al-beiruti'
+      }
+    };
+
+    let activeIdx = 0;
+    let progress = 0;
+    let paused = false;
+    let progressTimer = null;
+    const ROTATE_MS = 5500;
+
+    const updateReadout = (brandKey) => {
+      const data = BRAND_DATA[brandKey];
+      if (!data) return;
+      readoutEls.forEach(el => {
+        const key = el.getAttribute('data-readout');
+        if (key && data[key]) {
+          el.parentElement.classList.add('is-swapping');
+          setTimeout(() => {
+            el.textContent = data[key];
+            el.parentElement.classList.remove('is-swapping');
+          }, 200);
+        }
+      });
+      if (focusName) focusName.textContent = data.name;
+      if (readoutCta) readoutCta.href = data.link;
+    };
+
+    const setActive = (idx, opts = {}) => {
+      activeIdx = (idx + panels.length) % panels.length;
+      panels.forEach((p, i) => p.classList.toggle('is-active', i === activeIdx));
+      const brandKey = panels[activeIdx].getAttribute('data-brand');
+      updateReadout(brandKey);
+      if (focusCount) {
+        focusCount.textContent = `0${activeIdx + 1} / 0${panels.length}`;
+      }
+      if (!opts.skipReset) {
+        progress = 0;
+        if (progressBar) progressBar.style.width = '0%';
+      }
+    };
+
+    const tick = () => {
+      if (paused) return;
+      progress += 100 / (ROTATE_MS / 50);
+      if (progressBar) progressBar.style.width = Math.min(progress, 100) + '%';
+      if (progress >= 100) {
+        progress = 0;
+        setActive(activeIdx + 1);
+      }
+    };
+
+    const startRotation = () => {
+      stopRotation();
+      progressTimer = setInterval(tick, 50);
+    };
+    const stopRotation = () => {
+      if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+    };
+
+    // Hover override
+    panels.forEach((panel, i) => {
+      panel.addEventListener('mouseenter', () => {
+        paused = true;
+        progress = 0;
+        if (progressBar) progressBar.style.width = '0%';
+        setActive(i, { skipReset: true });
+      });
+      panel.addEventListener('mouseleave', () => { paused = false; });
+      panel.addEventListener('click', (e) => {
+        if (panel.classList.contains('is-active')) {
+          const brand = panel.getAttribute('data-brand');
+          window.location.href = `brands.html#${brand}`;
+        } else {
+          e.preventDefault();
+          setActive(i);
+        }
+      });
+    });
+
+    triptych.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+
+    // 3D parallax
+    let rafId = null;
+    const onMove = (e) => {
+      const r = triptych.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top)  / r.height;
+      const px = (x - 0.5) * 2;
+      const py = (y - 0.5) * 2;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        triptych.style.setProperty('--px', px.toFixed(3));
+        triptych.style.setProperty('--py', py.toFixed(3));
+      });
+    };
+    const onLeave = () => {
+      triptych.style.setProperty('--px', '0');
+      triptych.style.setProperty('--py', '0');
+    };
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      triptych.addEventListener('mousemove', onMove);
+      triptych.addEventListener('mouseleave', onLeave);
     }
-  });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopRotation(); else startRotation();
+    });
+
+    setTimeout(startRotation, 1800);
+  }
+
+  /* ============================================================
+     5) LIVE CLOCK (Doha)
+     ============================================================ */
+  const clock = document.getElementById('clock');
+  if (clock) {
+    const renderClock = () => {
+      try {
+        const fmt = new Intl.DateTimeFormat('en-GB', {
+          hour: '2-digit', minute: '2-digit', hour12: false,
+          timeZone: 'Asia/Qatar'
+        });
+        clock.textContent = fmt.format(new Date()) + ' AST';
+      } catch (e) { clock.textContent = ''; }
+    };
+    renderClock();
+    setInterval(renderClock, 30000);
+  }
+
+  /* ============================================================
+     6) CUSTOM CURSOR — pointer-fine only
+     ============================================================ */
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(cursor);
+    document.body.classList.add('has-custom-cursor');
+
+    let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    let tx = cx, ty = cy;
+    const FOLLOW = 0.22;
+
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+    }, { passive: true });
+
+    const tickCursor = () => {
+      cx += (tx - cx) * FOLLOW;
+      cy += (ty - cy) * FOLLOW;
+      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(tickCursor);
+    };
+    tickCursor();
+
+    const interactive = 'a, button, input, textarea, select, [data-interactive]';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactive)) document.body.classList.add('is-hovering-interactive');
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(interactive)) document.body.classList.remove('is-hovering-interactive');
+    });
+    document.addEventListener('mousedown', () => document.body.classList.add('is-pressing'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('is-pressing'));
+    document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+    document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+  }
+
+  /* ============================================================
+     7) MAGNETIC BUTTONS — subtle pull toward cursor
+     ============================================================ */
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const STRENGTH = 0.25;
+    const RADIUS = 80;
+    document.querySelectorAll('.btn, .nav__cta').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        const dist = Math.hypot(dx, dy);
+        if (dist < RADIUS + Math.max(r.width, r.height) / 2) {
+          btn.classList.add('is-magnetic');
+          btn.style.setProperty('--mx', (dx * STRENGTH).toFixed(2));
+          btn.style.setProperty('--my', (dy * STRENGTH).toFixed(2));
+        }
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.classList.remove('is-magnetic');
+        btn.style.setProperty('--mx', '0');
+        btn.style.setProperty('--my', '0');
+      });
+    });
+  }
 })();
