@@ -14,8 +14,8 @@
 
 <!-- =============== NAV =============== -->
 <header class="nav">
-  <a href="index.html" class="nav__brand">
-    World of Hospitality <small>QA</small>
+  <a href="index.html" class="nav__brand" aria-label="World of Hospitality home">
+    <img src="https://worldofhospitality.com.qa/wp-content/uploads/2025/05/f72ef56d-3846-4c17-b92f-0f6ef0058529_removalai_preview-367x259.png" alt="World of Hospitality" class="nav__logo">
   </a>
   <nav>
     <ul class="nav__links">
@@ -124,16 +124,25 @@
     </div>
     <div class="pillars__grid">
       <article class="pillar" data-reveal>
+        <div class="pillar__icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
         <div class="pillar__num">01 / Brand</div>
         <h3>Origin first.</h3>
         <p>Recipes, rhythm, room. We adapt — we don't dilute.</p>
       </article>
       <article class="pillar" data-reveal data-reveal-delay="1">
+        <div class="pillar__icon">
+          <svg class="icon" viewBox="0 0 24 24"><polygon points="12,2 2,7 12,12 22,7 12,2"/><polyline points="2,17 12,22 22,17"/><polyline points="2,12 12,17 22,12"/></svg>
+        </div>
         <div class="pillar__num">02 / Operations</div>
         <h3>End to end.</h3>
         <p>Site to opening, opening to last seating. One team carries it all.</p>
       </article>
       <article class="pillar" data-reveal data-reveal-delay="2">
+        <div class="pillar__icon">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/></svg>
+        </div>
         <div class="pillar__num">03 / Growth</div>
         <h3>Built to scale.</h3>
         <p>Shared back-office. Sized for multi-unit. Made to last.</p>
@@ -197,26 +206,120 @@
   </div>
 </section>
 
-<!-- =============== TEASER (Al Beiruti construction) =============== -->
-<section class="teaser">
-  <div class="teaser__inner">
-    <div class="teaser__media">
-      <video autoplay muted loop playsinline preload="metadata"
-             poster="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80">
-        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/02/Al-Beiruti-First-Teaser-Construction-Compressed-260226-1.mp4" type="video/mp4">
-      </video>
+<!-- =============== MARQUEE — Brand names ticker =============== -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item">Günaydın</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item"><em>Kumar</em></span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">Eleven Green</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item"><em>Al Beiruti</em></span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">Günaydın</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item"><em>Kumar</em></span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">Eleven Green</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item"><em>Al Beiruti</em></span>
+    <span class="marquee__dot"></span>
+  </div>
+</section>
+
+<!-- =============== GALLERY — Inside the Rooms =============== -->
+<section class="gallery">
+  <div class="container">
+    <div class="gallery__header">
+      <div>
+        <p class="eyebrow" data-reveal>Inside the Rooms</p>
+        <h2 data-reveal data-reveal-delay="1">Where the work shows.</h2>
+      </div>
+      <p class="lede" data-reveal data-reveal-delay="2" style="max-width:30ch;">Plate, fire, light, hand. A few frames from across the houses.</p>
     </div>
-    <div class="teaser__content" data-reveal>
-      <p class="eyebrow">In Construction</p>
-      <h2>Al Beiruti, soon.</h2>
-      <p>A long table for the city. Mezze, charcoal, ease. Late 2026.</p>
-      <a href="brands.html#al-beiruti" class="btn btn--light">Follow the build <span class="arr">→</span></a>
-      <dl class="teaser__detail">
-        <div><dt>Cuisine</dt><dd>Lebanese</dd></div>
-        <div><dt>Seating</dt><dd>180 + terrace</dd></div>
-        <div><dt>Status</dt><dd>Fit-out</dd></div>
-        <div><dt>Opening</dt><dd>Late 2026</dd></div>
-      </dl>
+    <div class="gallery__grid" data-reveal>
+      <figure class="gallery__cell">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&auto=format&fit=crop&q=80" alt="Dining room interior">
+        <figcaption>The Room</figcaption>
+      </figure>
+      <figure class="gallery__cell">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&auto=format&fit=crop&q=80" alt="Plated dish">
+        <figcaption>The Plate</figcaption>
+      </figure>
+      <figure class="gallery__cell">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1200&auto=format&fit=crop&q=80" alt="Hands at work">
+        <figcaption>The Hand</figcaption>
+      </figure>
+      <figure class="gallery__cell">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1200&auto=format&fit=crop&q=80" alt="Glassware">
+        <figcaption>The Pour</figcaption>
+      </figure>
+      <figure class="gallery__cell">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200&auto=format&fit=crop&q=80" alt="Char on the grill">
+        <figcaption>The Fire</figcaption>
+      </figure>
+      <figure class="gallery__cell">
+        <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=1400&auto=format&fit=crop&q=80" alt="Mezze spread">
+        <figcaption>The Table</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- =============== UPCOMING — Al Beiruti with phases =============== -->
+<section class="upcoming" data-reveal>
+  <div class="upcoming__bg" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=2000&auto=format&fit=crop&q=80');"></div>
+  <div class="upcoming__inner">
+    <div class="upcoming__head">
+      <div>
+        <p class="eyebrow" style="color:var(--brass);" data-reveal>Now in Construction</p>
+        <h2 data-reveal data-reveal-delay="1">Al Beiruti, <em>soon</em>.</h2>
+      </div>
+      <div data-reveal data-reveal-delay="2">
+        <p>A long table for the city. Mezze, charcoal, ease. 180 seats plus a terrace built for Doha's cooler months. First seating late 2026.</p>
+        <a href="brands.html#al-beiruti" class="btn btn--light" style="margin-top:1.5rem;">Follow the build <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="phases" data-reveal>
+      <div class="phase is-done">
+        <div class="phase__bar"><div class="phase__bar-fill"></div></div>
+        <div class="phase__num">Phase 01</div>
+        <h4>Concept</h4>
+        <p>Complete</p>
+      </div>
+      <div class="phase is-done">
+        <div class="phase__bar"><div class="phase__bar-fill"></div></div>
+        <div class="phase__num">Phase 02</div>
+        <h4>Design &amp; permits</h4>
+        <p>Complete</p>
+      </div>
+      <div class="phase is-active">
+        <div class="phase__bar"><div class="phase__bar-fill"></div></div>
+        <div class="phase__num">Phase 03</div>
+        <h4>Fit-out</h4>
+        <p>Underway</p>
+      </div>
+      <div class="phase">
+        <div class="phase__bar"><div class="phase__bar-fill"></div></div>
+        <div class="phase__num">Phase 04</div>
+        <h4>Opening</h4>
+        <p>Late 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== PRESS / PARTNERS =============== -->
+<section class="press">
+  <div class="press__inner">
+    <p class="press__label" data-reveal>In partnership with</p>
+    <div class="press__items" data-reveal data-reveal-delay="1">
+      <span>Günaydın Et</span>
+      <span>MK Group</span>
+      <span>Tanos at 8</span>
+      <span>Eleven Green</span>
     </div>
   </div>
 </section>
@@ -244,7 +347,7 @@
   <div class="foot__inner">
     <div class="foot__brand-block">
       <div class="foot__brand-display">
-        World of Hospitality
+        <img src="https://worldofhospitality.com.qa/wp-content/uploads/2025/05/f72ef56d-3846-4c17-b92f-0f6ef0058529_removalai_preview-367x259.png" alt="World of Hospitality" class="foot__logo">
         <small>F&amp;B Management · Doha · QA</small>
       </div>
       <p class="foot__tag">Four houses. One standard. Doha.</p>
@@ -268,11 +371,15 @@
     </div>
     <div>
       <h4>Follow</h4>
-      <ul>
-        <li><a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener">Instagram</a></li>
-      </ul>
-      <h4 style="margin-top:2rem;">Affiliations</h4>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+      <h4 style="margin-top:1.5rem;">Affiliations</h4>
       <ul>
         <li><a href="https://www.mkgroup.com.kw/" target="_blank" rel="noopener">MK Group</a></li>
         <li><a href="https://gunaydinet.com/" target="_blank" rel="noopener">Günaydın Et</a></li>
