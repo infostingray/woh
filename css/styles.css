@@ -3098,3 +3098,160 @@ html.is-loading body { overflow: hidden !important; }
     gap: 0.5rem;
   }
 }
+
+/* =========================================================
+   BRANDS PAGE — Logo display + per-brand color accents
+   ========================================================= */
+/* The h2 wrapping the logo, used for visual + semantic */
+.brand-spread__name {
+  margin: 1rem 0 0.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+}
+.brand-spread__name .brand-spread__logo {
+  display: flex;
+  align-items: center;
+  height: clamp(44px, 5vw, 72px);
+  max-width: 100%;
+}
+.brand-spread__name .brand-spread__logo img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* Eleven Green JPG — render as a tile, not a raw photo */
+.brand-spread__name .brand-spread__logo--green {
+  height: clamp(56px, 7vw, 88px);
+  width: auto;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.brand-spread__name .brand-spread__logo--green img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* Brand-color accents on the spread tag + meta */
+.brand-spread[style*="--brand-color"] .brand-spread__tag {
+  color: var(--brand-color, var(--brass));
+}
+.brand-spread[style*="--brand-color"] .brand-spread__cuisine {
+  border-left: 2px solid var(--brand-color, var(--brass));
+  padding-left: 1rem;
+  font-style: italic;
+}
+.brand-spread[style*="--brand-color"] .btn--ghost:hover {
+  border-color: var(--brand-color, var(--brass));
+  color: var(--brand-color, var(--brass));
+}
+
+/* =========================================================
+   ABOUT PAGE — Animated stats section
+   ========================================================= */
+.stats {
+  background: var(--ink);
+  color: var(--parchment);
+  padding-block: clamp(3.5rem, 7vh, 5.5rem);
+  border-block: 1px solid var(--line-dark);
+}
+.stats__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: end;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.stat__value {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--brass);
+  font-feature-settings: "tnum";
+}
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(244,239,230,0.6);
+  line-height: 1.7;
+}
+.stat__label em {
+  color: var(--parchment);
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  display: block;
+}
+@media (max-width: 760px) {
+  .stats__inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+  .stat__value { font-size: clamp(2.4rem, 14vw, 3.6rem); }
+}
+
+/* =========================================================
+   SERVICES — cap hover (subtle lift + brass accent)
+   ========================================================= */
+.cap {
+  position: relative;
+  transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
+  cursor: default;
+}
+.cap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, transparent, transparent) padding-box,
+              linear-gradient(135deg, var(--brass) 0%, transparent 60%) border-box;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.cap:hover {
+  transform: translateY(-4px);
+}
+.cap:hover::before {
+  opacity: 1;
+}
+.cap:hover .cap__icon {
+  color: var(--brass);
+}
+.cap:hover .cap__num {
+  color: var(--brass);
+}
+.cap__num {
+  transition: color 0.4s var(--ease);
+}
+.cap__icon {
+  transition: color 0.4s var(--ease);
+}

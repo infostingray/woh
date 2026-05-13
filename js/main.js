@@ -497,6 +497,38 @@
   }
 
   /* ============================================================
+     4e) STATS — counters animate up when scrolled into view
+     ============================================================ */
+  const statValues = document.querySelectorAll('.stat__value[data-count]');
+  if (statValues.length && 'IntersectionObserver' in window) {
+    const animateCount = (el) => {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1400;
+      const startTime = performance.now();
+      const tick = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        // easeOutCubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.floor(target * eased);
+        el.textContent = value + (progress >= 1 ? suffix : '');
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCount(e.target);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    statValues.forEach(el => obs.observe(el));
+  }
+
+  /* ============================================================
      8) MAGNETIC BUTTONS — subtle pull toward cursor
      ============================================================ */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
