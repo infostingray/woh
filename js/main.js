@@ -120,6 +120,212 @@
 
 
   /* ============================================================
+     4a) HEADLINE LETTER SPLIT + REVEAL
+     ============================================================ */
+  document.querySelectorAll('[data-split]').forEach(el => {
+    if (el.dataset.splitDone) return;
+    el.dataset.splitDone = '1';
+    const raw = el.innerHTML;
+    // Wrap each character of plain text in a span; preserve <em> tags
+    const tmp = document.createElement('div');
+    tmp.innerHTML = raw;
+    const wrapChars = (node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        const text = node.textContent;
+        for (let i = 0; i < text.length; i++) {
+          const c = text[i];
+          const span = document.createElement('span');
+          span.className = c === ' ' ? 'char space' : 'char';
+          span.textContent = c === ' ' ? '\u00A0' : c;
+          frag.appendChild(span);
+        }
+        node.replaceWith(frag);
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        Array.from(node.childNodes).forEach(wrapChars);
+      }
+    };
+    Array.from(tmp.childNodes).forEach(wrapChars);
+    el.innerHTML = tmp.innerHTML;
+    // Stagger animation delays
+    el.querySelectorAll('.char').forEach((c, i) => {
+      c.style.animationDelay = `${0.7 + i * 0.028}s`;
+    });
+  });
+
+  /* ============================================================
+     4b) HERO CANVAS — gold dust constellation
+     ============================================================ */
+  const heroCanvas = document.getElementById('heroCanvas');
+  if (heroCanvas && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ctx = heroCanvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0, h = 0;
+    let particles = [];
+    let mouse = { x: -9999, y: -9999, active: false };
+    const COUNT_BASE = 56;
+    let count = COUNT_BASE;
+
+    const resize = () => {
+      const rect = heroCanvas.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      heroCanvas.width = w * dpr;
+      heroCanvas.height = h * dpr;
+      heroCanvas.style.width = w + 'px';
+      heroCanvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      count = Math.min(COUNT_BASE, Math.round(w * h / 18000));
+    };
+
+    const seed = () => {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          z: 0.4 + Math.random() * 0.6,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          r: 0.5 + Math.random() * 1.4,
+        });
+      }
+    };
+
+    resize();
+    seed();
+    window.addEventListener('resize', () => { resize(); seed(); });
+
+    const hero = document.getElementById('hero');
+    if (hero) {
+      hero.addEventListener('mousemove', (e) => {
+        const r = heroCanvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+        mouse.active = true;
+      });
+      hero.addEventListener('mouseleave', () => {
+        mouse.active = false;
+        mouse.x = -9999; mouse.y = -9999;
+      });
+    }
+
+    const CONNECT = 130;
+    const MOUSE_PULL = 170;
+
+    const tick = () => {
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        // Drift
+        p.x += p.vx * p.z;
+        p.y += p.vy * p.z;
+
+        // Mouse attraction
+        if (mouse.active) {
+          const dxm = mouse.x - p.x;
+          const dym = mouse.y - p.y;
+          const dm = Math.hypot(dxm, dym);
+          if (dm < MOUSE_PULL) {
+            const force = (1 - dm / MOUSE_PULL) * 0.06;
+            p.vx += dxm / dm * force;
+            p.vy += dym / dm * force;
+          }
+        }
+        // Damping + cap
+        p.vx *= 0.985; p.vy *= 0.985;
+        const maxV = 0.6;
+        if (p.vx > maxV) p.vx = maxV; if (p.vx < -maxV) p.vx = -maxV;
+        if (p.vy > maxV) p.vy = maxV; if (p.vy < -maxV) p.vy = -maxV;
+
+        // Wrap
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * p.z, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168,129,74,${0.45 + p.z * 0.35})`;
+        ctx.fill();
+      }
+
+      // Lines: each particle to nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d = Math.hypot(dx, dy);
+          if (d < CONNECT) {
+            const o = (1 - d / CONNECT) * 0.22;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(168,129,74,${o})`;
+            ctx.lineWidth = 0.55;
+            ctx.stroke();
+          }
+        }
+        // Lines to mouse
+        if (mouse.active) {
+          const dxm = a.x - mouse.x;
+          const dym = a.y - mouse.y;
+          const dm = Math.hypot(dxm, dym);
+          if (dm < MOUSE_PULL) {
+            const o = (1 - dm / MOUSE_PULL) * 0.45;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(212,168,108,${o})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    setTimeout(() => heroCanvas.classList.add('is-on'), 600);
+    tick();
+  }
+
+  /* ============================================================
+     4c) CURSOR-FOLLOWING GLOW (dark sections)
+     ============================================================ */
+  const cursorGlow = document.getElementById('cursorGlow');
+  if (cursorGlow && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    let cgRaf = null;
+    let cgX = -9999, cgY = -9999;
+    document.addEventListener('mousemove', (e) => {
+      cgX = e.clientX; cgY = e.clientY;
+      if (cgRaf) cancelAnimationFrame(cgRaf);
+      cgRaf = requestAnimationFrame(() => {
+        cursorGlow.style.transform = `translate3d(${cgX - 240}px, ${cgY - 240}px, 0)`;
+      });
+    });
+    // Only show on dark sections (hero, marquee, upcoming, partner — bg ink)
+    const darkSelectors = ['.hero', '.marquee', '.upcoming', '.partner', '.foot', '.page-header'];
+    const checkDark = () => {
+      const ey = window.innerHeight / 2;
+      let inDark = false;
+      for (const sel of darkSelectors) {
+        document.querySelectorAll(sel).forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top < ey && r.bottom > ey) inDark = true;
+        });
+      }
+      cursorGlow.classList.toggle('is-active', inDark);
+    };
+    window.addEventListener('scroll', checkDark, { passive: true });
+    checkDark();
+  }
+
+  /* ============================================================
      4) HERO PANELS — auto-cycle "active" highlight (visual only)
         Panels are <a> links: hover highlights, click navigates.
      ============================================================ */
@@ -157,7 +363,7 @@
       }
     };
 
-    const tick = () => {
+    const tick2 = () => {
       if (paused) return;
       progress += 100 / (ROTATE_MS / 50);
       if (progressBar) progressBar.style.width = Math.min(progress, 100) + '%';
@@ -169,7 +375,7 @@
 
     const startRotation = () => {
       stopRotation();
-      progressTimer = setInterval(tick, 50);
+      progressTimer = setInterval(tick2, 50);
     };
     const stopRotation = () => {
       if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }

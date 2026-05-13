@@ -415,13 +415,14 @@ section { padding-block: var(--section-y); }
 }
 .hero__text-link:hover { gap: 0.9rem; }
 
-/* RIGHT — Asymmetric mosaic of 4 brands */
+/* RIGHT — Equal-sized 2x2 grid of brand tiles */
 .hero__panels {
   display: grid;
-  grid-template-columns: 1.55fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
-  gap: clamp(0.5rem, 0.8vw, 0.85rem);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: clamp(0.5rem, 0.85vw, 1rem);
   min-height: 0;
+  perspective: 1400px;
 }
 
 .panel {
@@ -439,11 +440,8 @@ section { padding-block: var(--section-y); }
   animation: panelIn 1.1s var(--ease) forwards;
   min-height: 0;
   display: block;
+  will-change: transform;
 }
-.panel--featured { grid-column: 1; grid-row: 1 / span 3; }
-.panel:nth-child(2) { grid-column: 2; grid-row: 1; }
-.panel:nth-child(3) { grid-column: 2; grid-row: 2; }
-.panel:nth-child(4) { grid-column: 2; grid-row: 3; }
 
 .panel:nth-child(1) { animation-delay: 0.95s; }
 .panel:nth-child(2) { animation-delay: 1.05s; }
@@ -491,23 +489,12 @@ section { padding-block: var(--section-y); }
 .panel__name {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.15rem, 1.8vw, 1.75rem);
+  font-size: clamp(1.3rem, 2vw, 2rem);
   line-height: 1;
   margin: 0;
   letter-spacing: -0.005em;
   color: var(--parchment);
   transition: color 0.5s var(--ease);
-}
-.panel--featured .panel__name {
-  font-size: clamp(1.6rem, 2.5vw, 2.6rem);
-}
-.panel__cuisine {
-  display: block;
-  margin-top: 0.4rem;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: rgba(244,239,230,0.75);
 }
 
 /* Hover: highlight any tile */
@@ -630,18 +617,12 @@ section { padding-block: var(--section-y); }
   }
   .hero__panels {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1.4fr 1fr 1fr;
-    aspect-ratio: 1 / 1.2;
+    grid-template-rows: 1fr 1fr;
+    aspect-ratio: 1 / 1;
     gap: 0.4rem;
   }
-  .panel--featured { grid-column: 1 / span 2; grid-row: 1; }
-  .panel:nth-child(2) { grid-column: 1; grid-row: 2 / span 2; }
-  .panel:nth-child(3) { grid-column: 2; grid-row: 2; }
-  .panel:nth-child(4) { grid-column: 2; grid-row: 3; }
   .panel__name { font-size: 1.05rem; }
-  .panel--featured .panel__name { font-size: 1.5rem; }
   .panel__num { font-size: 0.56rem; }
-  .panel__cuisine { font-size: 0.85rem; }
   .scroll-cue { display: none; }
 }
 
@@ -1352,24 +1333,24 @@ section { padding-block: var(--section-y); }
    LOGO
    ========================================================= */
 .nav__logo {
-  height: clamp(74px, 9vw, 110px);
+  height: clamp(50px, 5.5vw, 70px);
   width: auto;
   display: block;
   transition: height 0.4s var(--ease), filter 0.4s var(--ease);
 }
 .nav.is-light .nav__logo { filter: invert(1); }
 .nav.is-scrolled .nav__logo {
-  height: clamp(56px, 6.5vw, 78px);
+  height: clamp(40px, 4.5vw, 54px);
 }
 .nav__brand small { display: none; }
 .foot__logo {
-  height: clamp(110px, 13vw, 160px);
+  height: clamp(80px, 9vw, 110px);
   width: auto;
   margin-bottom: 1.5rem;
   display: block;
 }
 .preloader__logo {
-  height: clamp(110px, 14vw, 160px);
+  height: clamp(90px, 11vw, 130px);
   width: auto;
 }
 .foot__brand-display {
@@ -2305,3 +2286,116 @@ section { padding-block: var(--section-y); }
   30%      { box-shadow: 0 0 0 6px rgba(168,129,74,0.18); }
 }
 .apply.is-highlighted .apply-form { animation: applyHighlight 1.8s var(--ease) 0.4s; }
+
+/* =========================================================
+   HERO — Canvas particle layer (gold dust constellation)
+   ========================================================= */
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1.5s var(--ease) 0.4s;
+}
+.hero__canvas.is-on { opacity: 0.85; }
+
+/* =========================================================
+   HEADLINE — letter-by-letter split reveal
+   ========================================================= */
+.hero__headline[data-split] .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.7em) rotate(4deg);
+  filter: blur(8px);
+  animation: charIn 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.hero__headline[data-split] .char.space {
+  width: 0.32em;
+}
+@keyframes charIn {
+  to { opacity: 1; transform: translateY(0) rotate(0); filter: blur(0); }
+}
+
+/* =========================================================
+   SCROLL-MARQUEE — text strip that scrolls horizontally as page scrolls
+   ========================================================= */
+.marquee {
+  background: var(--ink);
+  color: var(--parchment);
+  overflow: hidden;
+  position: relative;
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  border-block: 1px solid var(--line-dark);
+}
+.marquee__track {
+  display: flex;
+  gap: clamp(2rem, 5vw, 4rem);
+  white-space: nowrap;
+  will-change: transform;
+  width: max-content;
+  animation: marqueeRoll 38s linear infinite;
+}
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: -0.01em;
+  color: rgba(244,239,230,0.18);
+  line-height: 1;
+}
+.marquee__item em {
+  font-style: normal;
+  color: var(--brass);
+}
+.marquee__item .dot {
+  width: 7px; height: 7px;
+  background: var(--brass);
+  border-radius: 999px;
+  display: inline-block;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+@keyframes marqueeRoll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* =========================================================
+   3D HOVER CARDS — for inner pages
+   ========================================================= */
+.tilt-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease);
+  will-change: transform;
+}
+.tilt-3d > * {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* =========================================================
+   CURSOR-FOLLOWING GLOW — always present in dark sections
+   ========================================================= */
+.cursor-glow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 480px;
+  height: 480px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(168,129,74,0.10), transparent 65%);
+  pointer-events: none;
+  transform: translate3d(-9999px, -9999px, 0);
+  z-index: 1;
+  mix-blend-mode: screen;
+  transition: opacity 0.5s var(--ease);
+  opacity: 0;
+}
+.cursor-glow.is-active { opacity: 1; }
+@media (hover: none) { .cursor-glow { display: none; } }

@@ -24,6 +24,9 @@
 <!-- Scroll progress -->
 <div class="scroll-progress" id="scrollProgress"></div>
 
+<!-- Cursor glow (subtle radial that follows mouse on dark sections) -->
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
 
 <!-- =============== NAV =============== -->
 <header class="nav">
@@ -56,12 +59,13 @@
 <!-- =============== HERO — Editorial mosaic, all brands visible =============== -->
 <section class="hero" id="hero">
   <div class="hero__atmos"></div>
+  <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
   <div class="hero__spotlight"></div>
 
   <!-- Top meta -->
   <div class="hero__top">
-    <span><strong>WOH</strong> · Vol. 01 · Doha · <span class="clock" id="clock">--:--</span></span>
-    <span class="focus-tag">Now: <span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
+    <span><strong>WOH</strong> · Doha · <span class="clock" id="clock">--:--</span></span>
+    <span class="focus-tag">Now · <span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
   </div>
 
   <div class="hero__main">
@@ -73,37 +77,31 @@
           <span class="hero__chapter-line"></span>
           <span class="hero__chapter-label">The Houses of Doha</span>
         </div>
-        <h1 class="hero__headline">
-          <span class="line"><span>Restaurants</span></span>
-          <span class="line"><span>you <em>return</em> to.</span></span>
+        <h1 class="hero__headline" data-split>
+          Restaurants you <em>return</em> to.
         </h1>
-        <p class="hero__lede">
-          Four international F&amp;B brands. Operated end to end. Always in Doha.
-        </p>
+        <p class="hero__lede">Four houses. End to end. Doha.</p>
       </div>
 
       <div class="hero__cta-row">
-        <a href="brands.html" class="btn btn--light">All brands <span class="arr">→</span></a>
+        <a href="brands.html" class="btn btn--light">Explore all brands <span class="arr">→</span></a>
         <a href="partnerships.html" class="hero__text-link">Bring yours to Qatar <span>→</span></a>
       </div>
     </div>
 
-    <!-- RIGHT: asymmetric mosaic of all 4 brands -->
+    <!-- RIGHT: 2x2 equal-sized brand tiles -->
     <div class="hero__panels" id="triptych">
-      <a href="brands.html#gunaydin" class="panel panel--featured is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın">
-        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&auto=format&fit=crop&q=85');"></div>
+      <a href="brands.html#gunaydin" class="panel is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1100&auto=format&fit=crop&q=85');"></div>
         <div class="panel__shine"></div>
         <div class="panel__caption">
-          <span class="panel__num">01 / Turkish Steakhouse</span>
-          <div>
-            <h2 class="panel__name">Günaydın</h2>
-            <span class="panel__cuisine">Istanbul · 1961</span>
-          </div>
+          <span class="panel__num">01 · Turkish</span>
+          <h2 class="panel__name">Günaydın</h2>
         </div>
       </a>
 
       <a href="brands.html#kumar" class="panel" data-index="1" data-brand="kumar" aria-label="Kumar">
-        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=900&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1100&auto=format&fit=crop&q=85');"></div>
         <div class="panel__shine"></div>
         <div class="panel__caption">
           <span class="panel__num">02 · Indian</span>
@@ -112,7 +110,7 @@
       </a>
 
       <a href="brands.html#eleven-green" class="panel" data-index="2" data-brand="eleven-green" aria-label="Eleven Green">
-        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1100&auto=format&fit=crop&q=85');"></div>
         <div class="panel__shine"></div>
         <div class="panel__caption">
           <span class="panel__num">03 · Burgers</span>
@@ -121,7 +119,7 @@
       </a>
 
       <a href="brands.html#al-beiruti" class="panel" data-index="3" data-brand="al-beiruti" aria-label="Al Beiruti — opening late 2026">
-        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1100&auto=format&fit=crop&q=85');"></div>
         <div class="panel__shine"></div>
         <div class="panel__caption">
           <span class="panel__num">04 · Lebanese · 2026</span>
@@ -221,6 +219,36 @@
         <h3>Al Beiruti</h3>
         <span class="brand-card__cta">Preview</span>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- =============== MARQUEE — kinetic typography strip =============== -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <div class="marquee__item">
+      <span>Restaurants you <em>return</em> to</span>
+      <span class="dot"></span>
+      <span>Four houses</span>
+      <span class="dot"></span>
+      <span><em>One</em> standard</span>
+      <span class="dot"></span>
+      <span>Doha · Qatar</span>
+      <span class="dot"></span>
+      <span>Operated <em>end to end</em></span>
+      <span class="dot"></span>
+    </div>
+    <div class="marquee__item">
+      <span>Restaurants you <em>return</em> to</span>
+      <span class="dot"></span>
+      <span>Four houses</span>
+      <span class="dot"></span>
+      <span><em>One</em> standard</span>
+      <span class="dot"></span>
+      <span>Doha · Qatar</span>
+      <span class="dot"></span>
+      <span>Operated <em>end to end</em></span>
+      <span class="dot"></span>
     </div>
   </div>
 </section>
