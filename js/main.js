@@ -423,7 +423,20 @@
 
     const setActive = (idx, opts = {}) => {
       activeIdx = (idx + panels.length) % panels.length;
-      panels.forEach((p, i) => p.classList.toggle('is-active', i === activeIdx));
+      panels.forEach((p, i) => {
+        const isActive = (i === activeIdx);
+        p.classList.toggle('is-active', isActive);
+        // Play only the active video; pause the others
+        const v = p.querySelector('video');
+        if (v) {
+          if (isActive) {
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+            try { v.currentTime = 0; } catch (e) {}
+          }
+        }
+      });
       const brandKey = panels[activeIdx].getAttribute('data-brand');
       if (focusName) focusName.textContent = BRAND_NAMES[brandKey] || brandKey;
       if (focusCount) {
@@ -466,6 +479,15 @@
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopRotation(); else startRotation();
     });
+
+    // Kick off initial state — play the video that's already marked active
+    const initialActive = panels.findIndex(p => p.classList.contains('is-active'));
+    if (initialActive >= 0) {
+      setTimeout(() => {
+        const v = panels[initialActive].querySelector('video');
+        if (v) v.play().catch(() => {});
+      }, 500);
+    }
 
     setTimeout(startRotation, 1800);
   }

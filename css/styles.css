@@ -356,13 +356,13 @@ section { padding-block: var(--section-y); }
 .hero__headline {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.1rem, 4.5vw, 3.8rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.06;
   letter-spacing: -0.012em;
   margin: 0;
-  max-width: 18ch;
   color: var(--parchment);
-  overflow-wrap: break-word;
+  hyphens: none;
+  word-break: keep-all;
 }
 .hero__headline em {
   font-style: italic;
@@ -2653,4 +2653,34 @@ html.is-loading body { overflow: hidden !important; }
 .brand-slide:hover .brand-slide__video {
   filter: brightness(1) saturate(1.05);
   transform: scale(1.04);
+}
+
+/* =========================================================
+   HERO BACKDROP — blurred Doha skyline atmosphere
+   ========================================================= */
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center 65%;
+  opacity: 0.18;
+  filter: blur(14px) saturate(0.85) brightness(0.85);
+  transform: scale(1.12);
+  pointer-events: none;
+  animation: backdropDrift 28s ease-in-out infinite alternate;
+}
+@keyframes backdropDrift {
+  from { transform: scale(1.12) translate(0, 0); }
+  to   { transform: scale(1.18) translate(-2%, -1.5%); }
+}
+
+/* =========================================================
+   HOVER-TO-PLAY VIDEOS — hide hover hint on mobile
+   ========================================================= */
+.panel__video {
+  background: var(--ink);
+}
+@media (hover: none) {
+  /* On touch devices, the active rotating video still plays; no hover */
 }
