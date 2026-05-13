@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — World of Hospitality</title>
+<meta name="description" content="Get in touch with World of Hospitality — F&amp;B management group, Doha, Qatar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..600,30..100&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swapfamily=Manrope:wght@300;400;500;600;700https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..600,30..100&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swapfamily=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Preloader (auto-hides after page loads) -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <img class="preloader__logo" src="images/woh-logo.png" alt="">
+    <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
+    <div class="preloader__caption">Doha · 2026</div>
+  </div>
+</div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+
+<header class="nav is-scrolled">
+  <a href="index.html" class="nav__brand" aria-label="World of Hospitality home"><img src="images/woh-logo.png" alt="World of Hospitality" class="nav__logo"></a>
+  <nav>
+    <ul class="nav__links">
+      <li><a href="index.html"        data-page="index.html">Home</a></li>
+      <li><a href="about.html"        data-page="about.html">About</a></li>
+      <li><a href="brands.html"       data-page="brands.html">Brands</a></li>
+      <li><a href="services.html"     data-page="services.html">Services</a></li>
+      <li><a href="partnerships.html" data-page="partnerships.html">Partnerships</a></li>
+      <li><a href="careers.html"      data-page="careers.html">Careers</a></li>
+    </ul>
+  </nav>
+  <a href="contact.html" class="nav__cta">Contact</a>
+  <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  <div class="nav__panel">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="brands.html">Brands</a>
+    <a href="services.html">Services</a>
+    <a href="partnerships.html">Partnerships</a>
+    <a href="careers.html">Careers</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="page-header__bg" style="background-image:url('https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=2000&auto=format&fit=crop&q=80');"></div>
+  <div class="page-header__inner">
+    <p class="crumbs">World of Hospitality <span>/</span> Contact</p>
+    <h1 data-reveal>Let's talk.</h1>
+    <p data-reveal data-reveal-delay="1">Brand owner. Future colleague. Curious guest. The right person will get back within two working days.</p>
+  </div>
+</section>
+
+<section class="contact-grid">
+  <div class="container">
+    <div class="contact-grid__inner">
+      <!-- FORM -->
+      <div data-reveal>
+        <p class="eyebrow">Send a message</p>
+        <h2 style="font-size:var(--fs-lg); margin-bottom:2rem;">Tell us a little about what you're after.</h2>
+
+        <form class="contact-form" id="contactForm" action="mailto:info@worldofhospitality.com.qa" method="post" enctype="text/plain">
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="company">Company</label>
+              <input id="company" name="company" type="text" autocomplete="organization">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="topic">I'm getting in touch about</label>
+            <select id="topic" name="topic" required>
+              <option value="">Select an option…</option>
+              <option>A brand partnership / Qatar expansion</option>
+              <option>Career opportunities</option>
+              <option>Media &amp; press</option>
+              <option>Supplier &amp; vendor enquiries</option>
+              <option>Something else</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="A few sentences is plenty. We'll come back with the right questions."></textarea>
+          </div>
+
+          <button type="submit" class="btn" style="justify-self:start; margin-top:0.5rem;">Send message <span class="arr">→</span></button>
+          <p style="font-size:var(--fs-xs); opacity:0.6; margin:0;">By submitting, you agree we may contact you about your enquiry.</p>
+        </form>
+      </div>
+
+      <!-- INFO -->
+      <div data-reveal data-reveal-delay="1">
+        <div class="info-block">
+          <h3>Head office</h3>
+          <dl>
+            <div>
+              <dt><svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Address</dt>
+              <dd>Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha, Qatar</dd>
+            </div>
+            <div>
+              <dt><svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>Phone</dt>
+              <dd><a href="tel:+97470323311">+974 7032 3311</a></dd>
+            </div>
+            <div>
+              <dt><svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</dt>
+              <dd><a href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a></dd>
+            </div>
+            <div>
+              <dt><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Hours</dt>
+              <dd>Sunday – Thursday · 9am – 6pm AST</dd>
+            </div>
+            <div>
+              <dt>Follow</dt>
+              <dd>
+                <div class="social-row" style="margin:0;">
+                  <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                  </a>
+                  <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                  </a>
+                </div>
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <div style="margin-top:1.5rem; aspect-ratio: 16 / 11; border-radius:2px; overflow:hidden; border:1px solid var(--line);">
+          <iframe
+            src="https://www.google.com/maps?q=Landmark+Mall+Doha&output=embed"
+            width="100%" height="100%" style="border:0;"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Landmark Mall, Doha"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__brand-block">
+      <div class="foot__brand-display">
+        <img src="images/woh-logo.png" alt="World of Hospitality" class="foot__logo">
+        <small>F&amp;B Management · Doha · QA</small>
+      </div>
+      <p class="foot__tag">Four houses. One standard. Doha.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="brands.html">Our Brands</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="partnerships.html">Partnerships</a></li>
+        <li><a href="careers.html">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+97470323311">+974 7032 3311</a></li>
+        <li><a href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a></li>
+        <li style="opacity:0.6; margin-top:0.5rem;">Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="foot__bottom">
+    <span>© <span data-year>2026</span> World of Hospitality. All rights reserved.</span>
+    <span>Doha, Qatar</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
