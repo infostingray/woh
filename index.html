@@ -220,6 +220,13 @@
       <div>
         <p class="brands-h__eyebrow" data-reveal>The Houses</p>
         <h2 style="margin:0.5rem 0 0; font-size:clamp(2rem, 4vw, 3.5rem); line-height:1; letter-spacing:-0.01em; font-weight:400;" data-reveal data-reveal-delay="1">Four houses. <em style="color:var(--brass); font-style:italic;">One</em> standard.</h2>
+        <!-- Creative drag hint — left-aligned beneath the section title, above the first card -->
+        <div class="brands-h__hint" id="brandsHint" aria-hidden="true">
+          <span class="brands-h__hint-rail">
+            <span class="brands-h__hint-dot"></span>
+          </span>
+          <span class="brands-h__hint-text">Drag to traverse</span>
+        </div>
       </div>
       <p class="brands-h__count"><span id="brandsHIdx"><strong>01</strong></span> / <strong>04</strong></p>
     </div>
@@ -293,14 +300,6 @@
           </div>
         </a>
       </div>
-    </div>
-
-    <!-- Creative scroll hint — dot traverses a rail to demonstrate the motion -->
-    <div class="brands-h__hint" id="brandsHint" aria-hidden="true">
-      <span class="brands-h__hint-rail">
-        <span class="brands-h__hint-dot"></span>
-      </span>
-      <span class="brands-h__hint-text">Drag or swipe to traverse the four houses</span>
     </div>
   </div>
 </section>
