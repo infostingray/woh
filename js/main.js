@@ -65,6 +65,17 @@
         gsap.delayedCall(0.35, hidePreloader);
       }
     });
+
+    const brandEls = document.querySelectorAll('.preloader__brand');
+    const sepEls   = document.querySelectorAll('.preloader__brand-sep');
+    const revealBrandAt = (idx) => {
+      brandEls.forEach((b, i) => {
+        if (i <= idx) b.classList.add('is-shown');
+        b.classList.toggle('is-active', i === idx);
+      });
+      sepEls.forEach((s, i) => { if (i < idx) s.classList.add('is-shown'); });
+    };
+
     intro
       .to('.preloader__top', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.15)
       .to('.preloader__logo', { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.3)
@@ -76,7 +87,13 @@
         snap: { innerText: 1 },
         ease: 'power2.inOut',
         onUpdate: function () {
-          if (preCounter) preCounter.textContent = String(Math.floor(this.targets()[0].innerText || 0)).padStart(2, '0');
+          const v = Math.floor(this.targets()[0].innerText || 0);
+          if (preCounter) preCounter.textContent = String(v).padStart(2, '0');
+          // Reveal brands at quarter milestones
+          if (v >= 25 && !brandEls[0]?.classList.contains('is-shown')) revealBrandAt(0);
+          if (v >= 50) revealBrandAt(1);
+          if (v >= 75) revealBrandAt(2);
+          if (v >= 100) revealBrandAt(3);
         }
       }, 0.9)
       .to('.preloader__logo', { y: -6, duration: 0.45, ease: 'power2.out' }, 3.0);

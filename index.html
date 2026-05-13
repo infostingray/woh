@@ -21,6 +21,15 @@
     </div>
     <div class="preloader__center">
       <img class="preloader__logo" src="images/woh-logo.png" alt="">
+      <div class="preloader__brands" aria-hidden="true">
+        <span class="preloader__brand" data-bi="0">Günaydın</span>
+        <span class="preloader__brand-sep"></span>
+        <span class="preloader__brand" data-bi="1">Kumar</span>
+        <span class="preloader__brand-sep"></span>
+        <span class="preloader__brand" data-bi="2">Eleven Green</span>
+        <span class="preloader__brand-sep"></span>
+        <span class="preloader__brand" data-bi="3">Al Beiruti</span>
+      </div>
     </div>
     <div class="preloader__bottom">
       <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
@@ -69,25 +78,25 @@
 <section class="hero" id="hero">
   <div class="hero__stage" id="heroStage">
     <!-- 4 stacked video layers; only one is active at a time -->
-    <div class="hero__video-wrap is-active" data-brand="gunaydin" data-num="01" data-cuisine="Turkish · Steakhouse">
+    <div class="hero__video-wrap is-active" data-brand="gunaydin" data-num="01" data-cuisine="Doha · Turkish">
       <video class="hero__video" muted loop playsinline preload="metadata"
         poster="https://images.unsplash.com/photo-1544025162-d76694265947?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Gunaydin-Website-Video-1-1.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="hero__video-wrap" data-brand="kumar" data-num="02" data-cuisine="Modern Indian">
+    <div class="hero__video-wrap" data-brand="kumar" data-num="02" data-cuisine="Doha · Indian">
       <video class="hero__video" muted loop playsinline preload="none"
         poster="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Kumar-Website-Video-1-1.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="hero__video-wrap" data-brand="eleven-green" data-num="03" data-cuisine="Burger Bistro">
+    <div class="hero__video-wrap" data-brand="eleven-green" data-num="03" data-cuisine="Doha · Burgers">
       <video class="hero__video" muted loop playsinline preload="none"
         poster="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/05/IMG_7763-1.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="hero__video-wrap" data-brand="al-beiruti" data-num="04" data-cuisine="Lebanese · Late 2026">
+    <div class="hero__video-wrap" data-brand="al-beiruti" data-num="04" data-cuisine="Doha · Lebanese">
       <video class="hero__video" muted loop playsinline preload="none"
         poster="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
@@ -100,7 +109,6 @@
   <!-- TOP — meta strip -->
   <div class="hero__top">
     <span><strong>WOH</strong> · Doha · <span class="clock" id="clock">--:--</span></span>
-    <span class="focus-tag">Now · <span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
   </div>
 
   <!-- CENTER — massive overlay headline with mix-blend-mode -->
@@ -121,25 +129,25 @@
     <button class="marker is-active" data-index="0" data-brand="gunaydin" aria-label="Switch to Günaydın">
       <span class="marker__num">01</span>
       <span class="marker__name">Günaydın</span>
-      <span class="marker__cuisine">Turkish · Steakhouse</span>
+      <span class="marker__cuisine">Doha · Turkish</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
     <button class="marker" data-index="1" data-brand="kumar" aria-label="Switch to Kumar">
       <span class="marker__num">02</span>
       <span class="marker__name">Kumar</span>
-      <span class="marker__cuisine">Modern Indian</span>
+      <span class="marker__cuisine">Doha · Indian</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
     <button class="marker" data-index="2" data-brand="eleven-green" aria-label="Switch to Eleven Green">
       <span class="marker__num">03</span>
       <span class="marker__name">Eleven Green</span>
-      <span class="marker__cuisine">Burger Bistro</span>
+      <span class="marker__cuisine">Doha · Burgers</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
     <button class="marker" data-index="3" data-brand="al-beiruti" aria-label="Switch to Al Beiruti">
       <span class="marker__num">04</span>
       <span class="marker__name">Al Beiruti</span>
-      <span class="marker__cuisine">Lebanese · Late 2026</span>
+      <span class="marker__cuisine">Doha · Lebanese</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
   </div>
@@ -252,13 +260,13 @@
         <a href="brands.html#kumar" class="brand-slide" data-cursor="View" data-brand="kumar">
           <div class="brand-slide__media">
             <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1400&auto=format&fit=crop&q=85');"></div>
-            <span class="brand-slide__num">02 / Modern Indian</span>
+            <span class="brand-slide__num">02 / Doha · Indian</span>
             <span class="brand-slide__tag">Open</span>
           </div>
           <div class="brand-slide__footer">
             <div class="brand-slide__title-block">
               <h3 class="brand-slide__name">Kumar</h3>
-              <p class="brand-slide__desc">Modern Indian with MK Group provenance. Open in Doha.</p>
+              <p class="brand-slide__desc">Doha · Indian with MK Group provenance. Open in Doha.</p>
             </div>
             <span class="brand-slide__arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
@@ -269,7 +277,7 @@
         <a href="brands.html#eleven-green" class="brand-slide" data-cursor="View" data-brand="eleven-green">
           <div class="brand-slide__media">
             <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1400&auto=format&fit=crop&q=85');"></div>
-            <span class="brand-slide__num">03 / Burger Bistro</span>
+            <span class="brand-slide__num">03 / Doha · Burgers</span>
             <span class="brand-slide__tag" style="color:var(--brass);">Coming</span>
           </div>
           <div class="brand-slide__footer">

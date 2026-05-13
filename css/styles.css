@@ -310,7 +310,7 @@ section { padding-block: var(--section-y); }
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: clamp(8rem, 14vh, 12rem) var(--gutter) clamp(12rem, 22vh, 18rem);
+  padding: clamp(6rem, 10vh, 9rem) var(--gutter) clamp(8rem, 15vh, 11rem);
   pointer-events: none;
 }
 /* Soft dark scrim behind the headline for legibility against any video */
@@ -2857,3 +2857,39 @@ html.is-loading body { overflow: hidden !important; }
   .brands-h__hint-rail { width: 36px; }
   .brands-h__hint-text { font-size: 0.55rem; letter-spacing: 0.22em; }
 }
+
+/* =========================================================
+   PRELOADER — Brand names beneath the WOH logo
+   ========================================================= */
+.preloader__brands {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.4rem);
+  margin-top: clamp(1.25rem, 2.5vh, 2rem);
+  flex-wrap: wrap;
+  max-width: 90vw;
+}
+.preloader__brand {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: rgba(244,239,230,0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), color 0.5s var(--ease);
+}
+.preloader__brand.is-shown { opacity: 1; transform: translateY(0); }
+.preloader__brand.is-active { color: var(--brass); }
+.preloader__brand-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brass);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.preloader__brand-sep.is-shown { opacity: 0.55; transform: scale(1); }
