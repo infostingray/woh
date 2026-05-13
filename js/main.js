@@ -210,61 +210,8 @@
 
 
   /* ============================================================
-     4a) HEADLINE LETTER SPLIT + REVEAL (any [data-split])
+     4a) [Split-text removed — hero uses CSS-only fade-up now]
      ============================================================ */
-  const splitTargets = document.querySelectorAll('[data-split]');
-  splitTargets.forEach(el => {
-    if (el.dataset.splitDone) return;
-    el.dataset.splitDone = '1';
-    const tmp = document.createElement('div');
-    tmp.innerHTML = el.innerHTML;
-    const wrapChars = (node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const frag = document.createDocumentFragment();
-        const text = node.textContent;
-        for (let i = 0; i < text.length; i++) {
-          const c = text[i];
-          const span = document.createElement('span');
-          span.className = c === ' ' ? 'char space' : 'char';
-          span.textContent = c === ' ' ? '\u00A0' : c;
-          frag.appendChild(span);
-        }
-        node.replaceWith(frag);
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        Array.from(node.childNodes).forEach(wrapChars);
-      }
-    };
-    Array.from(tmp.childNodes).forEach(wrapChars);
-    el.innerHTML = tmp.innerHTML;
-    // Stagger delays
-    el.querySelectorAll('.char').forEach((c, i) => {
-      c.style.animationDelay = `${i * 0.022}s`;
-    });
-  });
-
-  // Hero headline reveals immediately
-  const heroHL = document.querySelector('.hero__headline[data-split]');
-  if (heroHL) {
-    // Delay slightly after preloader hides
-    setTimeout(() => heroHL.classList.add('is-revealed'), 200);
-  }
-
-  // All other data-split elements reveal on scroll into view
-  const otherSplit = document.querySelectorAll('[data-split]:not(.hero__headline)');
-  if (otherSplit.length && 'IntersectionObserver' in window) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-revealed');
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
-    otherSplit.forEach(el => obs.observe(el));
-  } else {
-    // Fallback
-    otherSplit.forEach(el => el.classList.add('is-revealed'));
-  }
 
   /* ============================================================
      4b) HERO CANVAS — gold dust constellation
