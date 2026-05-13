@@ -561,28 +561,28 @@
   }
 
   /* ============================================================
-     4g) SERVICE TIMELINE — fill brass rail based on scroll progress
+     4g) CAPABILITIES — Accordion toggle (one open at a time)
      ============================================================ */
-  const stFill = document.getElementById('serviceTimelineFill');
-  const stSection = document.querySelector('.service-timeline');
-  if (stFill && stSection) {
-    const updateRail = () => {
-      const rect = stSection.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // Start filling when section top reaches 60% of viewport, finish when bottom reaches 30%
-      const start = vh * 0.6;
-      const end = -rect.height + vh * 0.3;
-      const total = start - end;
-      const current = start - rect.top;
-      const ratio = Math.max(0, Math.min(1, current / total));
-      stFill.style.height = (ratio * 100).toFixed(1) + '%';
-    };
-    let rafR = null;
-    window.addEventListener('scroll', () => {
-      if (rafR) cancelAnimationFrame(rafR);
-      rafR = requestAnimationFrame(updateRail);
-    }, { passive: true });
-    updateRail();
+  const capabilities = document.querySelectorAll('[data-cap]');
+  if (capabilities.length) {
+    capabilities.forEach((cap) => {
+      const button = cap.querySelector('.capability__row');
+      if (!button) return;
+      button.addEventListener('click', () => {
+        const wasOpen = cap.classList.contains('is-open');
+        // Close all others
+        capabilities.forEach((c) => {
+          c.classList.remove('is-open');
+          const btn = c.querySelector('.capability__row');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+        // Toggle this one
+        if (!wasOpen) {
+          cap.classList.add('is-open');
+          button.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   }
 
   /* ============================================================
