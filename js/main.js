@@ -23,12 +23,12 @@
   let lenis = null;
   if (hasLenis && !reducedMotion) {
     lenis = new window.Lenis({
-      lerp: 0.05,           // heavy luxury momentum
-      duration: 1.8,
+      lerp: 0.1,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       smoothTouch: false,
-      wheelMultiplier: 0.9,
+      wheelMultiplier: 1.1,
     });
     const lenisLoop = (time) => { lenis.raf(time); requestAnimationFrame(lenisLoop); };
     requestAnimationFrame(lenisLoop);
