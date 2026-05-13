@@ -346,12 +346,53 @@
           }
         }
       }
-
-      requestAnimationFrame(tick);
     };
 
     setTimeout(() => heroCanvas.classList.add('is-on'), 600);
-    tick();
+    let canvasRunning = true;
+    let canvasRaf = null;
+    const tickWrap = () => {
+      if (!canvasRunning) return;
+      tick();
+      canvasRaf = requestAnimationFrame(tickWrap);
+    };
+    // Pause canvas when hero is off-screen
+    if ('IntersectionObserver' in window) {
+      const heroEl = document.getElementById('hero');
+      if (heroEl) {
+        const ioCanvas = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting && !canvasRunning) {
+              canvasRunning = true;
+              tickWrap();
+            } else if (!e.isIntersecting) {
+              canvasRunning = false;
+              if (canvasRaf) cancelAnimationFrame(canvasRaf);
+            }
+          });
+        }, { threshold: 0 });
+        ioCanvas.observe(heroEl);
+      }
+    }
+    tickWrap();
+  }
+
+  /* ============================================================
+     4b.5) PLAY VIDEOS ONLY WHEN IN VIEW (perf)
+     ============================================================ */
+  const ioVideos = document.querySelectorAll('video[data-play-on-view], #upcomingVideo');
+  if (ioVideos.length && 'IntersectionObserver' in window) {
+    const vObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const v = e.target;
+        if (e.isIntersecting) {
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    ioVideos.forEach(v => vObs.observe(v));
   }
 
   /* ============================================================
