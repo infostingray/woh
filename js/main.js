@@ -318,20 +318,6 @@
       startCycle();
     };
     setTimeout(initialPlay, 4400);
-
-    // Scroll-driven letterbox — bars appear at top/bottom as you scroll
-    if (hasST) {
-      window.ScrollTrigger.create({
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.6,
-        onUpdate: (self) => {
-          const bar = Math.round(self.progress * 80); // 0–80px bars
-          heroStage.style.setProperty('--bar', bar + 'px');
-        }
-      });
-    }
   }
 
 
@@ -406,92 +392,87 @@
   }
 
   /* ============================================================
-     4c) BRANDS — GSAP horizontal pinned scroll + creative hint
+     4c) BRANDS — Horizontal drag-to-scroll (no pin, no scroll-jack)
      ============================================================ */
   const brandsH = document.getElementById('brandsH');
   const brandsHTrack = document.getElementById('brandsHTrack');
+  const brandsHTrackWrap = document.querySelector('.brands-h__track-wrap');
   const brandsHIdx = document.getElementById('brandsHIdx');
   const brandsHint = document.getElementById('brandsHint');
 
-  if (brandsH && brandsHTrack && hasST && !reducedMotion && window.innerWidth > 760) {
-    const gsap = window.gsap;
-    const ST   = window.ScrollTrigger;
-    const slides = brandsHTrack.querySelectorAll('.brand-slide');
+  if (brandsHTrackWrap && brandsHTrack) {
+    const slides = Array.from(brandsHTrack.querySelectorAll('.brand-slide'));
 
-    const computeDistance = () => brandsHTrack.scrollWidth - window.innerWidth + 80;
-
-    const horizontalTween = gsap.to(brandsHTrack, {
-      x: () => -computeDistance(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: brandsH,
-        start: 'top top',
-        end: () => `+=${computeDistance()}`,
-        scrub: 0.6,
-        pin: '.brands-h__pin',
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-      }
+    // Drag-to-scroll on the track wrapper
+    let isDown = false, startX = 0, scrollStart = 0, moved = false;
+    brandsHTrackWrap.addEventListener('pointerdown', (e) => {
+      isDown = true;
+      moved = false;
+      brandsHTrackWrap.classList.add('is-dragging');
+      startX = e.pageX - brandsHTrackWrap.offsetLeft;
+      scrollStart = brandsHTrackWrap.scrollLeft;
+      try { brandsHTrackWrap.setPointerCapture(e.pointerId); } catch (_) {}
     });
-
-    // Counter updates as each slide passes under viewport center
-    slides.forEach((slide, i) => {
-      ST.create({
-        trigger: slide,
-        start: 'left center',
-        end: 'right center',
-        containerAnimation: horizontalTween,
-        onEnter:     () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
-        onEnterBack: () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
-      });
+    brandsHTrackWrap.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      const dx = (e.pageX - brandsHTrackWrap.offsetLeft) - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      brandsHTrackWrap.scrollLeft = scrollStart - dx * 1.4;
     });
+    const endDrag = () => {
+      isDown = false;
+      brandsHTrackWrap.classList.remove('is-dragging');
+    };
+    brandsHTrackWrap.addEventListener('pointerup', endDrag);
+    brandsHTrackWrap.addEventListener('pointerleave', endDrag);
+    brandsHTrackWrap.addEventListener('pointercancel', endDrag);
+    // Prevent click-through if we dragged
+    brandsHTrack.addEventListener('click', (e) => {
+      if (moved) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
 
-    // Scroll hint — fades out once the user has begun traversing
-    if (brandsHint) {
-      ST.create({
-        trigger: brandsH,
-        start: 'top top',
-        end: () => `+=${computeDistance() * 0.25}`,
-        onUpdate: (self) => {
-          brandsHint.classList.toggle('is-faded', self.progress > 0.35);
-        }
-      });
-    }
+    // Counter + hint fade based on horizontal scroll position
+    const updateProgress = () => {
+      const maxScroll = brandsHTrackWrap.scrollWidth - brandsHTrackWrap.clientWidth;
+      const ratio = maxScroll > 0 ? brandsHTrackWrap.scrollLeft / maxScroll : 0;
+      const activeIdx = Math.min(slides.length - 1, Math.round(ratio * (slides.length - 1)));
+      if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${activeIdx + 1}</strong>`;
+      if (brandsHint) brandsHint.classList.toggle('is-faded', ratio > 0.1);
+    };
+    brandsHTrackWrap.addEventListener('scroll', () => {
+      requestAnimationFrame(updateProgress);
+    }, { passive: true });
+    updateProgress();
   }
 
   /* ============================================================
-     4d) HOW WE WORK — sticky scroll-synced steps + media swap
+     4d) HOW WE WORK — hover-activated steps (no scroll-jacking)
      ============================================================ */
   const hwSection = document.getElementById('howwework');
-  if (hwSection && hasST) {
-    const ST = window.ScrollTrigger;
+  if (hwSection) {
     const steps  = Array.from(hwSection.querySelectorAll('.hw-step'));
     const medias = Array.from(hwSection.querySelectorAll('.hw-media'));
     const fillEl = document.getElementById('hwProgressFill');
     const idxEl  = document.getElementById('hwIdx');
     const STEP_COUNT = steps.length;
-    let lastIdx = -1;
 
     const setActive = (idx) => {
       const clamped = Math.max(0, Math.min(STEP_COUNT - 1, idx));
-      if (clamped === lastIdx) return;
-      lastIdx = clamped;
       steps.forEach((s, i)  => s.classList.toggle('is-active', i === clamped));
       medias.forEach((m, i) => m.classList.toggle('is-active', i === clamped));
       if (idxEl)  idxEl.textContent = '0' + (clamped + 1);
       if (fillEl) fillEl.style.transform = `scaleX(${(clamped + 1) / STEP_COUNT})`;
     };
 
-    ST.create({
-      trigger: hwSection,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        // 0..1 → step 0..STEP_COUNT-1
-        const idx = Math.floor(self.progress * STEP_COUNT * 0.999);
-        setActive(idx);
-      }
+    steps.forEach((step, i) => {
+      step.addEventListener('mouseenter', () => setActive(i));
+      step.addEventListener('focus', () => setActive(i));
+      step.addEventListener('click', () => setActive(i));
+      step.setAttribute('tabindex', '0');
     });
+
+    // Initialize first as active
+    setActive(0);
   }
 
   /* ============================================================
