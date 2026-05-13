@@ -406,6 +406,60 @@
   }
 
   /* ============================================================
+     4c) BRANDS — GSAP horizontal pinned scroll + creative hint
+     ============================================================ */
+  const brandsH = document.getElementById('brandsH');
+  const brandsHTrack = document.getElementById('brandsHTrack');
+  const brandsHIdx = document.getElementById('brandsHIdx');
+  const brandsHint = document.getElementById('brandsHint');
+
+  if (brandsH && brandsHTrack && hasST && !reducedMotion && window.innerWidth > 760) {
+    const gsap = window.gsap;
+    const ST   = window.ScrollTrigger;
+    const slides = brandsHTrack.querySelectorAll('.brand-slide');
+
+    const computeDistance = () => brandsHTrack.scrollWidth - window.innerWidth + 80;
+
+    const horizontalTween = gsap.to(brandsHTrack, {
+      x: () => -computeDistance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: brandsH,
+        start: 'top top',
+        end: () => `+=${computeDistance()}`,
+        scrub: 0.6,
+        pin: '.brands-h__pin',
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+      }
+    });
+
+    // Counter updates as each slide passes under viewport center
+    slides.forEach((slide, i) => {
+      ST.create({
+        trigger: slide,
+        start: 'left center',
+        end: 'right center',
+        containerAnimation: horizontalTween,
+        onEnter:     () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
+        onEnterBack: () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
+      });
+    });
+
+    // Scroll hint — fades out once the user has begun traversing
+    if (brandsHint) {
+      ST.create({
+        trigger: brandsH,
+        start: 'top top',
+        end: () => `+=${computeDistance() * 0.25}`,
+        onUpdate: (self) => {
+          brandsHint.classList.toggle('is-faded', self.progress > 0.35);
+        }
+      });
+    }
+  }
+
+  /* ============================================================
      4d) HOW WE WORK — sticky scroll-synced steps + media swap
      ============================================================ */
   const hwSection = document.getElementById('howwework');

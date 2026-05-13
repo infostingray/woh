@@ -2799,3 +2799,71 @@ html.is-loading body { overflow: hidden !important; }
   .hw-media:first-child { opacity: 1; }
   .hw-progress { display: none; }
 }
+
+/* =========================================================
+   BRANDS HORIZONTAL — Creative scroll hint
+   The dot traversing a rail visually demonstrates "scroll = horizontal motion"
+   ========================================================= */
+.brands-h__hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(2rem, 5vh, 3.5rem);
+  z-index: 5;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease);
+  animation: hintAppear 0.9s var(--ease) 1s forwards;
+}
+@keyframes hintAppear {
+  to { opacity: 1; }
+}
+.brands-h__hint.is-faded {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.brands-h__hint-rail {
+  position: relative;
+  width: clamp(64px, 9vw, 96px);
+  height: 1px;
+  background: rgba(244,239,230,0.18);
+  display: block;
+}
+.brands-h__hint-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--brass);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(168,129,74,0.7);
+  animation: dotTraverse 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes dotTraverse {
+  0%   { left: 0;    opacity: 0; }
+  10%  { opacity: 1; }
+  45%  { left: 100%; opacity: 1; }
+  55%  { left: 100%; opacity: 0; }
+  56%  { left: 0;    opacity: 0; }
+  70%  { opacity: 1; }
+  100% { left: 0;    opacity: 1; }
+}
+.brands-h__hint-text {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(244,239,230,0.55);
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .brands-h__hint { bottom: 1.25rem; }
+  .brands-h__hint-text { font-size: 0.56rem; letter-spacing: 0.22em; }
+}
