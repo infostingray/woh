@@ -7,7 +7,7 @@
 <meta name="description" content="World of Hospitality manages and develops premium F&amp;B brands across Qatar. From concept to last seating — we run the whole house.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..600,30..100&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..600,30..100&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swapfamily=Manrope:wght@300;400;500;600;700https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..600,30..100&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swapfamily=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <!-- Preloader (auto-hides after page loads) -->
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader__inner">
-    <img class="preloader__logo" src="https://worldofhospitality.com.qa/wp-content/uploads/2025/05/f72ef56d-3846-4c17-b92f-0f6ef0058529_removalai_preview-367x259.png" alt="">
+    <img class="preloader__logo" src="images/woh-logo.png" alt="">
     <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
     <div class="preloader__caption">Doha · 2026</div>
   </div>
@@ -28,7 +28,7 @@
 <!-- =============== NAV =============== -->
 <header class="nav">
   <a href="index.html" class="nav__brand" aria-label="World of Hospitality home">
-    <img src="https://worldofhospitality.com.qa/wp-content/uploads/2025/05/f72ef56d-3846-4c17-b92f-0f6ef0058529_removalai_preview-367x259.png" alt="World of Hospitality" class="nav__logo">
+    <img src="images/woh-logo.png" alt="World of Hospitality" class="nav__logo">
   </a>
   <nav>
     <ul class="nav__links">
@@ -37,6 +37,7 @@
       <li><a href="brands.html"      data-page="brands.html">Brands</a></li>
       <li><a href="services.html"    data-page="services.html">Services</a></li>
       <li><a href="partnerships.html" data-page="partnerships.html">Partnerships</a></li>
+      <li><a href="careers.html"      data-page="careers.html">Careers</a></li>
     </ul>
   </nav>
   <a href="contact.html" class="nav__cta">Contact</a>
@@ -47,75 +48,87 @@
     <a href="brands.html">Brands</a>
     <a href="services.html">Services</a>
     <a href="partnerships.html">Partnerships</a>
+    <a href="careers.html">Careers</a>
     <a href="contact.html">Contact</a>
   </div>
 </header>
 
-<!-- =============== HERO — Full-bleed cinematic =============== -->
+<!-- =============== HERO — Editorial mosaic, all brands visible =============== -->
 <section class="hero" id="hero">
-  <!-- Stage with one slide per brand; only one is-active at a time -->
-  <div class="hero__stage" id="heroStage">
-    <div class="hero__slide is-active" data-slide="0" style="background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=2200&auto=format&fit=crop&q=85');"></div>
-    <div class="hero__slide" data-slide="1" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=2200&auto=format&fit=crop&q=85');"></div>
-    <div class="hero__slide" data-slide="2" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=2200&auto=format&fit=crop&q=85');"></div>
-    <div class="hero__slide" data-slide="3" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=2200&auto=format&fit=crop&q=85');"></div>
-  </div>
-  <div class="hero__overlay"></div>
   <div class="hero__atmos"></div>
   <div class="hero__spotlight"></div>
 
   <!-- Top meta -->
   <div class="hero__top">
     <span><strong>WOH</strong> · Vol. 01 · Doha · <span class="clock" id="clock">--:--</span></span>
-    <span class="focus-tag"><span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
+    <span class="focus-tag">Now: <span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
   </div>
 
-  <!-- Content -->
-  <div class="hero__content" id="heroHeadline">
-    <div class="hero__chapter">
-      <span class="hero__chapter-num">№ 01</span>
-      <span class="hero__chapter-line"></span>
-      <span class="hero__chapter-label">The Houses of Doha</span>
+  <div class="hero__main">
+    <!-- LEFT: text content -->
+    <div class="hero__content" id="heroHeadline">
+      <div>
+        <div class="hero__chapter">
+          <span class="hero__chapter-num">№ 01</span>
+          <span class="hero__chapter-line"></span>
+          <span class="hero__chapter-label">The Houses of Doha</span>
+        </div>
+        <h1 class="hero__headline">
+          <span class="line"><span>Restaurants</span></span>
+          <span class="line"><span>you <em>return</em> to.</span></span>
+        </h1>
+        <p class="hero__lede">
+          Four international F&amp;B brands. Operated end to end. Always in Doha.
+        </p>
+      </div>
+
+      <div class="hero__cta-row">
+        <a href="brands.html" class="btn btn--light">All brands <span class="arr">→</span></a>
+        <a href="partnerships.html" class="hero__text-link">Bring yours to Qatar <span>→</span></a>
+      </div>
     </div>
 
-    <h1 class="hero__headline">
-      <span class="line"><span>Restaurants</span></span>
-      <span class="line"><span>you <em>return</em> to.</span></span>
-    </h1>
+    <!-- RIGHT: asymmetric mosaic of all 4 brands -->
+    <div class="hero__panels" id="triptych">
+      <a href="brands.html#gunaydin" class="panel panel--featured is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">01 / Turkish Steakhouse</span>
+          <div>
+            <h2 class="panel__name">Günaydın</h2>
+            <span class="panel__cuisine">Istanbul · 1961</span>
+          </div>
+        </div>
+      </a>
 
-    <p class="hero__lede">
-      Four international F&amp;B brands. Operated end to end. Always in Doha.
-    </p>
+      <a href="brands.html#kumar" class="panel" data-index="1" data-brand="kumar" aria-label="Kumar">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=900&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">02 · Indian</span>
+          <h2 class="panel__name">Kumar</h2>
+        </div>
+      </a>
 
-    <div class="hero__active-card" id="readout">
-      <div class="hero__active-meta">
-        <div class="readout__item"><dt>Cuisine</dt><dd data-readout="cuisine">Turkish Steakhouse</dd></div>
-        <div class="readout__item"><dt>Status</dt><dd data-readout="status">Open in Doha</dd></div>
-      </div>
-      <a href="brands.html#gunaydin" class="btn btn--light" id="readoutCta" data-readout="link">
-        Visit the brand <span class="arr">→</span>
+      <a href="brands.html#eleven-green" class="panel" data-index="2" data-brand="eleven-green" aria-label="Eleven Green">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">03 · Burgers</span>
+          <h2 class="panel__name">Eleven Green</h2>
+        </div>
+      </a>
+
+      <a href="brands.html#al-beiruti" class="panel" data-index="3" data-brand="al-beiruti" aria-label="Al Beiruti — opening late 2026">
+        <div class="panel__img" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&auto=format&fit=crop&q=85');"></div>
+        <div class="panel__shine"></div>
+        <div class="panel__caption">
+          <span class="panel__num">04 · Lebanese · 2026</span>
+          <h2 class="panel__name">Al Beiruti</h2>
+        </div>
       </a>
     </div>
-  </div>
-
-  <!-- Brand thumbnails (selector) -->
-  <div class="hero__thumbs" id="triptych" aria-label="Switch brand">
-    <button class="thumb is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın">
-      <div class="thumb__img" style="background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format&fit=crop&q=80');"></div>
-      <div class="thumb__caption"><span class="thumb__num">01</span><span class="thumb__name">Günaydın</span></div>
-    </button>
-    <button class="thumb" data-index="1" data-brand="kumar" aria-label="Kumar">
-      <div class="thumb__img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop&q=80');"></div>
-      <div class="thumb__caption"><span class="thumb__num">02</span><span class="thumb__name">Kumar</span></div>
-    </button>
-    <button class="thumb" data-index="2" data-brand="eleven-green" aria-label="Eleven Green">
-      <div class="thumb__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80');"></div>
-      <div class="thumb__caption"><span class="thumb__num">03</span><span class="thumb__name">Eleven Green</span></div>
-    </button>
-    <button class="thumb" data-index="3" data-brand="al-beiruti" aria-label="Al Beiruti">
-      <div class="thumb__img" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&auto=format&fit=crop&q=80');"></div>
-      <div class="thumb__caption"><span class="thumb__num">04</span><span class="thumb__name">Al Beiruti</span></div>
-    </button>
   </div>
 
   <span class="scroll-cue">Scroll</span>
@@ -212,40 +225,47 @@
   </div>
 </section>
 
-<!-- =============== GALLERY — Inside the Rooms =============== -->
-<section class="gallery">
+<!-- =============== GALLERY — Horizontal scroll strip =============== -->
+<section class="gallery-strip">
   <div class="container">
-    <div class="gallery__header">
-      <div>
-        <p class="eyebrow" data-reveal>Inside the Rooms</p>
-        <h2 data-reveal data-reveal-delay="1">Where the work shows.</h2>
-      </div>
-      <p class="lede" data-reveal data-reveal-delay="2" style="max-width:30ch;">Plate, fire, light, hand. A few frames from across the houses.</p>
+    <div class="gallery-strip__header">
+      <p class="eyebrow" data-reveal>Inside the Rooms</p>
+      <h2 data-reveal data-reveal-delay="1">Plate, fire, light, hand.</h2>
     </div>
-    <div class="gallery__grid" data-reveal>
-      <figure class="gallery__cell">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&auto=format&fit=crop&q=80" alt="Dining room interior">
-        <figcaption>The Room</figcaption>
+  </div>
+  <div class="gallery-strip__track-wrap" data-reveal>
+    <div class="gallery-strip__track">
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>01</span>The Room</figcaption>
       </figure>
-      <figure class="gallery__cell">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&auto=format&fit=crop&q=80" alt="Plated dish">
-        <figcaption>The Plate</figcaption>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>02</span>The Plate</figcaption>
       </figure>
-      <figure class="gallery__cell">
-        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1200&auto=format&fit=crop&q=80" alt="Hands at work">
-        <figcaption>The Hand</figcaption>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>03</span>The Hand</figcaption>
       </figure>
-      <figure class="gallery__cell">
-        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1200&auto=format&fit=crop&q=80" alt="Glassware">
-        <figcaption>The Pour</figcaption>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>04</span>The Pour</figcaption>
       </figure>
-      <figure class="gallery__cell">
-        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200&auto=format&fit=crop&q=80" alt="Char on the grill">
-        <figcaption>The Fire</figcaption>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>05</span>The Fire</figcaption>
       </figure>
-      <figure class="gallery__cell">
-        <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=1400&auto=format&fit=crop&q=80" alt="Mezze spread">
-        <figcaption>The Table</figcaption>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>06</span>The Table</figcaption>
+      </figure>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>07</span>The Char</figcaption>
+      </figure>
+      <figure class="gs-cell">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&auto=format&fit=crop&q=85" alt="">
+        <figcaption><span>08</span>The Mezze</figcaption>
       </figure>
     </div>
   </div>
@@ -318,7 +338,7 @@
   <div class="foot__inner">
     <div class="foot__brand-block">
       <div class="foot__brand-display">
-        <img src="https://worldofhospitality.com.qa/wp-content/uploads/2025/05/f72ef56d-3846-4c17-b92f-0f6ef0058529_removalai_preview-367x259.png" alt="World of Hospitality" class="foot__logo">
+        <img src="images/woh-logo.png" alt="World of Hospitality" class="foot__logo">
         <small>F&amp;B Management · Doha · QA</small>
       </div>
       <p class="foot__tag">Four houses. One standard. Doha.</p>
@@ -330,6 +350,7 @@
         <li><a href="brands.html">Our Brands</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="partnerships.html">Partnerships</a></li>
+        <li><a href="careers.html">Careers</a></li>
       </ul>
     </div>
     <div>

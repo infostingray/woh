@@ -118,44 +118,23 @@
   const y = document.querySelector('[data-year]');
   if (y) y.textContent = new Date().getFullYear();
 
+
   /* ============================================================
-     4) HERO TRIPTYCH — auto-rotating spotlight + hover override
-                       + 3D parallax tilt
+     4) HERO PANELS — auto-cycle "active" highlight (visual only)
+        Panels are <a> links: hover highlights, click navigates.
      ============================================================ */
   const triptych = document.getElementById('triptych');
   if (triptych) {
-    const panels = Array.from(triptych.querySelectorAll('.thumb'));
+    const panels = Array.from(triptych.querySelectorAll('.panel'));
     const progressBar = document.getElementById('heroProgress');
     const focusName = document.getElementById('focusName');
     const focusCount = document.getElementById('focusCount');
-    const readoutEls = document.querySelectorAll('#readout [data-readout]');
-    const readoutCta = document.getElementById('readoutCta');
 
-    const BRAND_DATA = {
-      gunaydin: {
-        name: 'Günaydın',
-        cuisine: 'Turkish Steakhouse',
-        status: 'Open in Doha',
-        link: 'brands.html#gunaydin'
-      },
-      kumar: {
-        name: 'Kumar',
-        cuisine: 'Modern Indian',
-        status: 'Open in Doha',
-        link: 'brands.html#kumar'
-      },
-      'eleven-green': {
-        name: 'Eleven Green',
-        cuisine: 'Burger Bistro',
-        status: 'Coming to Doha',
-        link: 'brands.html#eleven-green'
-      },
-      'al-beiruti': {
-        name: 'Al Beiruti',
-        cuisine: 'Lebanese · Levantine',
-        status: 'Opening late 2026',
-        link: 'brands.html#al-beiruti'
-      }
+    const BRAND_NAMES = {
+      gunaydin: 'Günaydın',
+      kumar: 'Kumar',
+      'eleven-green': 'Eleven Green',
+      'al-beiruti': 'Al Beiruti'
     };
 
     let activeIdx = 0;
@@ -164,31 +143,11 @@
     let progressTimer = null;
     const ROTATE_MS = 5500;
 
-    const updateReadout = (brandKey) => {
-      const data = BRAND_DATA[brandKey];
-      if (!data) return;
-      readoutEls.forEach(el => {
-        const key = el.getAttribute('data-readout');
-        if (key && data[key]) {
-          el.parentElement.classList.add('is-swapping');
-          setTimeout(() => {
-            el.textContent = data[key];
-            el.parentElement.classList.remove('is-swapping');
-          }, 200);
-        }
-      });
-      if (focusName) focusName.textContent = data.name;
-      if (readoutCta) readoutCta.href = data.link;
-    };
-
-    const heroSlides = Array.from(document.querySelectorAll('.hero__slide'));
-
     const setActive = (idx, opts = {}) => {
       activeIdx = (idx + panels.length) % panels.length;
       panels.forEach((p, i) => p.classList.toggle('is-active', i === activeIdx));
-      heroSlides.forEach((s, i) => s.classList.toggle('is-active', i === activeIdx));
       const brandKey = panels[activeIdx].getAttribute('data-brand');
-      updateReadout(brandKey);
+      if (focusName) focusName.textContent = BRAND_NAMES[brandKey] || brandKey;
       if (focusCount) {
         focusCount.textContent = `0${activeIdx + 1} / 0${panels.length}`;
       }
@@ -216,7 +175,6 @@
       if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
     };
 
-    // Hover override
     panels.forEach((panel, i) => {
       panel.addEventListener('mouseenter', () => {
         paused = true;
@@ -225,50 +183,7 @@
         setActive(i, { skipReset: true });
       });
       panel.addEventListener('mouseleave', () => { paused = false; });
-      panel.addEventListener('click', (e) => {
-        const isTouch = matchMedia('(hover: none)').matches;
-        if (isTouch) {
-          // Touch: every tap activates only. The readout "Visit →" handles navigation.
-          e.preventDefault();
-          setActive(i);
-          paused = true;
-          setTimeout(() => { paused = false; }, 4000);
-          return;
-        }
-        // Desktop: tap an active panel to navigate; otherwise activate.
-        if (panel.classList.contains('is-active')) {
-          window.location.href = `brands.html#${panel.getAttribute('data-brand')}`;
-        } else {
-          e.preventDefault();
-          setActive(i);
-        }
-      });
     });
-
-    triptych.addEventListener('touchstart', () => { paused = true; }, { passive: true });
-
-    // 3D parallax
-    let rafId = null;
-    const onMove = (e) => {
-      const r = triptych.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width;
-      const y = (e.clientY - r.top)  / r.height;
-      const px = (x - 0.5) * 2;
-      const py = (y - 0.5) * 2;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        triptych.style.setProperty('--px', px.toFixed(3));
-        triptych.style.setProperty('--py', py.toFixed(3));
-      });
-    };
-    const onLeave = () => {
-      triptych.style.setProperty('--px', '0');
-      triptych.style.setProperty('--py', '0');
-    };
-    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      triptych.addEventListener('mousemove', onMove);
-      triptych.addEventListener('mouseleave', onLeave);
-    }
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopRotation(); else startRotation();
@@ -278,11 +193,10 @@
   }
 
   /* ============================================================
-     5) HERO SPOTLIGHT + HEADLINE + GHOST PARALLAX
+     5) HERO SPOTLIGHT + HEADLINE PARALLAX
      ============================================================ */
   const hero = document.getElementById('hero');
   const heroHeadline = document.getElementById('heroHeadline');
-  const heroGhost = hero ? hero.querySelector('.hero__ghost') : null;
   if (hero && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let rafSpot = null;
     hero.addEventListener('mousemove', (e) => {
@@ -296,17 +210,12 @@
         const px = x - 0.5;
         const py = y - 0.5;
         if (heroHeadline) {
-          heroHeadline.style.transform = `translate3d(${(px * 10).toFixed(2)}px, ${(py * 7).toFixed(2)}px, 0)`;
-        }
-        if (heroGhost) {
-          // Counter-direction, slightly slower — creates depth
-          heroGhost.style.transform = `translate3d(${(-px * 22).toFixed(2)}px, ${(-py * 14).toFixed(2)}px, 0)`;
+          heroHeadline.style.transform = `translate3d(${(px * 8).toFixed(2)}px, ${(py * 5).toFixed(2)}px, 0)`;
         }
       });
     });
     hero.addEventListener('mouseleave', () => {
       if (heroHeadline) heroHeadline.style.transform = '';
-      if (heroGhost) heroGhost.style.transform = '';
       hero.style.setProperty('--mx', '50%');
       hero.style.setProperty('--my', '30%');
     });
@@ -352,6 +261,34 @@
     };
     renderClock();
     setInterval(renderClock, 30000);
+  }
+
+  /* ============================================================
+     7.5) GALLERY STRIP — drag-to-scroll
+     ============================================================ */
+  const gw = document.querySelector('.gallery-strip__track-wrap');
+  if (gw) {
+    let isDown = false, startX = 0, scrollStart = 0;
+    gw.addEventListener('pointerdown', (e) => {
+      isDown = true;
+      gw.classList.add('is-dragging');
+      startX = e.pageX - gw.offsetLeft;
+      scrollStart = gw.scrollLeft;
+      gw.setPointerCapture(e.pointerId);
+    });
+    gw.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const dx = (e.pageX - gw.offsetLeft) - startX;
+      gw.scrollLeft = scrollStart - dx * 1.4;
+    });
+    const endDrag = () => {
+      isDown = false;
+      gw.classList.remove('is-dragging');
+    };
+    gw.addEventListener('pointerup', endDrag);
+    gw.addEventListener('pointerleave', endDrag);
+    gw.addEventListener('pointercancel', endDrag);
   }
 
   /* ============================================================
