@@ -2926,14 +2926,17 @@ html.is-loading body { overflow: hidden !important; }
 .pre-brand__rail-fill {
   position: absolute;
   inset: 0;
-  background: var(--brass);
+  background: var(--bc, var(--brass));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.7s var(--ease);
-  box-shadow: 0 0 8px rgba(168,129,74,0.55);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--bc, var(--brass)) 60%, transparent);
 }
 .pre-brand.is-shown .pre-brand__rail-fill {
   transform: scaleX(1);
+}
+.pre-brand.is-active .pre-brand__name {
+  color: var(--bc, var(--brass));
 }
 .pre-brand__type {
   font-family: var(--font-mono);
@@ -2947,9 +2950,151 @@ html.is-loading body { overflow: hidden !important; }
 .pre-brand.is-active .pre-brand__type {
   color: rgba(244,239,230,0.8);
 }
+
+/* The "+ more concepts" line — dashed rail, italic, subtly different */
+.pre-brand--more {
+  margin-top: 0.35rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(196, 150, 91, 0.22);
+}
+.pre-brand--more .pre-brand__num {
+  font-size: 1rem;
+  color: var(--brass);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+.pre-brand--more .pre-brand__name {
+  font-size: 0.95rem;
+  color: rgba(244,239,230,0.55);
+  font-style: italic;
+}
+.pre-brand--more .pre-brand__rail {
+  background: transparent;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(244,239,230,0.22) 0,
+    rgba(244,239,230,0.22) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+.pre-brand--more .pre-brand__rail-fill {
+  display: none;
+}
 @media (max-width: 600px) {
   .pre-brand { grid-template-columns: 24px auto 1fr auto; gap: 0.5rem; }
   .pre-brand__name { font-size: 0.95rem; }
   .pre-brand__type { font-size: 0.52rem; letter-spacing: 0.18em; }
   .preloader__brands { gap: 0.4rem; }
+}
+
+/* =========================================================
+   "MORE CONCEPTS" teaser slide at end of horizontal strip
+   ========================================================= */
+.brand-slide--more {
+  border: 1px dashed rgba(196, 150, 91, 0.32);
+  background: linear-gradient(180deg, rgba(20,19,26,0.6), rgba(8,7,10,0.9));
+  transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
+}
+.brand-slide--more:hover {
+  border-color: var(--brass);
+  background: linear-gradient(180deg, rgba(20,19,26,0.4), rgba(8,7,10,0.95));
+}
+.brand-slide__more-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(196,150,91,0.15) 0%, transparent 60%),
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(196,150,91,0.04) 14px 15px);
+}
+.brand-slide__more-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  z-index: 1;
+}
+.brand-slide__more-plus {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(4rem, 9vw, 7rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--brass);
+  text-shadow: 0 0 28px rgba(196,150,91,0.55);
+  animation: plusPulse 3s var(--ease) infinite;
+}
+@keyframes plusPulse {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%      { transform: translateY(-4px); opacity: 0.78; }
+}
+.brand-slide__more-label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(244,239,230,0.55);
+}
+
+/* =========================================================
+   PRELOADER — Brand logos (replacing text wordmarks)
+   ========================================================= */
+.pre-brand__logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 26px;
+  width: 110px;            /* fixed slot so rails align across rows */
+  overflow: hidden;
+  transition: opacity 0.4s var(--ease);
+  opacity: 0.55;
+}
+.pre-brand.is-active .pre-brand__logo,
+.pre-brand.is-shown .pre-brand__logo {
+  opacity: 1;
+}
+.pre-brand__logo img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* Square monogram logos (Günaydın, Eleven Green) — slightly smaller height to balance with wide wordmarks */
+.pre-brand__logo:not(.pre-brand__logo--wide):not(.pre-brand__logo--green) img {
+  height: 90%;
+  width: auto;
+}
+/* Eleven Green JPG — make it look like a clean tile, not a raw photo */
+.pre-brand__logo--green {
+  width: 38px;
+  height: 26px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.pre-brand__logo--green img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+/* On mobile, shrink the logo slot */
+@media (max-width: 600px) {
+  .pre-brand__logo { width: 80px; height: 22px; }
+  .pre-brand__logo--green { width: 30px; height: 22px; }
+}
+
+/* Update the grid to fit a fixed logo slot */
+.pre-brand:not(.pre-brand--more) {
+  grid-template-columns: 28px 110px 1fr auto;
+}
+@media (max-width: 600px) {
+  .pre-brand:not(.pre-brand--more) {
+    grid-template-columns: 24px 80px 1fr auto;
+    gap: 0.5rem;
+  }
 }

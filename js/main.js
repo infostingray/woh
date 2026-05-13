@@ -91,7 +91,13 @@
           if (v >= 25 && !brandEls[0]?.classList.contains('is-shown')) revealBrandAt(0);
           if (v >= 50) revealBrandAt(1);
           if (v >= 75) revealBrandAt(2);
-          if (v >= 100) revealBrandAt(3);
+          if (v >= 95) revealBrandAt(3);
+          if (v >= 100) {
+            // Reveal the "+ more concepts" line too, but keep Al Beiruti as the visually active one
+            const moreEl = document.querySelector('.pre-brand--more');
+            if (moreEl) moreEl.classList.add('is-shown');
+            revealBrandAt(3);
+          }
         }
       }, 0.9)
       .to('.preloader__logo', { y: -6, duration: 0.45, ease: 'power2.out' }, 3.0);
