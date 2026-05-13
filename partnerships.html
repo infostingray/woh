@@ -44,8 +44,7 @@
       <li><a href="index.html"        data-page="index.html">Home</a></li>
       <li><a href="about.html"        data-page="about.html">About</a></li>
       <li><a href="brands.html"       data-page="brands.html">Brands</a></li>
-      <li><a href="services.html"     data-page="services.html">Services</a></li>
-      <li><a href="partnerships.html" data-page="partnerships.html">Partnerships</a></li>
+      <li><a href="partnerships.html" data-page="partnerships.html" class="nav__partner">Partnerships</a></li>
       <li><a href="careers.html"      data-page="careers.html">Careers</a></li>
     </ul>
   </nav>
@@ -55,8 +54,7 @@
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="brands.html">Brands</a>
-    <a href="services.html">Services</a>
-    <a href="partnerships.html">Partnerships</a>
+    <a href="partnerships.html" class="nav__partner">Partnerships</a>
     <a href="careers.html">Careers</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -130,39 +128,167 @@
   </div>
 </section>
 
-<section class="cap-list">
+<!-- =============== END-TO-END EXECUTION — service timeline =============== -->
+<section class="cap-list service-timeline">
   <div class="container">
-    <p class="eyebrow" data-reveal style="margin-bottom:2rem;">How a typical partnership unfolds</p>
-    <div class="cap-list__items">
+    <div class="service-timeline__header">
+      <p class="eyebrow" data-reveal>End to end. Same team.</p>
+      <h2 data-reveal data-reveal-delay="1">What we do, <em style="color:var(--brass); font-style:italic;">from first site visit to last seating</em>.</h2>
+    </div>
+    <div class="service-timeline__rail" aria-hidden="true">
+      <span class="service-timeline__rail-track"></span>
+      <span class="service-timeline__rail-fill" id="serviceTimelineFill"></span>
+    </div>
+    <div class="cap-list__items service-timeline__items">
       <article class="cap" data-reveal>
-        <div class="cap__num">Stage 01</div>
-        <h3>Introduction call</h3>
-        <p>You tell us what you're imagining. We tell you honestly if it works.</p>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+        <div class="cap__num">01</div>
+        <h3>Concept &amp; brand strategy</h3>
+        <p>Assessing fit. Keeping what's untouchable. Refining what isn't.</p>
       </article>
       <article class="cap" data-reveal>
-        <div class="cap__num">Stage 02</div>
-        <h3>Market &amp; feasibility</h3>
-        <p>Locations, positioning, financials, timeline. 6–10 weeks.</p>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="cap__num">02</div>
+        <h3>Site selection</h3>
+        <p>Trade-area work, landlord relationships, the right shortlist.</p>
       </article>
       <article class="cap" data-reveal>
-        <div class="cap__num">Stage 03</div>
-        <h3>Commercial structure</h3>
-        <p>Franchise, management contract, or JV. Heads of terms in writing.</p>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M16 4l4 4-12 12-4-4 12-12z"/><line x1="6" y1="14" x2="8" y2="16"/><line x1="9" y1="11" x2="11" y2="13"/><line x1="12" y1="8" x2="14" y2="10"/></svg></div>
+        <div class="cap__num">03</div>
+        <h3>Design &amp; fit-out</h3>
+        <p>Brand-led design, local contracting, kitchen build, FF&amp;E, on-schedule delivery.</p>
       </article>
       <article class="cap" data-reveal>
-        <div class="cap__num">Stage 04</div>
-        <h3>Build &amp; open</h3>
-        <p>Site to launch. Published timeline. Weekly reporting.</p>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg></div>
+        <div class="cap__num">04</div>
+        <h3>Licensing</h3>
+        <p>CR, municipality, food safety, labour, alcohol where applicable.</p>
       </article>
       <article class="cap" data-reveal>
-        <div class="cap__num">Stage 05</div>
-        <h3>Operate &amp; grow</h3>
-        <p>We run it. You see the numbers. Location two comes when it's earned.</p>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="cap__num">05</div>
+        <h3>Recruitment &amp; training</h3>
+        <p>Senior team first. Pre-opening training to the brand's own standards.</p>
+      </article>
+      <article class="cap" data-reveal>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><polygon points="12,2 14,9 21,9 16,14 18,21 12,17 6,21 8,14 3,9 10,9"/></svg></div>
+        <div class="cap__num">06</div>
+        <h3>Pre-opening &amp; launch</h3>
+        <p>Soft launch, PR, media, opening-week operations.</p>
+      </article>
+      <article class="cap" data-reveal>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+        <div class="cap__num">07</div>
+        <h3>Daily operations</h3>
+        <p>Service. Kitchen. Supply. Inventory. Weekly reviews. Monthly P&amp;L.</p>
+      </article>
+      <article class="cap" data-reveal>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="3" x2="3" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/><polyline points="7,15 11,9 14,12 20,5"/></svg></div>
+        <div class="cap__num">08</div>
+        <h3>Finance &amp; reporting</h3>
+        <p>Centralised. Transparent. No mystery in the numbers.</p>
+      </article>
+      <article class="cap" data-reveal>
+        <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></div>
+        <div class="cap__num">09</div>
+        <h3>Marketing &amp; growth</h3>
+        <p>In-market campaigns, loyalty, partnerships, the second location.</p>
       </article>
     </div>
   </div>
 </section>
 
+<!-- =============== JOURNEY — 5-stage roadmap (FIXED) =============== -->
+<section class="journey">
+  <div class="container">
+    <div class="journey__header">
+      <p class="eyebrow" data-reveal>The journey</p>
+      <h2 data-reveal data-reveal-delay="1">How a partnership <em style="color:var(--brass); font-style:italic;">unfolds</em>.</h2>
+    </div>
+    <div class="journey__track" data-reveal data-reveal-delay="2">
+      <div class="journey__rail" aria-hidden="true"><span class="journey__rail-fill"></span></div>
+      <article class="stage">
+        <span class="stage__marker">
+          <span class="stage__num">01</span>
+        </span>
+        <div class="stage__body">
+          <h3 class="stage__title">Introduction call</h3>
+          <p class="stage__copy">You tell us what you're imagining. We tell you honestly if it works.</p>
+          <span class="stage__meta">Same week</span>
+        </div>
+      </article>
+      <article class="stage">
+        <span class="stage__marker">
+          <span class="stage__num">02</span>
+        </span>
+        <div class="stage__body">
+          <h3 class="stage__title">Market &amp; feasibility</h3>
+          <p class="stage__copy">Locations, positioning, financials, timeline.</p>
+          <span class="stage__meta">6 – 10 weeks</span>
+        </div>
+      </article>
+      <article class="stage">
+        <span class="stage__marker">
+          <span class="stage__num">03</span>
+        </span>
+        <div class="stage__body">
+          <h3 class="stage__title">Commercial structure</h3>
+          <p class="stage__copy">Franchise, management contract, or JV. Heads of terms in writing.</p>
+          <span class="stage__meta">2 – 4 weeks</span>
+        </div>
+      </article>
+      <article class="stage">
+        <span class="stage__marker">
+          <span class="stage__num">04</span>
+        </span>
+        <div class="stage__body">
+          <h3 class="stage__title">Build &amp; open</h3>
+          <p class="stage__copy">Site to launch. Published timeline. Weekly reporting.</p>
+          <span class="stage__meta">9 – 14 months</span>
+        </div>
+      </article>
+      <article class="stage">
+        <span class="stage__marker">
+          <span class="stage__num">05</span>
+        </span>
+        <div class="stage__body">
+          <h3 class="stage__title">Operate &amp; grow</h3>
+          <p class="stage__copy">We run it. You see the numbers. Location two comes when it's earned.</p>
+          <span class="stage__meta">Ongoing</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== ENGAGEMENT MODELS =============== -->
+<section class="models">
+  <div class="container">
+    <div class="models__header">
+      <p class="eyebrow" data-reveal>Engagement models</p>
+      <h2 data-reveal data-reveal-delay="1">Three ways to <em style="color:var(--brass); font-style:italic;">work together</em>.</h2>
+    </div>
+    <div class="models__grid">
+      <article class="model-card" data-reveal>
+        <span class="model-card__tag">A</span>
+        <h3 class="model-card__title">Franchise &amp; operate</h3>
+        <p class="model-card__desc">We hold the license. We run the venue. Royalties on revenue, brand controls retained.</p>
+      </article>
+      <article class="model-card" data-reveal data-reveal-delay="1">
+        <span class="model-card__tag">B</span>
+        <h3 class="model-card__title">Management contract</h3>
+        <p class="model-card__desc">You own it. We operate it. Fixed and incentive fees, monthly reporting.</p>
+      </article>
+      <article class="model-card" data-reveal data-reveal-delay="2">
+        <span class="model-card__tag">C</span>
+        <h3 class="model-card__title">Joint venture</h3>
+        <p class="model-card__desc">Aligned capital. Aligned outcomes. Co-investment, shared upside.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== CTA =============== -->
 <section class="partner">
   <div class="container">
     <div class="partner__inner">
@@ -194,8 +320,7 @@
       <ul>
         <li><a href="about.html">About</a></li>
         <li><a href="brands.html">Our Brands</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="partnerships.html">Partnerships</a></li>
+        <li><a href="partnerships.html" class="nav__partner">Partnerships</a></li>
         <li><a href="careers.html">Careers</a></li>
       </ul>
     </div>

@@ -3738,3 +3738,330 @@ html.is-loading body { overflow: hidden !important; }
   color: var(--brass);
   transform: scale(1.15);
 }
+
+/* =========================================================
+   NAV — Distinctive Partnerships link (italic brass + dot)
+   ========================================================= */
+.nav__partner {
+  position: relative;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--brass) !important;
+  letter-spacing: -0.005em;
+  padding-right: 0.85rem;
+  transition: color 0.3s var(--ease);
+}
+.nav__partner::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brass);
+  transform: translateY(-50%);
+  box-shadow: 0 0 8px rgba(196, 150, 91, 0.7);
+  animation: partnerPulse 2.2s ease-in-out infinite;
+}
+@keyframes partnerPulse {
+  0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+  50%      { opacity: 0.55; transform: translateY(-50%) scale(0.7); }
+}
+.nav__partner:hover {
+  color: var(--parchment) !important;
+}
+.nav__partner:hover::after {
+  background: var(--parchment);
+  box-shadow: 0 0 10px rgba(244, 239, 230, 0.6);
+}
+/* In mobile panel — slightly different treatment */
+.nav__panel .nav__partner {
+  display: inline-flex;
+  align-items: center;
+}
+.nav__panel .nav__partner::after {
+  position: static;
+  margin-left: 0.6rem;
+  transform: none;
+}
+
+/* =========================================================
+   SERVICE-TIMELINE — Header above the timeline
+   ========================================================= */
+.service-timeline__header {
+  grid-column: 1 / -1;
+  max-width: 760px;
+  margin: 0 0 clamp(2rem, 5vw, 4rem);
+}
+.service-timeline__header .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 1rem;
+}
+.service-timeline__header h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--parchment);
+}
+
+/* =========================================================
+   JOURNEY — 5-stage roadmap (FIXED from messy cap-list)
+   ========================================================= */
+.journey {
+  background: var(--ink);
+  color: var(--parchment);
+  padding-block: var(--section-y);
+  border-block: 1px solid var(--line-dark);
+}
+.journey__header {
+  max-width: 720px;
+  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+}
+.journey__header .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 1rem;
+}
+.journey__header h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--parchment);
+}
+
+/* The track holds 5 stages in a row on desktop, with a connecting rail */
+.journey__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+  align-items: start;
+}
+.journey__rail {
+  position: absolute;
+  top: 26px;     /* aligns with marker dot center */
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: rgba(244,239,230,0.18);
+  z-index: 0;
+}
+.journey__rail-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brass), rgba(196,150,91,0.4));
+  box-shadow: 0 0 8px rgba(196,150,91,0.5);
+  transition: width 0.6s var(--ease);
+}
+.journey__track.is-in .journey__rail-fill {
+  width: 100%;
+  transition-duration: 2.4s;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.stage__marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 1px solid rgba(196,150,91,0.35);
+  flex-shrink: 0;
+}
+.stage__marker::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(196,150,91,0.18);
+}
+.stage__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--brass);
+  line-height: 1;
+}
+.stage__body {
+  text-align: left;
+}
+.stage__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  margin: 0 0 0.5rem;
+  color: var(--parchment);
+}
+.stage__copy {
+  margin: 0 0 0.85rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(244,239,230,0.7);
+}
+.stage__meta {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid rgba(196,150,91,0.35);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* Hover treatment for each stage */
+.stage {
+  transition: transform 0.4s var(--ease);
+}
+.stage:hover { transform: translateY(-3px); }
+.stage:hover .stage__marker {
+  border-color: var(--brass);
+  box-shadow: 0 0 18px rgba(196,150,91,0.45);
+}
+.stage:hover .stage__title { color: var(--brass); }
+
+/* Mobile — stack stages vertically with a vertical rail */
+@media (max-width: 860px) {
+  .journey__track {
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem 1.5rem;
+    align-items: start;
+  }
+  .journey__rail {
+    top: 0; bottom: 0;
+    left: 26px;
+    width: 1px;
+    height: auto;
+    right: auto;
+  }
+  .journey__track.is-in .journey__rail-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--brass), rgba(196,150,91,0.4));
+  }
+  .stage {
+    display: contents;
+  }
+  .stage__marker { grid-column: 1; }
+  .stage__body { grid-column: 2; margin-bottom: 1.5rem; }
+}
+
+/* =========================================================
+   MODELS — Three engagement model cards
+   ========================================================= */
+.models {
+  background: var(--ink);
+  padding-block: var(--section-y);
+}
+.models__header {
+  max-width: 720px;
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+}
+.models__header .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 1rem;
+}
+.models__header h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--parchment);
+}
+.models__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+.model-card {
+  position: relative;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  background: rgba(20,19,26,0.5);
+  border: 1px solid var(--line-dark);
+  border-radius: 4px;
+  transition: border-color 0.4s var(--ease), background 0.4s var(--ease), transform 0.4s var(--ease);
+  overflow: hidden;
+}
+.model-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--brass);
+  transition: width 0.5s var(--ease);
+}
+.model-card:hover {
+  border-color: rgba(196,150,91,0.5);
+  background: rgba(20,19,26,0.85);
+  transform: translateY(-4px);
+}
+.model-card:hover::before { width: 100%; }
+.model-card__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,150,91,0.4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--brass);
+  margin-bottom: 1.5rem;
+}
+.model-card__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.7rem;
+  color: var(--parchment);
+}
+.model-card__desc {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(244,239,230,0.7);
+}
+@media (max-width: 760px) {
+  .models__grid { grid-template-columns: 1fr; }
+}
