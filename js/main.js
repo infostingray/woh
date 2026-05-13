@@ -18,32 +18,9 @@
   const desktopPointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ============================================================
-     0) LENIS — buttery smooth scroll
+     0) [Lenis removed — using native scroll for responsiveness]
      ============================================================ */
-  let lenis = null;
-  if (hasLenis && !reducedMotion) {
-    lenis = new window.Lenis({
-      lerp: 0.1,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      smoothTouch: false,
-      wheelMultiplier: 1.1,
-    });
-    const lenisLoop = (time) => { lenis.raf(time); requestAnimationFrame(lenisLoop); };
-    requestAnimationFrame(lenisLoop);
-    if (hasST) {
-      lenis.on('scroll', window.ScrollTrigger.update);
-      window.ScrollTrigger.scrollerProxy(document.body, {
-        scrollTop(value) {
-          return arguments.length ? lenis.scrollTo(value, { immediate: true }) : window.scrollY;
-        },
-        getBoundingClientRect() {
-          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-        },
-      });
-    }
-  }
+  // ScrollTrigger uses native scroll; no proxy needed
 
   /* ============================================================
      0a) PRELOADER — 4-second cinematic GSAP timeline
@@ -426,6 +403,41 @@
     gw.addEventListener('pointerup', endDrag);
     gw.addEventListener('pointerleave', endDrag);
     gw.addEventListener('pointercancel', endDrag);
+  }
+
+  /* ============================================================
+     4d) HOW WE WORK — sticky scroll-synced steps + media swap
+     ============================================================ */
+  const hwSection = document.getElementById('howwework');
+  if (hwSection && hasST) {
+    const ST = window.ScrollTrigger;
+    const steps  = Array.from(hwSection.querySelectorAll('.hw-step'));
+    const medias = Array.from(hwSection.querySelectorAll('.hw-media'));
+    const fillEl = document.getElementById('hwProgressFill');
+    const idxEl  = document.getElementById('hwIdx');
+    const STEP_COUNT = steps.length;
+    let lastIdx = -1;
+
+    const setActive = (idx) => {
+      const clamped = Math.max(0, Math.min(STEP_COUNT - 1, idx));
+      if (clamped === lastIdx) return;
+      lastIdx = clamped;
+      steps.forEach((s, i)  => s.classList.toggle('is-active', i === clamped));
+      medias.forEach((m, i) => m.classList.toggle('is-active', i === clamped));
+      if (idxEl)  idxEl.textContent = '0' + (clamped + 1);
+      if (fillEl) fillEl.style.transform = `scaleX(${(clamped + 1) / STEP_COUNT})`;
+    };
+
+    ST.create({
+      trigger: hwSection,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        // 0..1 → step 0..STEP_COUNT-1
+        const idx = Math.floor(self.progress * STEP_COUNT * 0.999);
+        setActive(idx);
+      }
+    });
   }
 
   /* ============================================================
