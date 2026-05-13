@@ -1,32 +1,168 @@
 /* =========================================================
    World of Hospitality — Behavior
-   Editorial luxury interactions
+   Editorial luxury interactions, GSAP + ScrollTrigger + Lenis
    ========================================================= */
 
 (() => {
   'use strict';
 
-  /* ============================================================
-     0) PRELOADER — hide after page settles
-     ============================================================ */
-  const hidePreloader = () => {
-    const pre = document.getElementById('preloader');
-    if (pre) pre.classList.add('is-hidden');
-  };
-  const MIN_PRELOAD_MS = 1600;
-  const startedAt = (window.performance && performance.timing && performance.timing.navigationStart)
-    ? performance.timing.navigationStart
-    : Date.now();
-  const elapsed = Date.now() - startedAt;
-  const showFor = Math.max(0, MIN_PRELOAD_MS - elapsed);
+  // Lock body during preload
+  document.documentElement.classList.add('is-loading');
 
-  if (document.readyState === 'complete') {
-    setTimeout(hidePreloader, showFor);
-  } else {
-    window.addEventListener('load', () => setTimeout(hidePreloader, showFor));
+  const hasGSAP = typeof window.gsap !== 'undefined';
+  const hasST = hasGSAP && typeof window.ScrollTrigger !== 'undefined';
+  const hasLenis = typeof window.Lenis !== 'undefined';
+  if (hasST) window.gsap.registerPlugin(window.ScrollTrigger);
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desktopPointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ============================================================
+     0) LENIS — buttery smooth scroll
+     ============================================================ */
+  let lenis = null;
+  if (hasLenis && !reducedMotion) {
+    lenis = new window.Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+      wheelMultiplier: 1,
+    });
+    const lenisLoop = (time) => { lenis.raf(time); requestAnimationFrame(lenisLoop); };
+    requestAnimationFrame(lenisLoop);
+    if (hasST) {
+      lenis.on('scroll', window.ScrollTrigger.update);
+      window.ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value) {
+          return arguments.length ? lenis.scrollTo(value, { immediate: true }) : window.scrollY;
+        },
+        getBoundingClientRect() {
+          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        },
+      });
+    }
   }
-  // Safety: hide no matter what after 4s
-  setTimeout(hidePreloader, 4200);
+
+  /* ============================================================
+     0a) PRELOADER — 4-second cinematic GSAP timeline
+     ============================================================ */
+  const preloader  = document.getElementById('preloader');
+  const preCounter = document.getElementById('preCounter');
+
+  const hidePreloader = () => {
+    if (!preloader) {
+      document.documentElement.classList.remove('is-loading');
+      return;
+    }
+    if (!hasGSAP) {
+      preloader.style.transition = 'opacity 0.8s';
+      preloader.style.opacity = 0;
+      setTimeout(() => preloader.remove(), 800);
+      document.documentElement.classList.remove('is-loading');
+      return;
+    }
+    const gsap = window.gsap;
+    const tl = gsap.timeline({
+      onComplete: () => {
+        preloader.style.display = 'none';
+        document.documentElement.classList.remove('is-loading');
+        if (hasST) window.ScrollTrigger.refresh();
+      }
+    });
+    tl.to('.preloader__veil', { y: '0%', duration: 1.0, ease: 'expo.inOut' })
+      .to(preloader, { opacity: 0, duration: 0.4, ease: 'power1.in' }, '-=0.05');
+  };
+
+  if (preloader && hasGSAP) {
+    const gsap = window.gsap;
+    // Inline opacity so nothing flashes pre-tween
+    gsap.set('.preloader__top', { opacity: 0, y: -10 });
+    gsap.set('.preloader__bottom', { opacity: 0, y: 10 });
+    gsap.set('.preloader__logo', { opacity: 0, y: 20 });
+
+    const intro = gsap.timeline({
+      onComplete: () => {
+        // Wait minimum total ~4 seconds (intro is ~3.4s); then add a brief pause and reveal
+        gsap.delayedCall(0.35, hidePreloader);
+      }
+    });
+    intro
+      .to('.preloader__top', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.15)
+      .to('.preloader__logo', { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.3)
+      .to('.preloader__bottom', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.6)
+      .to('.preloader__bar-fill', { scaleX: 1, duration: 2.5, ease: 'power2.inOut' }, 0.9)
+      .to(preCounter, {
+        innerText: 100,
+        duration: 2.5,
+        snap: { innerText: 1 },
+        ease: 'power2.inOut',
+        onUpdate: function () {
+          if (preCounter) preCounter.textContent = String(Math.floor(this.targets()[0].innerText || 0)).padStart(2, '0');
+        }
+      }, 0.9)
+      .to('.preloader__logo', { y: -6, duration: 0.45, ease: 'power2.out' }, 3.0);
+  } else if (preloader) {
+    // No GSAP fallback — hide after 4s
+    setTimeout(() => {
+      preloader.style.transition = 'opacity 0.8s';
+      preloader.style.opacity = 0;
+      setTimeout(() => preloader.remove(), 800);
+      document.documentElement.classList.remove('is-loading');
+    }, 4000);
+  } else {
+    document.documentElement.classList.remove('is-loading');
+  }
+
+  /* ============================================================
+     0b) CUSTOM CURSOR — dot + ring + label
+     ============================================================ */
+  const cursor      = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursorLabel');
+  if (cursor && desktopPointer && !reducedMotion) {
+    const dot  = cursor.querySelector('.cursor__dot');
+    const ring = cursor.querySelector('.cursor__ring');
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      if (dot)  dot.style.transform  = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
+      if (cursorLabel) cursorLabel.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
+    }, { passive: true });
+
+    const loop = () => {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      if (ring) ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+
+    // Hover/active states for interactive elements
+    const HOVER_SEL = 'a, button, .panel, .brand-card, .gs-cell, .brand-slide, [role="button"], [data-cursor]';
+    document.addEventListener('mouseover', (e) => {
+      const t = e.target.closest(HOVER_SEL);
+      if (t) {
+        cursor.classList.add('is-hover');
+        const label = t.getAttribute('data-cursor');
+        if (label && cursorLabel) cursorLabel.textContent = label;
+        else if (cursorLabel) cursorLabel.textContent = '';
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      const t = e.target.closest(HOVER_SEL);
+      if (t) {
+        cursor.classList.remove('is-hover');
+        if (cursorLabel) cursorLabel.textContent = '';
+      }
+    });
+    document.addEventListener('mousedown', () => cursor.classList.add('is-active'));
+    document.addEventListener('mouseup',   () => cursor.classList.remove('is-active'));
+
+    // Hide native cursor while custom is active
+    document.documentElement.style.cursor = 'none';
+  }
 
   /* ============================================================
      0b) SCROLL PROGRESS BAR
@@ -295,34 +431,46 @@
   }
 
   /* ============================================================
-     4c) CURSOR-FOLLOWING GLOW (dark sections)
+     4c) BRANDS — GSAP horizontal pinned scroll
      ============================================================ */
-  const cursorGlow = document.getElementById('cursorGlow');
-  if (cursorGlow && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    let cgRaf = null;
-    let cgX = -9999, cgY = -9999;
-    document.addEventListener('mousemove', (e) => {
-      cgX = e.clientX; cgY = e.clientY;
-      if (cgRaf) cancelAnimationFrame(cgRaf);
-      cgRaf = requestAnimationFrame(() => {
-        cursorGlow.style.transform = `translate3d(${cgX - 240}px, ${cgY - 240}px, 0)`;
+  const brandsH = document.getElementById('brandsH');
+  const brandsHTrack = document.getElementById('brandsHTrack');
+  const brandsHIdx = document.getElementById('brandsHIdx');
+  if (brandsH && brandsHTrack && hasST && !reducedMotion && window.innerWidth > 760) {
+    const gsap = window.gsap;
+    const ST = window.ScrollTrigger;
+    const slides = brandsHTrack.querySelectorAll('.brand-slide');
+
+    const computeDistance = () => {
+      // Total horizontal travel: track width minus viewport, plus gutter so last slide centers
+      return brandsHTrack.scrollWidth - window.innerWidth + 80;
+    };
+
+    const horizontalTween = gsap.to(brandsHTrack, {
+      x: () => -computeDistance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: brandsH,
+        start: 'top top',
+        end: () => `+=${computeDistance()}`,
+        scrub: 0.6,
+        pin: '.brands-h__pin',
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+      }
+    });
+
+    // Update index as slides pass under viewport center
+    slides.forEach((slide, i) => {
+      ST.create({
+        trigger: slide,
+        start: 'left center',
+        end: 'right center',
+        containerAnimation: horizontalTween,
+        onEnter: () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
+        onEnterBack: () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
       });
     });
-    // Only show on dark sections (hero, marquee, upcoming, partner — bg ink)
-    const darkSelectors = ['.hero', '.marquee', '.upcoming', '.partner', '.foot', '.page-header'];
-    const checkDark = () => {
-      const ey = window.innerHeight / 2;
-      let inDark = false;
-      for (const sel of darkSelectors) {
-        document.querySelectorAll(sel).forEach(el => {
-          const r = el.getBoundingClientRect();
-          if (r.top < ey && r.bottom > ey) inDark = true;
-        });
-      }
-      cursorGlow.classList.toggle('is-active', inDark);
-    };
-    window.addEventListener('scroll', checkDark, { passive: true });
-    checkDark();
   }
 
   /* ============================================================
