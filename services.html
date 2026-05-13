@@ -71,9 +71,14 @@
   </div>
 </section>
 
-<section class="cap-list">
+<section class="cap-list service-timeline">
   <div class="container">
-    <div class="cap-list__items">
+    <!-- Sticky brass progress rail on the left, fills as user scrolls through services -->
+    <div class="service-timeline__rail" aria-hidden="true">
+      <span class="service-timeline__rail-track"></span>
+      <span class="service-timeline__rail-fill" id="serviceTimelineFill"></span>
+    </div>
+    <div class="cap-list__items service-timeline__items">
       <article class="cap" data-reveal>
         <div class="cap__icon"><svg class="icon" viewBox="0 0 24 24"><path d="M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
         <div class="cap__num">01</div>

@@ -504,16 +504,19 @@
     const animateCount = (el) => {
       const target = parseInt(el.dataset.count, 10);
       const suffix = el.dataset.suffix || '';
-      const duration = 1400;
+      const duration = 1600;
       const startTime = performance.now();
+      // Reveal the parent .stat at the same moment the count starts
+      const parent = el.closest('.stat');
+      if (parent) parent.classList.add('is-counting');
       const tick = (now) => {
         const elapsed = now - startTime;
         const progress = Math.min(1, elapsed / duration);
-        // easeOutCubic
         const eased = 1 - Math.pow(1 - progress, 3);
         const value = Math.floor(target * eased);
         el.textContent = value + (progress >= 1 ? suffix : '');
         if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target + suffix;
       };
       requestAnimationFrame(tick);
     };
@@ -524,8 +527,90 @@
           obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.4 });
+    }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
     statValues.forEach(el => obs.observe(el));
+    // Reveal the symbol-only stats (∞) immediately when they enter view
+    document.querySelectorAll('.stat__value--symbol').forEach(el => {
+      const parent = el.closest('.stat');
+      const symObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && parent) {
+            parent.classList.add('is-counting');
+            symObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      symObs.observe(el);
+    });
+  }
+
+  /* ============================================================
+     4f) HOVER PILLARS — about page interactive cards
+     ============================================================ */
+  const hpCards = document.querySelectorAll('.hp-card');
+  if (hpCards.length) {
+    hpCards.forEach((card, i) => {
+      card.addEventListener('mouseenter', () => {
+        hpCards.forEach(c => c.classList.remove('is-active'));
+        card.classList.add('is-active');
+        // Apply this card's brand color
+        const bc = card.dataset.bc;
+        if (bc) card.style.setProperty('--bc', bc);
+      });
+    });
+  }
+
+  /* ============================================================
+     4g) SERVICE TIMELINE — fill brass rail based on scroll progress
+     ============================================================ */
+  const stFill = document.getElementById('serviceTimelineFill');
+  const stSection = document.querySelector('.service-timeline');
+  if (stFill && stSection) {
+    const updateRail = () => {
+      const rect = stSection.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Start filling when section top reaches 60% of viewport, finish when bottom reaches 30%
+      const start = vh * 0.6;
+      const end = -rect.height + vh * 0.3;
+      const total = start - end;
+      const current = start - rect.top;
+      const ratio = Math.max(0, Math.min(1, current / total));
+      stFill.style.height = (ratio * 100).toFixed(1) + '%';
+    };
+    let rafR = null;
+    window.addEventListener('scroll', () => {
+      if (rafR) cancelAnimationFrame(rafR);
+      rafR = requestAnimationFrame(updateRail);
+    }, { passive: true });
+    updateRail();
+  }
+
+  /* ============================================================
+     4h) BRAND NAV — sticky scroll-spy on brands.html
+     ============================================================ */
+  const brandNav = document.getElementById('brandNav');
+  if (brandNav) {
+    const navDots = Array.from(brandNav.querySelectorAll('.brand-nav__dot'));
+    const sections = navDots.map(d => document.querySelector(d.getAttribute('href'))).filter(Boolean);
+    if (sections.length && 'IntersectionObserver' in window) {
+      const navObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const idx = sections.indexOf(e.target);
+            navDots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+          }
+        });
+      }, { threshold: 0.4, rootMargin: '-20% 0px -40% 0px' });
+      sections.forEach(s => navObs.observe(s));
+    }
+    // Smooth scroll on click
+    navDots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(dot.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
   }
 
   /* ============================================================

@@ -73,22 +73,41 @@
 
 <!-- =============== STATS — animated counters =============== -->
 <section class="stats">
+  <p class="stats__eyebrow">By the numbers</p>
   <div class="stats__inner">
-    <div class="stat" data-reveal>
+    <div class="stat">
       <span class="stat__value" data-count="4" data-suffix="+">0</span>
       <span class="stat__label">Houses<br><em>in Doha</em></span>
     </div>
-    <div class="stat" data-reveal data-reveal-delay="1">
-      <span class="stat__value" data-count="1">0</span>
-      <span class="stat__label">Standard<br><em>across all</em></span>
+    <div class="stat">
+      <span class="stat__value" data-count="100" data-suffix="%">0</span>
+      <span class="stat__label">Senior-led<br><em>every shift</em></span>
     </div>
-    <div class="stat" data-reveal data-reveal-delay="2">
-      <span class="stat__value" data-count="2026">0</span>
-      <span class="stat__label">Built for<br><em>the next decade</em></span>
+    <div class="stat">
+      <span class="stat__value" data-count="180" data-suffix="+">0</span>
+      <span class="stat__label">Seats<br><em>at Al Beiruti</em></span>
     </div>
-    <div class="stat" data-reveal data-reveal-delay="3">
-      <span class="stat__value">∞</span>
+    <div class="stat">
+      <span class="stat__value stat__value--symbol">∞</span>
       <span class="stat__label">Concepts<br><em>ahead</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- =============== DOHA — atmospheric full-bleed =============== -->
+<section class="doha-section">
+  <div class="doha-section__bg" style="background-image:url('https://images.unsplash.com/photo-1517426119138-4788ce06171a?w=2400&auto=format&fit=crop&q=85');"></div>
+  <div class="doha-section__inner">
+    <p class="doha-section__eyebrow">Where we work</p>
+    <h2 class="doha-section__h2">
+      All four houses,<br>
+      <em>one city.</em>
+    </h2>
+    <p class="doha-section__lede">Doha · Qatar — from Lusail's Place Vendôme to Landmark on Wadi Lusail, every house we operate is within twenty minutes of our office. The team is in the building, every night.</p>
+    <div class="doha-section__pins">
+      <span class="doha-pin"><span class="doha-pin__dot"></span>Place Vendôme · Lusail</span>
+      <span class="doha-pin"><span class="doha-pin__dot"></span>Landmark Mall · Doha</span>
+      <span class="doha-pin"><span class="doha-pin__dot doha-pin__dot--coming"></span>Al Beiruti · Late 2026</span>
     </div>
   </div>
 </section>
@@ -113,26 +132,28 @@
   </div>
 </section>
 
-<section class="pillars">
+<section class="hover-pillars">
   <div class="container">
-    <div class="pillars__header">
-      <h2 data-reveal>How we <em style="color:var(--brass); font-style:italic;">actually</em> work.</h2>
-    </div>
-    <div class="pillars__grid">
-      <article class="pillar" data-reveal>
-        <div class="pillar__num">01 / Brand</div>
-        <h3>Origin first.</h3>
-        <p>Original recipe. Original room. Adapted, never diluted.</p>
+    <p class="eyebrow" data-reveal>The Approach</p>
+    <h2 data-reveal data-reveal-delay="1">How we <em style="color:var(--brass); font-style:italic;">actually</em> work.</h2>
+    <div class="hover-pillars__grid">
+      <article class="hp-card is-active" data-bc="#C4965B">
+        <span class="hp-card__num">01</span>
+        <h3 class="hp-card__title">Origin first.</h3>
+        <p class="hp-card__body">Original recipe. Original room. Adapted, never diluted.</p>
+        <span class="hp-card__bar"></span>
       </article>
-      <article class="pillar" data-reveal data-reveal-delay="1">
-        <div class="pillar__num">02 / Operations</div>
-        <h3>Senior people, every shift.</h3>
-        <p>The people accountable for the result are the people in the building.</p>
+      <article class="hp-card" data-bc="#D97757">
+        <span class="hp-card__num">02</span>
+        <h3 class="hp-card__title">Senior people, every shift.</h3>
+        <p class="hp-card__body">The people accountable for the result are the people in the building.</p>
+        <span class="hp-card__bar"></span>
       </article>
-      <article class="pillar" data-reveal data-reveal-delay="2">
-        <div class="pillar__num">03 / Growth</div>
-        <h3>Built to scale.</h3>
-        <p>Group infrastructure. Independent attention.</p>
+      <article class="hp-card" data-bc="#3F7A4C">
+        <span class="hp-card__num">03</span>
+        <h3 class="hp-card__title">Built to last.</h3>
+        <p class="hp-card__body">Group infrastructure. Independent attention.</p>
+        <span class="hp-card__bar"></span>
       </article>
     </div>
   </div>
