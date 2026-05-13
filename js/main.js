@@ -23,11 +23,12 @@
   let lenis = null;
   if (hasLenis && !reducedMotion) {
     lenis = new window.Lenis({
-      duration: 1.15,
+      lerp: 0.05,           // heavy luxury momentum
+      duration: 1.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       smoothTouch: false,
-      wheelMultiplier: 1,
+      wheelMultiplier: 0.9,
     });
     const lenisLoop = (time) => { lenis.raf(time); requestAnimationFrame(lenisLoop); };
     requestAnimationFrame(lenisLoop);
@@ -214,241 +215,21 @@
      ============================================================ */
 
   /* ============================================================
-     4b) HERO CANVAS — gold dust constellation
+     4b) HERO — Sequential cinematic video cycle (GSAP)
+            + scroll-driven letterbox effect
+            + marker progress bars
      ============================================================ */
-  const heroCanvas = document.getElementById('heroCanvas');
-  if (heroCanvas && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const ctx = heroCanvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let w = 0, h = 0;
-    let particles = [];
-    let mouse = { x: -9999, y: -9999, active: false };
-    const COUNT_BASE = 56;
-    let count = COUNT_BASE;
+  const heroStage   = document.getElementById('heroStage');
+  const heroMarkers = document.getElementById('heroMarkers');
+  const focusName   = document.getElementById('focusName');
+  const focusCount  = document.getElementById('focusCount');
 
-    const resize = () => {
-      const rect = heroCanvas.getBoundingClientRect();
-      w = rect.width;
-      h = rect.height;
-      heroCanvas.width = w * dpr;
-      heroCanvas.height = h * dpr;
-      heroCanvas.style.width = w + 'px';
-      heroCanvas.style.height = h + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      count = Math.min(COUNT_BASE, Math.round(w * h / 18000));
-    };
-
-    const seed = () => {
-      particles = [];
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          z: 0.4 + Math.random() * 0.6,
-          vx: (Math.random() - 0.5) * 0.18,
-          vy: (Math.random() - 0.5) * 0.18,
-          r: 0.5 + Math.random() * 1.4,
-        });
-      }
-    };
-
-    resize();
-    seed();
-    window.addEventListener('resize', () => { resize(); seed(); });
-
-    const hero = document.getElementById('hero');
-    if (hero) {
-      hero.addEventListener('mousemove', (e) => {
-        const r = heroCanvas.getBoundingClientRect();
-        mouse.x = e.clientX - r.left;
-        mouse.y = e.clientY - r.top;
-        mouse.active = true;
-      });
-      hero.addEventListener('mouseleave', () => {
-        mouse.active = false;
-        mouse.x = -9999; mouse.y = -9999;
-      });
-    }
-
-    const CONNECT = 130;
-    const MOUSE_PULL = 170;
-
-    const tick = () => {
-      ctx.clearRect(0, 0, w, h);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        // Drift
-        p.x += p.vx * p.z;
-        p.y += p.vy * p.z;
-
-        // Mouse attraction
-        if (mouse.active) {
-          const dxm = mouse.x - p.x;
-          const dym = mouse.y - p.y;
-          const dm = Math.hypot(dxm, dym);
-          if (dm < MOUSE_PULL) {
-            const force = (1 - dm / MOUSE_PULL) * 0.06;
-            p.vx += dxm / dm * force;
-            p.vy += dym / dm * force;
-          }
-        }
-        // Damping + cap
-        p.vx *= 0.985; p.vy *= 0.985;
-        const maxV = 0.6;
-        if (p.vx > maxV) p.vx = maxV; if (p.vx < -maxV) p.vx = -maxV;
-        if (p.vy > maxV) p.vy = maxV; if (p.vy < -maxV) p.vy = -maxV;
-
-        // Wrap
-        if (p.x < -20) p.x = w + 20;
-        if (p.x > w + 20) p.x = -20;
-        if (p.y < -20) p.y = h + 20;
-        if (p.y > h + 20) p.y = -20;
-
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * p.z, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168,129,74,${0.45 + p.z * 0.35})`;
-        ctx.fill();
-      }
-
-      // Lines: each particle to nearby particles
-      for (let i = 0; i < particles.length; i++) {
-        const a = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const d = Math.hypot(dx, dy);
-          if (d < CONNECT) {
-            const o = (1 - d / CONNECT) * 0.22;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(168,129,74,${o})`;
-            ctx.lineWidth = 0.55;
-            ctx.stroke();
-          }
-        }
-        // Lines to mouse
-        if (mouse.active) {
-          const dxm = a.x - mouse.x;
-          const dym = a.y - mouse.y;
-          const dm = Math.hypot(dxm, dym);
-          if (dm < MOUSE_PULL) {
-            const o = (1 - dm / MOUSE_PULL) * 0.45;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(212,168,108,${o})`;
-            ctx.lineWidth = 0.7;
-            ctx.stroke();
-          }
-        }
-      }
-    };
-
-    setTimeout(() => heroCanvas.classList.add('is-on'), 600);
-    let canvasRunning = true;
-    let canvasRaf = null;
-    const tickWrap = () => {
-      if (!canvasRunning) return;
-      tick();
-      canvasRaf = requestAnimationFrame(tickWrap);
-    };
-    // Pause canvas when hero is off-screen
-    if ('IntersectionObserver' in window) {
-      const heroEl = document.getElementById('hero');
-      if (heroEl) {
-        const ioCanvas = new IntersectionObserver(entries => {
-          entries.forEach(e => {
-            if (e.isIntersecting && !canvasRunning) {
-              canvasRunning = true;
-              tickWrap();
-            } else if (!e.isIntersecting) {
-              canvasRunning = false;
-              if (canvasRaf) cancelAnimationFrame(canvasRaf);
-            }
-          });
-        }, { threshold: 0 });
-        ioCanvas.observe(heroEl);
-      }
-    }
-    tickWrap();
-  }
-
-  /* ============================================================
-     4b.5) PLAY VIDEOS ONLY WHEN IN VIEW (perf)
-     ============================================================ */
-  const ioVideos = document.querySelectorAll('video[data-play-on-view], #upcomingVideo');
-  if (ioVideos.length && 'IntersectionObserver' in window) {
-    const vObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        const v = e.target;
-        if (e.isIntersecting) {
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-        }
-      });
-    }, { threshold: 0.25 });
-    ioVideos.forEach(v => vObs.observe(v));
-  }
-
-  /* ============================================================
-     4c) BRANDS — GSAP horizontal pinned scroll
-     ============================================================ */
-  const brandsH = document.getElementById('brandsH');
-  const brandsHTrack = document.getElementById('brandsHTrack');
-  const brandsHIdx = document.getElementById('brandsHIdx');
-  if (brandsH && brandsHTrack && hasST && !reducedMotion && window.innerWidth > 760) {
+  if (heroStage && heroMarkers && hasGSAP) {
     const gsap = window.gsap;
-    const ST = window.ScrollTrigger;
-    const slides = brandsHTrack.querySelectorAll('.brand-slide');
-
-    const computeDistance = () => {
-      // Total horizontal travel: track width minus viewport, plus gutter so last slide centers
-      return brandsHTrack.scrollWidth - window.innerWidth + 80;
-    };
-
-    const horizontalTween = gsap.to(brandsHTrack, {
-      x: () => -computeDistance(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: brandsH,
-        start: 'top top',
-        end: () => `+=${computeDistance()}`,
-        scrub: 0.6,
-        pin: '.brands-h__pin',
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-      }
-    });
-
-    // Update index as slides pass under viewport center
-    slides.forEach((slide, i) => {
-      ST.create({
-        trigger: slide,
-        start: 'left center',
-        end: 'right center',
-        containerAnimation: horizontalTween,
-        onEnter: () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
-        onEnterBack: () => { if (brandsHIdx) brandsHIdx.innerHTML = `<strong>0${i + 1}</strong>`; },
-      });
-    });
-  }
-
-  /* ============================================================
-     4) HERO PANELS — auto-cycle "active" highlight (visual only)
-        Panels are <a> links: hover highlights, click navigates.
-     ============================================================ */
-  const triptych = document.getElementById('triptych');
-  if (triptych) {
-    const panels = Array.from(triptych.querySelectorAll('.panel'));
-    const progressBar = document.getElementById('heroProgress');
-    const focusName = document.getElementById('focusName');
-    const focusCount = document.getElementById('focusCount');
-
+    const wraps   = Array.from(heroStage.querySelectorAll('.hero__video-wrap'));
+    const videos  = wraps.map(w => w.querySelector('video'));
+    const markers = Array.from(heroMarkers.querySelectorAll('.marker'));
+    const fills   = markers.map(m => m.querySelector('.marker__bar-fill'));
     const BRAND_NAMES = {
       gunaydin: 'Günaydın',
       kumar: 'Kumar',
@@ -456,111 +237,126 @@
       'al-beiruti': 'Al Beiruti'
     };
 
-    let activeIdx = 0;
-    let progress = 0;
+    const CYCLE_MS = 6000;
+    let currentIdx = 0;
+    let cycleTimer = null;
+    let progressTween = null;
     let paused = false;
-    let progressTimer = null;
-    const ROTATE_MS = 5500;
+    let transitioning = false;
 
-    const setActive = (idx, opts = {}) => {
-      activeIdx = (idx + panels.length) % panels.length;
-      panels.forEach((p, i) => {
-        const isActive = (i === activeIdx);
-        p.classList.toggle('is-active', isActive);
-        // Play only the active video; pause the others
-        const v = p.querySelector('video');
-        if (v) {
-          if (isActive) {
-            v.play().catch(() => {});
-          } else {
-            v.pause();
-            try { v.currentTime = 0; } catch (e) {}
+    const updateMeta = (idx) => {
+      const brand = wraps[idx].dataset.brand;
+      if (focusName)  focusName.textContent = BRAND_NAMES[brand] || brand;
+      if (focusCount) focusCount.textContent = `0${idx + 1} / 0${wraps.length}`;
+      markers.forEach((m, i) => m.classList.toggle('is-active', i === idx));
+    };
+
+    const startProgress = (idx) => {
+      // Reset all marker bars
+      fills.forEach((f, i) => { if (f) gsap.set(f, { scaleX: i < idx ? 0 : 0 }); });
+      // Animate active marker
+      if (fills[idx]) {
+        if (progressTween) progressTween.kill();
+        progressTween = gsap.fromTo(fills[idx],
+          { scaleX: 0 },
+          { scaleX: 1, duration: CYCLE_MS / 1000, ease: 'none', transformOrigin: 'left' }
+        );
+      }
+    };
+
+    const transitionTo = (nextIdx) => {
+      if (transitioning || nextIdx === currentIdx) return;
+      transitioning = true;
+      const fromIdx = currentIdx;
+      const fromWrap = wraps[fromIdx], toWrap = wraps[nextIdx];
+      const toVideo = videos[nextIdx];
+
+      // Preload + play the next video
+      if (toVideo) {
+        toVideo.preload = 'auto';
+        try { toVideo.currentTime = 0; } catch (e) {}
+        toVideo.play().catch(() => {});
+      }
+
+      // Cinematic crossfade: outgoing scales up & fades; incoming zooms in from 0.96
+      gsap.timeline({
+        defaults: { ease: 'power2.inOut' },
+        onComplete: () => {
+          fromWrap.classList.remove('is-active');
+          toWrap.classList.add('is-active');
+          if (videos[fromIdx]) {
+            videos[fromIdx].pause();
+            try { videos[fromIdx].currentTime = 0; } catch (e) {}
           }
+          currentIdx = nextIdx;
+          transitioning = false;
         }
-      });
-      const brandKey = panels[activeIdx].getAttribute('data-brand');
-      if (focusName) focusName.textContent = BRAND_NAMES[brandKey] || brandKey;
-      if (focusCount) {
-        focusCount.textContent = `0${activeIdx + 1} / 0${panels.length}`;
-      }
-      if (!opts.skipReset) {
-        progress = 0;
-        if (progressBar) progressBar.style.width = '0%';
-      }
+      })
+      .fromTo(toWrap,   { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 1.5 }, 0)
+      .to(fromWrap,     { opacity: 0, scale: 1.08, duration: 1.4 }, 0);
+
+      updateMeta(nextIdx);
+      startProgress(nextIdx);
     };
 
-    const tick2 = () => {
+    const cycleNext = () => {
       if (paused) return;
-      progress += 100 / (ROTATE_MS / 50);
-      if (progressBar) progressBar.style.width = Math.min(progress, 100) + '%';
-      if (progress >= 100) {
-        progress = 0;
-        setActive(activeIdx + 1);
-      }
+      transitionTo((currentIdx + 1) % wraps.length);
     };
 
-    const startRotation = () => {
-      stopRotation();
-      progressTimer = setInterval(tick2, 50);
+    const startCycle = () => {
+      stopCycle();
+      cycleTimer = setInterval(cycleNext, CYCLE_MS);
     };
-    const stopRotation = () => {
-      if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+    const stopCycle = () => {
+      if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+      if (progressTween) progressTween.pause();
     };
 
-    panels.forEach((panel, i) => {
-      panel.addEventListener('mouseenter', () => {
-        paused = true;
-        progress = 0;
-        if (progressBar) progressBar.style.width = '0%';
-        setActive(i, { skipReset: true });
+    // Markers — click to jump
+    markers.forEach((m, i) => {
+      m.addEventListener('click', () => {
+        transitionTo(i);
+        stopCycle();
+        startCycle();
       });
-      panel.addEventListener('mouseleave', () => { paused = false; });
+      m.addEventListener('mouseenter', () => { paused = true; });
+      m.addEventListener('mouseleave', () => { paused = false; });
     });
 
+    // Pause cycle when tab hidden
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stopRotation(); else startRotation();
+      if (document.hidden) stopCycle();
+      else startCycle();
     });
 
-    // Kick off initial state — play the video that's already marked active
-    const initialActive = panels.findIndex(p => p.classList.contains('is-active'));
-    if (initialActive >= 0) {
-      setTimeout(() => {
-        const v = panels[initialActive].querySelector('video');
-        if (v) v.play().catch(() => {});
-      }, 500);
-    }
+    // Kick off — play first video, start progress + cycle after preloader
+    const initialPlay = () => {
+      if (videos[0]) {
+        videos[0].preload = 'auto';
+        videos[0].play().catch(() => {});
+      }
+      updateMeta(0);
+      startProgress(0);
+      startCycle();
+    };
+    setTimeout(initialPlay, 4400);
 
-    setTimeout(startRotation, 1800);
-  }
-
-  /* ============================================================
-     5) HERO SPOTLIGHT + HEADLINE PARALLAX
-     ============================================================ */
-  const hero = document.getElementById('hero');
-  const heroHeadline = document.getElementById('heroHeadline');
-  if (hero && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    let rafSpot = null;
-    hero.addEventListener('mousemove', (e) => {
-      const r = hero.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width;
-      const y = (e.clientY - r.top) / r.height;
-      if (rafSpot) cancelAnimationFrame(rafSpot);
-      rafSpot = requestAnimationFrame(() => {
-        hero.style.setProperty('--mx', `${(x * 100).toFixed(2)}%`);
-        hero.style.setProperty('--my', `${(y * 100).toFixed(2)}%`);
-        const px = x - 0.5;
-        const py = y - 0.5;
-        if (heroHeadline) {
-          heroHeadline.style.transform = `translate3d(${(px * 8).toFixed(2)}px, ${(py * 5).toFixed(2)}px, 0)`;
+    // Scroll-driven letterbox — bars appear at top/bottom as you scroll
+    if (hasST) {
+      window.ScrollTrigger.create({
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.6,
+        onUpdate: (self) => {
+          const bar = Math.round(self.progress * 80); // 0–80px bars
+          heroStage.style.setProperty('--bar', bar + 'px');
         }
       });
-    });
-    hero.addEventListener('mouseleave', () => {
-      if (heroHeadline) heroHeadline.style.transform = '';
-      hero.style.setProperty('--mx', '50%');
-      hero.style.setProperty('--my', '30%');
-    });
+    }
   }
+
 
   /* ============================================================
      6) 3D TILT — brand cards + gallery cells

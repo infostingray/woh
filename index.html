@@ -65,96 +65,88 @@
   </div>
 </header>
 
-<!-- =============== HERO — Editorial mosaic, all brands visible =============== -->
+<!-- =============== HERO — Full-bleed cinematic video stage =============== -->
 <section class="hero" id="hero">
-  <!-- Atmospheric backdrop — blurred Doha skyline at night -->
-  <div class="hero__backdrop" style="background-image:url('https://images.unsplash.com/photo-1517426119138-4788ce06171a?w=2200&auto=format&fit=crop&q=80');"></div>
-  <div class="hero__atmos"></div>
-  <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
-  <div class="hero__spotlight"></div>
+  <div class="hero__stage" id="heroStage">
+    <!-- 4 stacked video layers; only one is active at a time -->
+    <div class="hero__video-wrap is-active" data-brand="gunaydin" data-num="01" data-cuisine="Turkish · Steakhouse">
+      <video class="hero__video" muted loop playsinline preload="metadata"
+        poster="https://images.unsplash.com/photo-1544025162-d76694265947?w=2000&auto=format&fit=crop&q=85">
+        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Gunaydin-Website-Video-1-1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero__video-wrap" data-brand="kumar" data-num="02" data-cuisine="Modern Indian">
+      <video class="hero__video" muted loop playsinline preload="none"
+        poster="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=2000&auto=format&fit=crop&q=85">
+        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Kumar-Website-Video-1-1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero__video-wrap" data-brand="eleven-green" data-num="03" data-cuisine="Burger Bistro">
+      <video class="hero__video" muted loop playsinline preload="none"
+        poster="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=2000&auto=format&fit=crop&q=85">
+        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/05/IMG_7763-1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero__video-wrap" data-brand="al-beiruti" data-num="04" data-cuisine="Lebanese · Late 2026">
+      <video class="hero__video" muted loop playsinline preload="none"
+        poster="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=2000&auto=format&fit=crop&q=85">
+        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
+      </video>
+    </div>
+    <!-- Vignette overlay for legibility -->
+    <div class="hero__vignette"></div>
+  </div>
 
-  <!-- Top meta -->
+  <!-- TOP — meta strip -->
   <div class="hero__top">
     <span><strong>WOH</strong> · Doha · <span class="clock" id="clock">--:--</span></span>
     <span class="focus-tag">Now · <span id="focusName">Günaydın</span> · <span id="focusCount" style="color:var(--brass);">01 / 04</span></span>
   </div>
 
-  <div class="hero__main">
-    <!-- LEFT: text content -->
-    <div class="hero__content" id="heroHeadline">
-      <div>
-        <div class="hero__chapter">
-          <span class="hero__chapter-num">№ 01</span>
-          <span class="hero__chapter-line"></span>
-          <span class="hero__chapter-label">The Houses of Doha</span>
-        </div>
-        <h1 class="hero__headline">
-          Restaurants you <em>return</em> to.
-        </h1>
-        <p class="hero__lede">Four houses. End to end. Doha.</p>
-      </div>
-
-      <div class="hero__cta-row">
-        <a href="brands.html" class="btn btn--light">Explore all brands <span class="arr">→</span></a>
-        <a href="partnerships.html" class="hero__text-link">Bring yours to Qatar <span>→</span></a>
-      </div>
+  <!-- CENTER — massive overlay headline with mix-blend-mode -->
+  <div class="hero__overlay">
+    <div class="hero__overlay-eyebrow">
+      <span class="hero__overlay-line"></span>
+      <span>№ 01 — The Houses of Doha</span>
+      <span class="hero__overlay-line"></span>
     </div>
+    <h1 class="hero__overlay-headline">
+      Restaurants you<br><em>return</em> to.
+    </h1>
+    <p class="hero__overlay-lede">Four houses. End to end. Doha.</p>
+  </div>
 
-    <!-- RIGHT: 2x2 equal-sized brand tiles with real WOH videos -->
-    <div class="hero__panels" id="triptych">
-      <a href="brands.html#gunaydin" class="panel is-active" data-index="0" data-brand="gunaydin" aria-label="Günaydın">
-        <video class="panel__video" muted loop playsinline preload="none"
-          poster="https://images.unsplash.com/photo-1544025162-d76694265947?w=1100&auto=format&fit=crop&q=85">
-          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Gunaydin-Website-Video-1-1.mp4" type="video/mp4">
-        </video>
-        <div class="panel__shine"></div>
-        <div class="panel__caption">
-          <span class="panel__num">01 · Turkish</span>
-          <h2 class="panel__name">Günaydın</h2>
-        </div>
-      </a>
-
-      <a href="brands.html#kumar" class="panel" data-index="1" data-brand="kumar" aria-label="Kumar">
-        <video class="panel__video" muted loop playsinline preload="none"
-          poster="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1100&auto=format&fit=crop&q=85">
-          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Kumar-Website-Video-1-1.mp4" type="video/mp4">
-        </video>
-        <div class="panel__shine"></div>
-        <div class="panel__caption">
-          <span class="panel__num">02 · Indian</span>
-          <h2 class="panel__name">Kumar</h2>
-        </div>
-      </a>
-
-      <a href="brands.html#eleven-green" class="panel" data-index="2" data-brand="eleven-green" aria-label="Eleven Green">
-        <video class="panel__video" muted loop playsinline preload="none"
-          poster="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1100&auto=format&fit=crop&q=85">
-          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/05/IMG_7763-1.mp4" type="video/mp4">
-        </video>
-        <div class="panel__shine"></div>
-        <div class="panel__caption">
-          <span class="panel__num">03 · Burgers</span>
-          <h2 class="panel__name">Eleven Green</h2>
-        </div>
-      </a>
-
-      <a href="brands.html#al-beiruti" class="panel" data-index="3" data-brand="al-beiruti" aria-label="Al Beiruti — opening late 2026">
-        <video class="panel__video" muted loop playsinline preload="none"
-          poster="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1100&auto=format&fit=crop&q=85">
-          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
-        </video>
-        <div class="panel__shine"></div>
-        <div class="panel__caption">
-          <span class="panel__num">04 · Lebanese · 2026</span>
-          <h2 class="panel__name">Al Beiruti</h2>
-        </div>
-      </a>
-    </div>
+  <!-- BOTTOM — brand markers (all 4 always visible) -->
+  <div class="hero__markers" id="heroMarkers">
+    <button class="marker is-active" data-index="0" data-brand="gunaydin" aria-label="Switch to Günaydın">
+      <span class="marker__num">01</span>
+      <span class="marker__name">Günaydın</span>
+      <span class="marker__cuisine">Turkish · Steakhouse</span>
+      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
+    </button>
+    <button class="marker" data-index="1" data-brand="kumar" aria-label="Switch to Kumar">
+      <span class="marker__num">02</span>
+      <span class="marker__name">Kumar</span>
+      <span class="marker__cuisine">Modern Indian</span>
+      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
+    </button>
+    <button class="marker" data-index="2" data-brand="eleven-green" aria-label="Switch to Eleven Green">
+      <span class="marker__num">03</span>
+      <span class="marker__name">Eleven Green</span>
+      <span class="marker__cuisine">Burger Bistro</span>
+      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
+    </button>
+    <button class="marker" data-index="3" data-brand="al-beiruti" aria-label="Switch to Al Beiruti">
+      <span class="marker__num">04</span>
+      <span class="marker__name">Al Beiruti</span>
+      <span class="marker__cuisine">Lebanese · Late 2026</span>
+      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
+    </button>
   </div>
 
   <span class="scroll-cue">Scroll</span>
-  <div class="hero__progress" id="heroProgress"></div>
 </section>
+
 
 <!-- =============== PILLARS =============== -->
 <section class="pillars">
