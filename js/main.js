@@ -66,14 +66,12 @@
       }
     });
 
-    const brandEls = document.querySelectorAll('.preloader__brand');
-    const sepEls   = document.querySelectorAll('.preloader__brand-sep');
+    const brandEls = document.querySelectorAll('.pre-brand');
     const revealBrandAt = (idx) => {
       brandEls.forEach((b, i) => {
         if (i <= idx) b.classList.add('is-shown');
         b.classList.toggle('is-active', i === idx);
       });
-      sepEls.forEach((s, i) => { if (i < idx) s.classList.add('is-shown'); });
     };
 
     intro

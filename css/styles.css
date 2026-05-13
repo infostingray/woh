@@ -2250,12 +2250,14 @@ section { padding-block: var(--section-y); }
 .preloader__top .preloader__location { color: var(--brass); }
 .preloader__center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(1.25rem, 2.6vh, 2.2rem);
   overflow: hidden;
 }
 .preloader__logo {
-  height: clamp(90px, 11vw, 130px);
+  height: clamp(70px, 9vw, 110px);
   width: auto;
   opacity: 0;
   transform: translateY(20px);
@@ -2859,37 +2861,95 @@ html.is-loading body { overflow: hidden !important; }
 }
 
 /* =========================================================
-   PRELOADER — Brand names beneath the WOH logo
+   PRELOADER — Brand chapter cards beneath the WOH logo
    ========================================================= */
+.preloader__eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  opacity: 0;
+  animation: pEyebrowIn 0.7s var(--ease) 1.2s forwards;
+}
+@keyframes pEyebrowIn {
+  to { opacity: 1; }
+}
 .preloader__brands {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.75rem, 2vw, 1.4rem);
-  margin-top: clamp(1.25rem, 2.5vh, 2rem);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: clamp(280px, 36vw, 440px);
   max-width: 90vw;
 }
-.preloader__brand {
+.pre-brand {
+  display: grid;
+  grid-template-columns: 28px auto 1fr auto;
+  align-items: center;
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+  padding: 0.35rem 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.pre-brand.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+.pre-brand__num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--brass);
+  font-weight: 500;
+}
+.pre-brand__name {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-size: 1.1rem;
   font-weight: 400;
-  letter-spacing: 0.01em;
-  color: rgba(244,239,230,0.35);
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), color 0.5s var(--ease);
+  color: rgba(244,239,230,0.85);
+  transition: color 0.5s var(--ease);
+  white-space: nowrap;
 }
-.preloader__brand.is-shown { opacity: 1; transform: translateY(0); }
-.preloader__brand.is-active { color: var(--brass); }
-.preloader__brand-sep {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+.pre-brand.is-active .pre-brand__name {
+  color: var(--brass);
+}
+.pre-brand__rail {
+  position: relative;
+  height: 1px;
+  background: rgba(244,239,230,0.15);
+  margin: 0 0.3rem;
+  overflow: hidden;
+}
+.pre-brand__rail-fill {
+  position: absolute;
+  inset: 0;
   background: var(--brass);
-  opacity: 0;
-  transform: scale(0.4);
-  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+  box-shadow: 0 0 8px rgba(168,129,74,0.55);
 }
-.preloader__brand-sep.is-shown { opacity: 0.55; transform: scale(1); }
+.pre-brand.is-shown .pre-brand__rail-fill {
+  transform: scaleX(1);
+}
+.pre-brand__type {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244,239,230,0.45);
+  white-space: nowrap;
+  transition: color 0.5s var(--ease);
+}
+.pre-brand.is-active .pre-brand__type {
+  color: rgba(244,239,230,0.8);
+}
+@media (max-width: 600px) {
+  .pre-brand { grid-template-columns: 24px auto 1fr auto; gap: 0.5rem; }
+  .pre-brand__name { font-size: 0.95rem; }
+  .pre-brand__type { font-size: 0.52rem; letter-spacing: 0.18em; }
+  .preloader__brands { gap: 0.4rem; }
+}
