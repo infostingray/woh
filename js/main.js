@@ -7,6 +7,62 @@
   'use strict';
 
   /* ============================================================
+     0) PRELOADER — hide after page settles
+     ============================================================ */
+  const hidePreloader = () => {
+    const pre = document.getElementById('preloader');
+    if (pre) pre.classList.add('is-hidden');
+  };
+  const MIN_PRELOAD_MS = 1600;
+  const startedAt = (window.performance && performance.timing && performance.timing.navigationStart)
+    ? performance.timing.navigationStart
+    : Date.now();
+  const elapsed = Date.now() - startedAt;
+  const showFor = Math.max(0, MIN_PRELOAD_MS - elapsed);
+
+  if (document.readyState === 'complete') {
+    setTimeout(hidePreloader, showFor);
+  } else {
+    window.addEventListener('load', () => setTimeout(hidePreloader, showFor));
+  }
+  // Safety: hide no matter what after 4s
+  setTimeout(hidePreloader, 4200);
+
+  /* ============================================================
+     0b) SCROLL PROGRESS BAR
+     ============================================================ */
+  const scrollProg = document.getElementById('scrollProgress');
+  if (scrollProg) {
+    let rafScroll = null;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      scrollProg.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', () => {
+      if (rafScroll) cancelAnimationFrame(rafScroll);
+      rafScroll = requestAnimationFrame(update);
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* ============================================================
+     0c) PAGE HEADER PARALLAX (inner pages)
+     ============================================================ */
+  const pageHeaderBg = document.querySelector('.page-header__bg');
+  if (pageHeaderBg) {
+    let rafPHB = null;
+    window.addEventListener('scroll', () => {
+      if (rafPHB) cancelAnimationFrame(rafPHB);
+      rafPHB = requestAnimationFrame(() => {
+        const y = Math.min(window.scrollY, 600);
+        pageHeaderBg.style.transform = `translate3d(0, ${y * 0.18}px, 0) scale(${(1 + y * 0.00012).toFixed(3)})`;
+      });
+    }, { passive: true });
+  }
+
+  /* ============================================================
      1) NAV — scroll state + mobile toggle + active link
      ============================================================ */
   const nav = document.querySelector('.nav');
@@ -68,7 +124,7 @@
      ============================================================ */
   const triptych = document.getElementById('triptych');
   if (triptych) {
-    const panels = Array.from(triptych.querySelectorAll('.panel'));
+    const panels = Array.from(triptych.querySelectorAll('.thumb'));
     const progressBar = document.getElementById('heroProgress');
     const focusName = document.getElementById('focusName');
     const focusCount = document.getElementById('focusCount');
@@ -125,9 +181,12 @@
       if (readoutCta) readoutCta.href = data.link;
     };
 
+    const heroSlides = Array.from(document.querySelectorAll('.hero__slide'));
+
     const setActive = (idx, opts = {}) => {
       activeIdx = (idx + panels.length) % panels.length;
       panels.forEach((p, i) => p.classList.toggle('is-active', i === activeIdx));
+      heroSlides.forEach((s, i) => s.classList.toggle('is-active', i === activeIdx));
       const brandKey = panels[activeIdx].getAttribute('data-brand');
       updateReadout(brandKey);
       if (focusCount) {
@@ -274,6 +333,7 @@
     };
     document.querySelectorAll('.brand-card').forEach(el => attachTilt(el, 5));
     document.querySelectorAll('.gallery__cell').forEach(el => attachTilt(el, 8));
+    document.querySelectorAll('.brand-spread__media').forEach(el => attachTilt(el, 4));
   }
 
   /* ============================================================
