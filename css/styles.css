@@ -4349,3 +4349,30 @@ html.is-loading body { overflow: hidden !important; }
   .capability__title { font-size: 1.05rem; }
   .capability__panel p { padding-left: clamp(38px, 9vw, 52px); padding-right: 0; }
 }
+
+/* =========================================================
+   CAREERS — Open application card (distinct from regular roles)
+   ========================================================= */
+.job--open {
+  position: relative;
+  background: linear-gradient(180deg, rgba(196,150,91,0.06), rgba(20,19,26,0.5));
+  border: 1px dashed rgba(196,150,91,0.4);
+}
+.job--open::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass), transparent);
+}
+.job--open .job__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brass);
+}
+.job__tag--brass {
+  background: var(--brass) !important;
+  color: var(--ink) !important;
+  border-color: var(--brass) !important;
+  font-weight: 600;
+}

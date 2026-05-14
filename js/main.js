@@ -754,6 +754,34 @@
       setTimeout(() => applySect.classList.remove('is-highlighted'), 2400);
     }
 
+    // Intercept "Apply" buttons on job cards — smooth scroll instead of page reload
+    document.querySelectorAll('a[href*="?role="][href*="#apply"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Extract role from the link's href
+        try {
+          const url = new URL(link.href, window.location.origin);
+          const role = url.searchParams.get('role');
+          if (role && roleSel) {
+            const match = Array.from(roleSel.options).find(o => o.value === role || o.textContent.trim() === role);
+            if (match) match.selected = true;
+          }
+        } catch (_) {}
+        // Smooth scroll to apply section
+        if (applySect) {
+          applySect.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Trigger the highlight pulse
+          applySect.classList.add('is-highlighted');
+          setTimeout(() => applySect.classList.remove('is-highlighted'), 2400);
+          // Focus the first input after scroll completes
+          setTimeout(() => {
+            const firstInput = applyForm.querySelector('input[name="name"]');
+            if (firstInput) firstInput.focus({ preventScroll: true });
+          }, 700);
+        }
+      });
+    });
+
     // Async submit
     applyForm.addEventListener('submit', async (e) => {
       e.preventDefault();
