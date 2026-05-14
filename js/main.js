@@ -483,23 +483,31 @@
     }, true);
 
     // Mouse wheel — vertical/horizontal wheel scrolls the houses horizontally.
-    // Listen on the WHOLE section so it works on the hint area, counter, anywhere.
+    // Uses capture phase + bounds escape: when at scroll limit, release to native vertical scroll
+    // so the user can continue past the section instead of feeling stuck.
     const wheelTarget = brandsH || brandsHTrackWrap;
     let wheelTimer = null;
     wheelTarget.addEventListener('wheel', (e) => {
-      // Use whichever delta is larger (trackpads can do horizontal natively)
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-      if (Math.abs(delta) > 0) {
-        e.preventDefault();
-        // Temporarily disable smooth-scroll so wheel feels instant
-        brandsHTrackWrap.style.scrollBehavior = 'auto';
-        brandsHTrackWrap.scrollLeft += delta * 1.8;
-        clearTimeout(wheelTimer);
-        wheelTimer = setTimeout(() => {
-          brandsHTrackWrap.style.scrollBehavior = '';
-        }, 80);
-      }
-    }, { passive: false });
+      if (Math.abs(delta) < 1) return;
+
+      const maxScroll = brandsHTrackWrap.scrollWidth - brandsHTrackWrap.clientWidth;
+      const current = brandsHTrackWrap.scrollLeft;
+
+      // Bounds escape — if user is trying to scroll past either end, let the page scroll naturally
+      const scrollingForward = delta > 0;
+      if (scrollingForward && current >= maxScroll - 1) return;   // at right edge, let page advance
+      if (!scrollingForward && current <= 1) return;              // at left edge, let page retreat
+
+      // Otherwise, intercept and convert vertical wheel → horizontal scroll
+      e.preventDefault();
+      brandsHTrackWrap.style.scrollBehavior = 'auto';
+      brandsHTrackWrap.scrollLeft = Math.max(0, Math.min(maxScroll, current + delta * 1.8));
+      clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => {
+        brandsHTrackWrap.style.scrollBehavior = '';
+      }, 80);
+    }, { passive: false, capture: true });
 
     // Counter + hint fade based on horizontal scroll position
     const updateProgress = () => {
@@ -704,6 +712,67 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
     brandSpreads.forEach(s => bsObs.observe(s));
   }
+
+  /* ============================================================
+     4j) BRAND SLIDESHOWS — auto-rotate with pause-on-hover
+     ============================================================ */
+  document.querySelectorAll('[data-slideshow]').forEach((slideshow) => {
+    const slides = Array.from(slideshow.querySelectorAll('.bs-slide'));
+    const dots   = Array.from(slideshow.querySelectorAll('.bs-slideshow__dot'));
+    if (slides.length < 2) return;
+    const interval = parseInt(slideshow.dataset.interval, 10) || 5000;
+    let current = 0;
+    let timer = null;
+    let isPaused = false;
+    let isInView = false;
+
+    const go = (idx) => {
+      current = ((idx % slides.length) + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
+      dots.forEach((d, i)   => d.classList.toggle('is-active', i === current));
+      // If slide contains a video, play it; pause others
+      slides.forEach((s, i) => {
+        const v = s.querySelector('video');
+        if (!v) return;
+        if (i === current) v.play?.().catch(() => {});
+        else { try { v.pause(); } catch (_) {} }
+      });
+    };
+    const next = () => go(current + 1);
+    const start = () => {
+      stop();
+      if (!isPaused && isInView) timer = setInterval(next, interval);
+    };
+    const stop = () => {
+      if (timer) { clearInterval(timer); timer = null; }
+    };
+
+    // Dot click — jump and reset timer
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        go(i);
+        start();
+      });
+    });
+
+    // Pause on hover (desktop), resume on leave
+    slideshow.addEventListener('mouseenter', () => { isPaused = true;  stop(); });
+    slideshow.addEventListener('mouseleave', () => { isPaused = false; start(); });
+
+    // Only run when in viewport — pause when off-screen for performance
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          isInView = e.isIntersecting;
+          if (isInView) start(); else stop();
+        });
+      }, { threshold: 0.2 });
+      obs.observe(slideshow);
+    } else {
+      isInView = true;
+      start();
+    }
+  });
 
   /* ============================================================
      8) MAGNETIC BUTTONS — subtle pull toward cursor
