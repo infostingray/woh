@@ -424,10 +424,12 @@
   if (brandsHTrackWrap && brandsHTrack) {
     const slides = Array.from(brandsHTrack.querySelectorAll('.brand-slide'));
 
-    // Drag-to-scroll on the track wrapper — lighter friction for easier traversal
+    // Drag-to-scroll on the track wrapper — desktop pointer only (mouse/pen).
+    // On touch devices, native overflow-x scroll + scroll-snap handles swipe natively.
     let isDown = false, startX = 0, scrollStart = 0, moved = false;
     let velocity = 0, lastX = 0, lastT = 0;
     brandsHTrackWrap.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') return;  // skip touch — browser handles it
       isDown = true;
       moved = false;
       velocity = 0;
