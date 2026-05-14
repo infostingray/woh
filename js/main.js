@@ -629,6 +629,22 @@
   }
 
   /* ============================================================
+     4i) BRAND SPREADS — trigger brand-color stripe on view
+     ============================================================ */
+  const brandSpreads = document.querySelectorAll('.brand-spread');
+  if (brandSpreads.length && 'IntersectionObserver' in window) {
+    const bsObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in-view');
+          bsObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+    brandSpreads.forEach(s => bsObs.observe(s));
+  }
+
+  /* ============================================================
      8) MAGNETIC BUTTONS — subtle pull toward cursor
      ============================================================ */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
