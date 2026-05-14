@@ -865,12 +865,12 @@ section { padding-block: var(--section-y); }
   background: var(--ink);
   color: var(--parchment);
   position: relative;
-  min-height: clamp(560px, 78vh, 760px);
+  min-height: clamp(520px, 68vh, 720px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(8rem, 14vw, 11rem) var(--gutter) clamp(2rem, 4vh, 3rem);
+  padding: clamp(7rem, 12vw, 9rem) var(--gutter) clamp(2rem, 3.5vh, 2.5rem);
   isolation: isolate;
 }
 .page-header__bg {
@@ -3759,10 +3759,22 @@ html.is-loading body { overflow: hidden !important; }
   border-radius: 3px;
   backdrop-filter: blur(6px);
 }
-.brand-nav__dot:hover .brand-nav__label,
-.brand-nav__dot.is-active .brand-nav__label {
+.brand-nav__dot:hover .brand-nav__label {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
+}
+
+/* Brand-nav is hidden while user is still inside the page-header — appears when scrolled past */
+.brand-nav {
+  opacity: 0;
+  transform: translateY(-50%) translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.brand-nav.is-visible {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
 }
 @media (max-width: 760px) {
   .brand-nav { display: none; }

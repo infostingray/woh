@@ -592,6 +592,21 @@
   if (brandNav) {
     const navDots = Array.from(brandNav.querySelectorAll('.brand-nav__dot'));
     const sections = navDots.map(d => document.querySelector(d.getAttribute('href'))).filter(Boolean);
+    const pageHeader = document.querySelector('.page-header');
+
+    // Show/hide nav based on whether user has scrolled past the page header
+    if (pageHeader && 'IntersectionObserver' in window) {
+      const headerObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          // When page-header is NOT intersecting (scrolled past), show the brand-nav
+          brandNav.classList.toggle('is-visible', !e.isIntersecting);
+        });
+      }, { threshold: 0, rootMargin: '-60% 0px 0px 0px' });
+      headerObs.observe(pageHeader);
+    } else {
+      brandNav.classList.add('is-visible');
+    }
+
     if (sections.length && 'IntersectionObserver' in window) {
       const navObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
