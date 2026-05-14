@@ -4568,3 +4568,111 @@ html.is-loading body { overflow: hidden !important; }
   border-color: var(--brass) !important;
   font-weight: 600;
 }
+
+/* =========================================================
+   HOW WE WORK — Typographic editorial panel (replaces media swap)
+   ========================================================= */
+.hw-media-stage--typographic {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+.hw-media-stage--typographic::before {
+  /* Subtle brass radial glow — soft, restrained */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 45%, color-mix(in srgb, var(--brass) 12%, transparent) 0%, transparent 65%);
+  z-index: 0;
+  transition: opacity 0.8s var(--ease);
+}
+
+.hw-word {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  pointer-events: none;
+  z-index: 1;
+}
+.hw-word.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hw-word__chapter {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 1.5rem;
+  padding-left: 32px;
+  position: relative;
+}
+.hw-word__chapter::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 22px;
+  height: 1px;
+  background: var(--brass);
+  transform: translateY(-50%);
+}
+
+.hw-word__display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.2rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  margin: 0 0 2rem;
+  color: var(--parchment);
+}
+.hw-word__display em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brass);
+  background: linear-gradient(180deg, var(--brass), color-mix(in srgb, var(--brass) 70%, var(--parchment)));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hw-word__quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+  line-height: 1.4;
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  border-left: 2px solid var(--brass);
+  color: rgba(244, 239, 230, 0.82);
+  max-width: 28ch;
+  quotes: "\201C" "\201D";
+}
+
+@media (max-width: 860px) {
+  .hw-media-stage--typographic { min-height: 40vh; padding: 2rem 1.25rem; }
+  .hw-word { padding: 2rem 1.25rem; align-items: center; text-align: center; }
+  .hw-word__chapter { padding-left: 28px; }
+  .hw-word__display { font-size: clamp(2.5rem, 14vw, 4rem); }
+  .hw-word__quote { border-left: 0; padding: 0; border-top: 2px solid var(--brass); padding-top: 1rem; }
+}

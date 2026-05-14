@@ -472,7 +472,7 @@
   const hwSection = document.getElementById('howwework');
   if (hwSection) {
     const steps  = Array.from(hwSection.querySelectorAll('.hw-step'));
-    const medias = Array.from(hwSection.querySelectorAll('.hw-media'));
+    const words  = Array.from(hwSection.querySelectorAll('.hw-word'));
     const fillEl = document.getElementById('hwProgressFill');
     const idxEl  = document.getElementById('hwIdx');
     const STEP_COUNT = steps.length;
@@ -480,7 +480,7 @@
     const setActive = (idx) => {
       const clamped = Math.max(0, Math.min(STEP_COUNT - 1, idx));
       steps.forEach((s, i)  => s.classList.toggle('is-active', i === clamped));
-      medias.forEach((m, i) => m.classList.toggle('is-active', i === clamped));
+      words.forEach((w, i)  => w.classList.toggle('is-active', i === clamped));
       if (idxEl)  idxEl.textContent = '0' + (clamped + 1);
       if (fillEl) fillEl.style.transform = `scaleX(${(clamped + 1) / STEP_COUNT})`;
     };
