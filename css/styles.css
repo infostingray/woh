@@ -1488,6 +1488,45 @@ section { padding-block: var(--section-y); }
   body:has(.nav.is-open) {
     overflow: hidden;
   }
+
+  /* Standalone "Partner with us" CTA at bottom of mobile panel */
+  .nav__panel-cta {
+    margin-top: auto;        /* pushes it to the bottom of the panel */
+    padding: 1.1rem 1.5rem !important;
+    background: var(--brass);
+    color: var(--ink) !important;
+    border: 1px solid var(--brass) !important;
+    border-bottom: 1px solid var(--brass) !important;
+    border-radius: 999px;
+    font-family: var(--font-display) !important;
+    font-style: normal !important;
+    font-weight: 500;
+    font-size: 1.25rem !important;
+    line-height: 1;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: auto;
+    align-self: stretch;
+    text-align: left;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease), padding 0.3s var(--ease) !important;
+  }
+  .nav__panel-cta:hover,
+  .nav__panel-cta:active {
+    background: var(--ink) !important;
+    color: var(--brass) !important;
+    padding-left: 1.5rem !important;       /* override hover indent from regular .nav__panel a */
+  }
+  .nav__panel-cta .arr {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    transition: transform 0.3s var(--ease);
+  }
+  .nav__panel-cta:hover .arr,
+  .nav__panel-cta:active .arr {
+    transform: translateX(4px);
+  }
 }
 @media (min-width: 861px) {
   .nav__panel { display: none !important; }
