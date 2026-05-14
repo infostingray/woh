@@ -482,13 +482,22 @@
       if (moved) { e.preventDefault(); e.stopPropagation(); }
     }, true);
 
-    // Mouse wheel — vertical wheel scrolls horizontally when over the houses section
-    brandsHTrackWrap.addEventListener('wheel', (e) => {
+    // Mouse wheel — vertical/horizontal wheel scrolls the houses horizontally.
+    // Listen on the WHOLE section so it works on the hint area, counter, anywhere.
+    const wheelTarget = brandsH || brandsHTrackWrap;
+    let wheelTimer = null;
+    wheelTarget.addEventListener('wheel', (e) => {
       // Use whichever delta is larger (trackpads can do horizontal natively)
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (Math.abs(delta) > 0) {
         e.preventDefault();
-        brandsHTrackWrap.scrollLeft += delta * 1.5;
+        // Temporarily disable smooth-scroll so wheel feels instant
+        brandsHTrackWrap.style.scrollBehavior = 'auto';
+        brandsHTrackWrap.scrollLeft += delta * 1.8;
+        clearTimeout(wheelTimer);
+        wheelTimer = setTimeout(() => {
+          brandsHTrackWrap.style.scrollBehavior = '';
+        }, 80);
       }
     }, { passive: false });
 

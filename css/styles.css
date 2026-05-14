@@ -167,10 +167,11 @@ section { padding-block: var(--section-y); }
 }
 .nav__links a {
   font-size: var(--fs-sm);
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   position: relative;
   padding: 0.25rem 0;
-  opacity: 0.85;
+  opacity: 0.92;
   transition: opacity 0.2s var(--ease);
 }
 .nav__links a::after {
@@ -2723,7 +2724,7 @@ section { padding-block: var(--section-y); }
   scrollbar-width: none;
   -ms-overflow-style: none;
   cursor: grab;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;  /* was mandatory — proximity allows free wheel scroll */
   -webkit-overflow-scrolling: touch;
 }
 .brands-h__track-wrap::-webkit-scrollbar { display: none; }
