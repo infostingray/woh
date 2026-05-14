@@ -3038,6 +3038,9 @@ html.is-loading body { overflow: hidden !important; }
   position: relative;
   overflow: hidden;
   background: var(--ink-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* center the typographic stage vertically in the column */
 }
 .hw-media-stage {
   position: absolute;
@@ -4698,13 +4701,12 @@ html.is-loading body { overflow: hidden !important; }
 .hw-media-stage--typographic {
   position: relative;
   width: 100%;
-  min-height: 60vh;
+  min-height: 50vh;
   display: grid;
   grid-template-areas: "stack";
   align-items: center;
   justify-items: center;
-  /* Asymmetric padding pushes the chapter down to vertically align with the middle step (02) */
-  padding: clamp(8rem, 16vh, 13rem) clamp(2rem, 5vw, 4rem) clamp(2rem, 5vh, 4rem);
+  padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
 }
