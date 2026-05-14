@@ -424,25 +424,53 @@
   if (brandsHTrackWrap && brandsHTrack) {
     const slides = Array.from(brandsHTrack.querySelectorAll('.brand-slide'));
 
-    // Drag-to-scroll on the track wrapper
+    // Drag-to-scroll on the track wrapper — lighter friction for easier traversal
     let isDown = false, startX = 0, scrollStart = 0, moved = false;
+    let velocity = 0, lastX = 0, lastT = 0;
     brandsHTrackWrap.addEventListener('pointerdown', (e) => {
       isDown = true;
       moved = false;
+      velocity = 0;
       brandsHTrackWrap.classList.add('is-dragging');
       startX = e.pageX - brandsHTrackWrap.offsetLeft;
       scrollStart = brandsHTrackWrap.scrollLeft;
+      lastX = e.pageX;
+      lastT = performance.now();
       try { brandsHTrackWrap.setPointerCapture(e.pointerId); } catch (_) {}
     });
     brandsHTrackWrap.addEventListener('pointermove', (e) => {
       if (!isDown) return;
       const dx = (e.pageX - brandsHTrackWrap.offsetLeft) - startX;
       if (Math.abs(dx) > 4) moved = true;
-      brandsHTrackWrap.scrollLeft = scrollStart - dx * 1.4;
+      brandsHTrackWrap.scrollLeft = scrollStart - dx * 2.2; /* was 1.4 — lighter, easier */
+      // Track velocity for momentum
+      const now = performance.now();
+      const dt = now - lastT;
+      if (dt > 0) {
+        velocity = (e.pageX - lastX) / dt;
+        lastX = e.pageX;
+        lastT = now;
+      }
     });
     const endDrag = () => {
+      if (!isDown) return;
       isDown = false;
       brandsHTrackWrap.classList.remove('is-dragging');
+      // Momentum flick — continue scrolling for a moment based on release velocity
+      if (Math.abs(velocity) > 0.3) {
+        const startScroll = brandsHTrackWrap.scrollLeft;
+        const targetDelta = -velocity * 380; /* multiplier tuned for natural feel */
+        const startTime = performance.now();
+        const duration = Math.min(900, Math.abs(targetDelta) * 1.5);
+        const ease = (t) => 1 - Math.pow(1 - t, 3); // easeOutCubic
+        const tick = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          brandsHTrackWrap.scrollLeft = startScroll + targetDelta * ease(progress);
+          if (progress < 1 && !isDown) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
     };
     brandsHTrackWrap.addEventListener('pointerup', endDrag);
     brandsHTrackWrap.addEventListener('pointerleave', endDrag);
@@ -451,6 +479,16 @@
     brandsHTrack.addEventListener('click', (e) => {
       if (moved) { e.preventDefault(); e.stopPropagation(); }
     }, true);
+
+    // Mouse wheel — vertical wheel scrolls horizontally when over the houses section
+    brandsHTrackWrap.addEventListener('wheel', (e) => {
+      // Use whichever delta is larger (trackpads can do horizontal natively)
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) > 0) {
+        e.preventDefault();
+        brandsHTrackWrap.scrollLeft += delta * 1.5;
+      }
+    }, { passive: false });
 
     // Counter + hint fade based on horizontal scroll position
     const updateProgress = () => {
@@ -488,7 +526,19 @@
     steps.forEach((step, i) => {
       step.addEventListener('mouseenter', () => setActive(i));
       step.addEventListener('focus', () => setActive(i));
-      step.addEventListener('click', () => setActive(i));
+      step.addEventListener('click', () => {
+        // On mobile/touch, allow clicking the active step to close it (accordion)
+        const isTouch = matchMedia('(hover: none)').matches;
+        const alreadyActive = step.classList.contains('is-active');
+        if (isTouch && alreadyActive) {
+          steps.forEach(s => s.classList.remove('is-active'));
+          words.forEach(w => w.classList.remove('is-active'));
+          if (idxEl) idxEl.textContent = '00';
+          if (fillEl) fillEl.style.transform = 'scaleX(0)';
+        } else {
+          setActive(i);
+        }
+      });
       step.setAttribute('tabindex', '0');
     });
 

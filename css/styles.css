@@ -3067,22 +3067,78 @@ html.is-loading body { overflow: hidden !important; }
   font-style: normal;
 }
 
-/* Mobile fallback — stacked vertical, tap-to-activate */
+/* Mobile — accordion-style: hide right panel, click step to expand description */
 @media (max-width: 860px) {
   .howwework__inner {
     grid-template-columns: 1fr;
     min-height: auto;
   }
   .howwework__text { padding: var(--section-y) var(--gutter); gap: 1.5rem; }
-  .howwework__media {
-    aspect-ratio: 4 / 3;
-    min-height: 320px;
-  }
-  .hw-step { opacity: 0.6; padding: 1rem 0; }
-  .hw-step.is-active { padding: 1rem 0; transform: translateX(4px); }
-  .hw-step__num { color: var(--brass); font-size: 1.2rem; }
-  .hw-step.is-active .hw-step__num { font-size: 1.2rem; color: var(--parchment); }
+  /* Hide the typographic chapter panel on mobile — accordion replaces it */
+  .howwework__media { display: none; }
   .hw-progress { display: none; }
+
+  /* Each step becomes an accordion row */
+  .hw-steps { gap: 0; }
+  .hw-step {
+    opacity: 1;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--line-dark);
+    position: relative;
+    cursor: pointer;
+    transition: padding 0.4s var(--ease);
+  }
+  .hw-step:first-of-type { border-top: 1px solid var(--line-dark); }
+  .hw-step:hover,
+  .hw-step.is-active {
+    padding-left: 0.4rem;
+  }
+  .hw-step__num {
+    color: var(--brass);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.25em;
+  }
+  .hw-step__title {
+    font-size: 1.4rem;
+    margin: 0;
+    color: var(--parchment);
+    transition: color 0.35s var(--ease);
+  }
+  .hw-step.is-active .hw-step__title { color: var(--brass); }
+
+  /* Plus/minus indicator on the right */
+  .hw-step::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    width: 14px;
+    height: 14px;
+    background:
+      linear-gradient(var(--brass), var(--brass)) center / 100% 1.5px no-repeat,
+      linear-gradient(var(--brass), var(--brass)) center / 1.5px 100% no-repeat;
+    transform: translateY(-50%);
+    transition: transform 0.35s var(--ease);
+  }
+  .hw-step.is-active::after {
+    background: linear-gradient(var(--brass), var(--brass)) center / 100% 1.5px no-repeat;
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  /* Description collapses unless active */
+  .hw-step__body p {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: max-height 0.45s var(--ease), opacity 0.4s var(--ease), margin-top 0.4s var(--ease);
+  }
+  .hw-step.is-active .hw-step__body p {
+    max-height: 200px;
+    opacity: 0.8;
+    margin-top: 0.6rem;
+  }
 }
 
 /* =========================================================
