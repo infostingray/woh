@@ -74,40 +74,6 @@
   </div>
 </section>
 
-<section class="pillars">
-  <div class="container">
-    <div class="pillars__header">
-      <h2 data-reveal>What we look for.</h2>
-    </div>
-    <div class="pillars__grid">
-      <article class="pillar" data-reveal>
-        <div class="pillar__icon">
-          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
-        </div>
-        <div class="pillar__num">01 / Craft</div>
-        <h3>Discipline at the pass.</h3>
-        <p>The same plate, the same way, every night. Not perfection — consistency.</p>
-      </article>
-      <article class="pillar" data-reveal data-reveal-delay="1">
-        <div class="pillar__icon">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="pillar__num">02 / People</div>
-        <h3>Hospitality, not theatre.</h3>
-        <p>Warmth without performance. Attention without hovering. The room as host.</p>
-      </article>
-      <article class="pillar" data-reveal data-reveal-delay="2">
-        <div class="pillar__icon">
-          <svg class="icon" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7,7 17,7 17,17"/></svg>
-        </div>
-        <div class="pillar__num">03 / Trajectory</div>
-        <h3>Hungry to grow.</h3>
-        <p>We move people up. Show us the next role you want — we'll show you the path.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- =============== Open roles =============== -->
 <section class="cap-list">
   <div class="container">
@@ -205,7 +171,30 @@
         </div>
         <div class="field">
           <label for="appPhone">Phone <span class="req">*</span></label>
-          <input id="appPhone" name="phone" type="tel" required autocomplete="tel" maxlength="40" placeholder="+974 ...">
+          <div class="phone-group">
+            <select id="appPhoneCode" name="phoneCode" class="phone-group__code" aria-label="Country code">
+              <option value="+974" selected>🇶🇦 +974</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+965">🇰🇼 +965</option>
+              <option value="+973">🇧🇭 +973</option>
+              <option value="+968">🇴🇲 +968</option>
+              <option value="+961">🇱🇧 +961</option>
+              <option value="+962">🇯🇴 +962</option>
+              <option value="+20">🇪🇬 +20</option>
+              <option value="+90">🇹🇷 +90</option>
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+39">🇮🇹 +39</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+61">🇦🇺 +61</option>
+            </select>
+            <input id="appPhone" name="phone" type="tel" required autocomplete="tel" maxlength="40" placeholder="Phone number" class="phone-group__num">
+          </div>
         </div>
         <div class="field">
           <label for="appEmail">Email <span class="req">*</span></label>

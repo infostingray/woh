@@ -4703,7 +4703,8 @@ html.is-loading body { overflow: hidden !important; }
   grid-template-areas: "stack";
   align-items: center;
   justify-items: center;
-  padding: clamp(2rem, 5vw, 4rem);
+  /* Asymmetric padding pushes the chapter down to vertically align with the middle step (02) */
+  padding: clamp(8rem, 16vh, 13rem) clamp(2rem, 5vw, 4rem) clamp(2rem, 5vh, 4rem);
   overflow: hidden;
   isolation: isolate;
 }
@@ -4889,4 +4890,48 @@ html.is-loading body { overflow: hidden !important; }
 .bs-slideshow__counter strong {
   color: var(--brand-color, var(--brass));
   font-weight: 600;
+}
+
+/* =========================================================
+   PHONE GROUP — Country code dropdown + number input
+   ========================================================= */
+.phone-group {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.phone-group__code {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line-dark);
+  border-radius: 2px;
+  background: rgba(13, 12, 11, 0.5) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C4965B' stroke-width='1.4' fill='none'/%3E%3C/svg%3E") no-repeat right 0.7rem center;
+  background-size: 10px 6px;
+  color: var(--parchment);
+  padding-right: 1.8rem;
+  cursor: pointer;
+  transition: border-color 0.3s var(--ease);
+  min-width: 90px;
+}
+.phone-group__code:focus {
+  outline: none;
+  border-color: var(--brass);
+}
+.phone-group__code option {
+  background: var(--ink);
+  color: var(--parchment);
+  padding: 0.5rem;
+}
+.phone-group__num {
+  width: 100%;
+  min-width: 0;  /* allow shrinking inside grid */
+}
+@media (max-width: 520px) {
+  .phone-group { grid-template-columns: 1fr; }
+  .phone-group__code { min-width: 0; }
 }

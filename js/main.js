@@ -329,16 +329,40 @@
     });
 
     // Kick off — play first video, start progress + cycle after preloader
+    const tryPlay = (v, tries = 0) => {
+      if (!v) return;
+      const p = v.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => {
+          if (tries < 3) {
+            // Some browsers block autoplay until first user gesture — retry once muted reasserted
+            v.muted = true;
+            setTimeout(() => tryPlay(v, tries + 1), 220);
+          }
+        });
+      }
+    };
     const initialPlay = () => {
       if (videos[0]) {
         videos[0].preload = 'auto';
-        videos[0].play().catch(() => {});
+        videos[0].muted = true;            // belt + braces — autoplay blocked if not muted
+        tryPlay(videos[0]);
       }
+      // Also start preloading the NEXT video in advance for smoother transitions
+      if (videos[1]) videos[1].preload = 'auto';
       updateMeta(0);
       startProgress(0);
       startCycle();
     };
     setTimeout(initialPlay, 4400);
+    // Backup — if a user gesture happens before then, kick off immediately
+    const userKick = () => {
+      if (videos[0] && videos[0].paused) tryPlay(videos[0]);
+      window.removeEventListener('click', userKick);
+      window.removeEventListener('touchstart', userKick);
+    };
+    window.addEventListener('click', userKick, { passive: true, once: true });
+    window.addEventListener('touchstart', userKick, { passive: true, once: true });
   }
 
 
@@ -925,10 +949,19 @@
 
       applyForm.classList.add('is-submitting');
 
+      // Combine country code with phone number for clean submission
+      const phoneCodeEl = applyForm.elements['phoneCode'];
+      const phoneEl = applyForm.elements['phone'];
+      const formData = new FormData(applyForm);
+      if (phoneCodeEl && phoneEl) {
+        formData.set('phone', `${phoneCodeEl.value} ${phoneEl.value.trim()}`);
+        formData.delete('phoneCode');
+      }
+
       try {
         const res = await fetch(applyForm.action, {
           method: 'POST',
-          body: new FormData(applyForm),
+          body: formData,
         });
         let data = {};
         try { data = await res.json(); } catch (_) {}
