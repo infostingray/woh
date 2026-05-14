@@ -482,32 +482,9 @@
       if (moved) { e.preventDefault(); e.stopPropagation(); }
     }, true);
 
-    // Mouse wheel — vertical/horizontal wheel scrolls the houses horizontally.
-    // Uses capture phase + bounds escape: when at scroll limit, release to native vertical scroll
-    // so the user can continue past the section instead of feeling stuck.
-    const wheelTarget = brandsH || brandsHTrackWrap;
-    let wheelTimer = null;
-    wheelTarget.addEventListener('wheel', (e) => {
-      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-      if (Math.abs(delta) < 1) return;
-
-      const maxScroll = brandsHTrackWrap.scrollWidth - brandsHTrackWrap.clientWidth;
-      const current = brandsHTrackWrap.scrollLeft;
-
-      // Bounds escape — if user is trying to scroll past either end, let the page scroll naturally
-      const scrollingForward = delta > 0;
-      if (scrollingForward && current >= maxScroll - 1) return;   // at right edge, let page advance
-      if (!scrollingForward && current <= 1) return;              // at left edge, let page retreat
-
-      // Otherwise, intercept and convert vertical wheel → horizontal scroll
-      e.preventDefault();
-      brandsHTrackWrap.style.scrollBehavior = 'auto';
-      brandsHTrackWrap.scrollLeft = Math.max(0, Math.min(maxScroll, current + delta * 1.8));
-      clearTimeout(wheelTimer);
-      wheelTimer = setTimeout(() => {
-        brandsHTrackWrap.style.scrollBehavior = '';
-      }, 80);
-    }, { passive: false, capture: true });
+    // No wheel hijacking — vertical wheel scrolls the page (as expected).
+    // Horizontal trackpad swipes already work natively via overflow-x: auto on the wrap.
+    // Mouse users → drag with momentum (see above). Touch users → native swipe.
 
     // Counter + hint fade based on horizontal scroll position
     const updateProgress = () => {
