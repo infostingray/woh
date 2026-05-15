@@ -167,22 +167,22 @@
       <div class="field-grid">
         <div class="field">
           <label for="appName">Full name <span class="req">*</span></label>
-          <input id="appName" name="name" type="text" required autocomplete="name" maxlength="120">
+          <input id="appName" name="name" type="text" required autocomplete="name" maxlength="80" pattern="[A-Za-zÀ-ÿ\u0600-\u06FF\s'\-\.]{2,80}" title="Letters only, 2–80 characters">
         </div>
         <div class="field">
           <label for="appPhone">Phone <span class="req">*</span></label>
           <div class="phone-group">
             <select id="appPhoneCode" name="phoneCode" class="phone-group__code" aria-label="Country code"></select>
-            <input id="appPhone" name="phone" type="tel" required autocomplete="tel" maxlength="40" placeholder="Phone number" class="phone-group__num">
+            <input id="appPhone" name="phone" type="tel" required autocomplete="tel" maxlength="20" inputmode="numeric" pattern="[0-9\s\-]{4,20}" placeholder="Phone number" class="phone-group__num" title="Numbers only, 4–20 digits">
           </div>
         </div>
         <div class="field">
           <label for="appEmail">Email <span class="req">*</span></label>
-          <input id="appEmail" name="email" type="email" required autocomplete="email">
+          <input id="appEmail" name="email" type="email" required autocomplete="email" maxlength="120" inputmode="email" spellcheck="false" autocapitalize="off" pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}" title="Please enter a valid email address">
         </div>
         <div class="field">
           <label for="appLinkedin">LinkedIn <small>(optional)</small></label>
-          <input id="appLinkedin" name="linkedin" type="url" autocomplete="url" placeholder="https://linkedin.com/in/…">
+          <input id="appLinkedin" name="linkedin" type="url" autocomplete="url" placeholder="https://linkedin.com/in/…" maxlength="200" pattern="https?://([A-Za-z0-9\-]+\.)?linkedin\.com/.*" title="Must be a valid linkedin.com URL">
         </div>
       </div>
 

@@ -1390,7 +1390,39 @@ section { padding-block: var(--section-y); }
 .field select:focus {
   outline: none;
   border-color: var(--brass);
-  background: white;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brass) 18%, transparent);
+}
+/* Invalid state — when user input fails validation */
+.field input:not(:placeholder-shown):invalid,
+.field input.is-invalid {
+  border-color: rgba(155, 56, 51, 0.6);
+}
+.field input:not(:placeholder-shown):invalid:focus,
+.field input.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(155, 56, 51, 0.18);
+}
+/* Override Chrome / Safari autofill — kills the yellow/white background */
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus,
+.field input:-webkit-autofill:active,
+.field textarea:-webkit-autofill,
+.field select:-webkit-autofill,
+.apply-form input:-webkit-autofill,
+.apply-form input:-webkit-autofill:hover,
+.apply-form input:-webkit-autofill:focus,
+.apply-form textarea:-webkit-autofill,
+.apply-form select:-webkit-autofill,
+.contact-form input:-webkit-autofill,
+.contact-form input:-webkit-autofill:hover,
+.contact-form input:-webkit-autofill:focus,
+.contact-form textarea:-webkit-autofill,
+.contact-form select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--ink-soft) inset !important;
+  -webkit-text-fill-color: var(--parchment) !important;
+  caret-color: var(--brass);
+  transition: background-color 5000s ease-in-out 0s;
 }
 .field textarea { min-height: 140px; resize: vertical; }
 .field-row {
@@ -2296,16 +2328,20 @@ section { padding-block: var(--section-y); }
 .apply-form textarea:focus {
   outline: none;
   border-color: var(--brass);
-  background: white;
-  box-shadow: 0 0 0 4px rgba(168,129,74,0.12);
+  background: var(--ink);
+  box-shadow: 0 0 0 4px rgba(168,129,74,0.18);
 }
 .apply-form textarea {
   min-height: 140px;
   resize: vertical;
   font-family: inherit;
 }
-.apply-form input:invalid:not(:placeholder-shown):not(:focus) {
-  border-color: rgba(122,46,42,0.4);
+.apply-form input:invalid:not(:placeholder-shown):not(:focus),
+.apply-form input.is-invalid {
+  border-color: rgba(155, 56, 51, 0.55);
+}
+.apply-form input.is-invalid:focus {
+  box-shadow: 0 0 0 4px rgba(155, 56, 51, 0.18);
 }
 
 .field-grid {
@@ -4937,3 +4973,19 @@ html.is-loading body { overflow: hidden !important; }
   .phone-group { grid-template-columns: 1fr; }
   .phone-group__code { min-width: 0; }
 }
+
+/* =========================================================
+   FORM SECURITY — honeypot (hidden from users, visible to bots)
+   ========================================================= */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.hp-field input,
+.hp-field label { all: revert; }

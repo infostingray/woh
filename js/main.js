@@ -352,6 +352,98 @@
   }
 
   /* ============================================================
+     0d) FORM VALIDATION — email regex, phone digit-strip, honeypot,
+         shared utilities for both contact + careers forms
+     ============================================================ */
+  const EMAIL_RX = /^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/;
+
+  // Live input sanitizers — run as user types
+  document.querySelectorAll('input[type="tel"]').forEach((el) => {
+    el.addEventListener('input', () => {
+      // Strip everything that isn't a digit, space, or dash
+      const cleaned = el.value.replace(/[^\d\s\-]/g, '');
+      if (cleaned !== el.value) el.value = cleaned;
+      el.classList.remove('is-invalid');
+    });
+  });
+  document.querySelectorAll('input[type="email"]').forEach((el) => {
+    el.addEventListener('blur', () => {
+      const v = el.value.trim();
+      if (v && !EMAIL_RX.test(v)) el.classList.add('is-invalid');
+      else el.classList.remove('is-invalid');
+    });
+    el.addEventListener('input', () => el.classList.remove('is-invalid'));
+  });
+  document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach((el) => {
+    // Strip leading/trailing whitespace on blur to prevent accidental space-padded submissions
+    el.addEventListener('blur', () => {
+      if (typeof el.value === 'string') el.value = el.value.trim();
+    });
+  });
+
+  // Shared validator
+  const validateForm = (form) => {
+    const errors = [];
+    // Honeypot — if filled, silently reject
+    const honey = form.querySelector('input[name="website"]');
+    if (honey && honey.value.trim() !== '') {
+      return { ok: false, errors: ['__honeypot__'] };
+    }
+    // Email
+    const email = form.querySelector('input[type="email"]');
+    if (email && email.required) {
+      const v = email.value.trim();
+      if (!v) errors.push({ el: email, msg: 'Please enter your email.' });
+      else if (!EMAIL_RX.test(v)) errors.push({ el: email, msg: 'Please enter a valid email address.' });
+    }
+    // Phone — required if marked required
+    const phone = form.querySelector('input[type="tel"]');
+    if (phone && phone.required) {
+      const digits = phone.value.replace(/\D/g, '');
+      if (digits.length < 4) errors.push({ el: phone, msg: 'Please enter a valid phone number (at least 4 digits).' });
+      else if (digits.length > 18) errors.push({ el: phone, msg: 'Phone number too long.' });
+    }
+    // Name — letters/spaces only
+    const name = form.querySelector('input[name="name"]');
+    if (name && name.required) {
+      const v = name.value.trim();
+      if (v.length < 2) errors.push({ el: name, msg: 'Please enter your name.' });
+    }
+    errors.forEach(({ el }) => el && el.classList.add('is-invalid'));
+    return { ok: errors.length === 0, errors };
+  };
+
+  // Contact form submit interception (no JS handler existed before)
+  const contactForm = document.querySelector('form.contact-form');
+  if (contactForm) {
+    contactForm.setAttribute('novalidate', '');
+    contactForm.addEventListener('submit', (e) => {
+      const result = validateForm(contactForm);
+      if (!result.ok) {
+        e.preventDefault();
+        // If honeypot tripped, pretend success silently so bots don't learn
+        if (result.errors[0] === '__honeypot__') {
+          contactForm.reset();
+          return;
+        }
+        // Show the first error to the user and focus that field
+        const first = result.errors[0];
+        if (first.el) { first.el.focus(); first.el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        alert(first.msg);
+        return;
+      }
+      // Combine country code + phone for clean submission
+      const phoneCode = contactForm.elements['phoneCode'];
+      const phone = contactForm.elements['phone'];
+      if (phoneCode && phone && phone.value.trim()) {
+        phone.value = `${phoneCode.value} ${phone.value.trim()}`;
+        phoneCode.disabled = true;  // omit separate phoneCode from POST
+      }
+      // Form posts naturally
+    });
+  }
+
+  /* ============================================================
      1) NAV — scroll state + mobile toggle + active link
      ============================================================ */
   const nav = document.querySelector('.nav');
@@ -1144,6 +1236,33 @@
           return;
         }
       }
+      // Strict email check
+      const emailEl = applyForm.elements['email'];
+      if (emailEl && !EMAIL_RX.test(emailEl.value.trim())) {
+        showStatus('Please enter a valid email address.', 'error');
+        emailEl.classList.add('is-invalid');
+        emailEl.focus();
+        return;
+      }
+      // Phone — at least 4 digits, no garbage
+      const phoneEl = applyForm.elements['phone'];
+      if (phoneEl) {
+        const digits = phoneEl.value.replace(/\D/g, '');
+        if (digits.length < 4) {
+          showStatus('Please enter a valid phone number.', 'error');
+          phoneEl.classList.add('is-invalid');
+          phoneEl.focus();
+          return;
+        }
+      }
+      // Honeypot — silently reject if filled (bot detected)
+      const honey = applyForm.querySelector('input[name="website"]');
+      if (honey && honey.value.trim() !== '') {
+        // Pretend success so bots don't learn
+        showStatus('Thanks — your application has been received.', 'success');
+        applyForm.reset();
+        return;
+      }
       const fErr = validateFile(fileInput.files[0]);
       if (fErr) { showStatus(fErr, 'error'); return; }
 
@@ -1151,7 +1270,6 @@
 
       // Combine country code with phone number for clean submission
       const phoneCodeEl = applyForm.elements['phoneCode'];
-      const phoneEl = applyForm.elements['phone'];
       const formData = new FormData(applyForm);
       if (phoneCodeEl && phoneEl) {
         formData.set('phone', `${phoneCodeEl.value} ${phoneEl.value.trim()}`);
