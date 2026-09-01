@@ -5859,6 +5859,15 @@ html.is-loading body { overflow: hidden !important; }
   padding: 4px;
   margin-left: -4px;
   transition: transform 0.5s var(--ease), color 0.5s var(--ease);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.j-stage__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: var(--brass);
+  stroke: var(--brass);
 }
 .j-stage:hover .j-stage__icon {
   transform: scale(1.08) rotate(-2deg);
