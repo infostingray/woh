@@ -395,6 +395,14 @@ section { padding-block: var(--section-y); }
   opacity: 0;
   animation: hFadeIn 1s var(--ease) 1.3s forwards;
 }
+.hero__overlay-lede em {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--brass);
+  font-weight: 400;
+  font-size: 1.15em;
+  letter-spacing: 0;
+}
 
 @keyframes hFadeIn {
   to { opacity: 1; }
@@ -5184,4 +5192,571 @@ html.is-loading body { overflow: hidden !important; }
 @media (max-width: 520px) {
   .opening-facts { grid-template-columns: 1fr; }
   .just-opened__badge-text { font-size: 0.58rem; }
+}
+
+/* =========================================================
+   PRELOADER v2 — "The Curtain Rises"
+   Theatrical staging in ~3.5s: corner marks fade in, brass
+   hairline splits into two curtains, WOH monogram strokes
+   itself alive, italic tagline settles, brand marquee drifts.
+   No progress bar, no counter. All CSS animations — no JS
+   dependency for the visual; JS just removes the veil after 3.5s.
+   ========================================================= */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #0A0908;
+  color: #C4965B;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none; /* let clicks fall through once fading */
+}
+.preloader.is-hidden {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+  pointer-events: none;
+}
+.preloader.is-hidden .preloader__veil {
+  transform: scaleY(0);
+}
+
+/* Camera-frame corner marks — hairline L brackets in each corner */
+.preloader__corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: solid rgba(196, 150, 91, 0.55);
+  border-width: 0;
+  opacity: 0;
+  animation: prCornerIn 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) 0.15s forwards;
+}
+.preloader__corner--tl { top: 32px; left: 32px; border-top-width: 1px; border-left-width: 1px; }
+.preloader__corner--tr { top: 32px; right: 32px; border-top-width: 1px; border-right-width: 1px; }
+.preloader__corner--bl { bottom: 32px; left: 32px; border-bottom-width: 1px; border-left-width: 1px; }
+.preloader__corner--br { bottom: 32px; right: 32px; border-bottom-width: 1px; border-right-width: 1px; }
+@keyframes prCornerIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Top strip — WOH · dot · Doha */
+.preloader__strip--top {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  opacity: 0;
+  animation: prFadeUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 2.0s forwards;
+}
+.preloader__strip-tag {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #C4965B;
+  font-weight: 500;
+}
+.preloader__strip-tag--muted { color: rgba(244, 239, 230, 0.5); }
+.preloader__strip-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(196, 150, 91, 0.5);
+}
+@keyframes prFadeUp {
+  from { opacity: 0; transform: translate(-50%, 6px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* The two curtain lines — start as one hairline in the middle, expand horizontally,
+   then split vertically to top/bottom, framing the monogram. */
+.preloader__curtain {
+  position: absolute;
+  left: 50%;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(196, 150, 91, 0.9) 50%, transparent 100%);
+  transform: translateX(-50%);
+}
+.preloader__curtain--upper {
+  top: 50%;
+  animation: prCurtainDraw 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.05s forwards,
+             prCurtainSplitUp 1.1s cubic-bezier(0.65, 0, 0.35, 1) 1.1s forwards;
+}
+.preloader__curtain--lower {
+  top: 50%;
+  animation: prCurtainDraw 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.05s forwards,
+             prCurtainSplitDown 1.1s cubic-bezier(0.65, 0, 0.35, 1) 1.1s forwards;
+}
+@keyframes prCurtainDraw {
+  from { width: 0; opacity: 0; }
+  20%  { opacity: 1; }
+  to   { width: min(560px, 80vw); opacity: 1; }
+}
+@keyframes prCurtainSplitUp {
+  from { top: 50%; }
+  to   { top: 22%; }
+}
+@keyframes prCurtainSplitDown {
+  from { top: 50%; }
+  to   { top: 78%; }
+}
+
+/* Center stage — the SVG monogram + italic tagline */
+.preloader__stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  opacity: 0;
+  animation: prStageIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s forwards;
+}
+@keyframes prStageIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.preloader__mark {
+  display: block;
+  width: clamp(220px, 32vw, 380px);
+  height: auto;
+  opacity: 0;
+  transform: translateY(12px) scale(0.94);
+  filter: drop-shadow(0 4px 24px rgba(196, 150, 91, 0.15));
+  animation: prLogoIn 1.2s cubic-bezier(0.2, 0.85, 0.25, 1) 1.4s forwards;
+}
+@keyframes prLogoIn {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.94); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.preloader__tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: rgba(244, 239, 230, 0.7);
+  margin: 0;
+  opacity: 0;
+  animation: prFadeUp2 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 2.6s forwards;
+}
+.preloader__tagline em {
+  color: #C4965B;
+  font-style: italic;
+  font-weight: 400;
+}
+@keyframes prFadeUp2 {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Bottom marquee — the portfolio drifting right-to-left */
+.preloader__marquee {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%);
+  opacity: 0;
+  animation: prMarqueeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 2.4s forwards;
+}
+.preloader__marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  animation: prMarqueeDrift 22s linear infinite;
+}
+@keyframes prMarqueeIn {
+  from { opacity: 0; }
+  to   { opacity: 0.85; }
+}
+@keyframes prMarqueeDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.pm-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.7);
+  font-weight: 500;
+}
+.pm-brand-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bc, #C4965B);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--bc, #C4965B) 60%, transparent);
+}
+.pm-brand-sep {
+  color: rgba(196, 150, 91, 0.35);
+  font-size: 0.9rem;
+}
+
+/* Veil — the exit curtain that wipes down over everything as it hides */
+.preloader__veil {
+  position: absolute;
+  inset: 0;
+  background: #0A0908;
+  transform-origin: top;
+  transform: scaleY(1);
+  z-index: -1;
+}
+
+/* Mobile — smaller monogram, tighter framing */
+@media (max-width: 640px) {
+  .preloader__corner { width: 20px; height: 20px; }
+  .preloader__corner--tl, .preloader__corner--tr { top: 20px; }
+  .preloader__corner--bl, .preloader__corner--br { bottom: 20px; }
+  .preloader__corner--tl, .preloader__corner--bl { left: 20px; }
+  .preloader__corner--tr, .preloader__corner--br { right: 20px; }
+  .preloader__marquee { bottom: 30px; }
+  .pm-brand { font-size: 0.6rem; letter-spacing: 0.24em; }
+  .preloader__strip--top { top: 26px; }
+}
+
+/* Reduced-motion — snap to a static composed frame, no strokes/marquee */
+@media (prefers-reduced-motion: reduce) {
+  .preloader__corner,
+  .preloader__curtain,
+  .preloader__stage,
+  .preloader__mark,
+  .preloader__tagline,
+  .preloader__marquee,
+  .preloader__strip--top {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .preloader__curtain--upper { top: 22%; width: min(560px, 80vw); }
+  .preloader__curtain--lower { top: 78%; width: min(560px, 80vw); }
+  .preloader__marquee-track { animation: none !important; transform: translateX(0); }
+}
+
+/* =========================================================
+   PULL QUOTE — editorial rhythm break between sections.
+   Not a "testimonial" — an authored principle, in the voice
+   of the group. Reads like the pull quote in a magazine feature.
+   ========================================================= */
+.pull-quote {
+  position: relative;
+  padding: clamp(6rem, 12vw, 10rem) var(--gutter);
+  background: var(--ink);
+  overflow: hidden;
+}
+.pull-quote::before {
+  /* Faint brass hairline on the left, spans 40% of section height, offset from top */
+  content: "";
+  position: absolute;
+  top: clamp(5rem, 10vw, 8rem);
+  left: max(var(--gutter), calc(50vw - 500px));
+  width: 1px;
+  height: 40%;
+  background: linear-gradient(180deg, var(--brass) 0%, transparent 100%);
+  opacity: 0.5;
+}
+.pull-quote__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: clamp(2rem, 5vw, 4.5rem);
+}
+.pull-quote__mark {
+  position: absolute;
+  top: -0.4em;
+  left: 0;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 12vw, 10rem);
+  color: var(--brass);
+  line-height: 1;
+  opacity: 0.32;
+  font-style: italic;
+  font-weight: 400;
+  pointer-events: none;
+  user-select: none;
+}
+.pull-quote__body {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.3rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 300;
+  color: var(--parchment);
+  margin: 0 0 1.75rem;
+  max-width: 22ch;
+}
+.pull-quote__body em {
+  font-style: italic;
+  color: var(--brass);
+  font-weight: 400;
+  display: block;
+  margin-top: 0.15em;
+}
+.pull-quote__attribution {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(196, 150, 91, 0.65);
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(196, 150, 91, 0.18);
+  max-width: 20rem;
+}
+
+/* =========================================================
+   SIGNATURE — the manifesto close.
+   Three progressive lines at increasing scale + italic pivot
+   in the middle. Restrained CTA sits below, no button — just
+   text that leads into the "start the conversation" link.
+   Reads like the closing paragraph of a book chapter.
+   ========================================================= */
+.signature {
+  position: relative;
+  padding: clamp(7rem, 14vw, 12rem) var(--gutter);
+  background: var(--ink);
+  overflow: hidden;
+  isolation: isolate;
+}
+.signature::before {
+  /* Warm brass glow behind the middle line */
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: radial-gradient(circle, rgba(196, 150, 91, 0.08) 0%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+}
+.signature__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.signature__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 500;
+}
+.signature__eyebrow::before {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--brass);
+}
+.signature__lines {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.4rem, 1vw, 0.7rem);
+  margin: 0 0 clamp(4rem, 8vw, 6rem);
+}
+.signature__line {
+  font-family: var(--font-display);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--parchment);
+  margin: 0;
+  font-weight: 300;
+}
+.signature__line em {
+  font-style: italic;
+  color: var(--brass);
+  font-weight: 400;
+}
+/* Three lines at progressively larger scale — the eye is pulled down */
+.signature__line--1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  opacity: 0.7;
+}
+.signature__line--2 {
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+  padding-left: clamp(1.5rem, 4vw, 3rem);
+}
+.signature__line--3 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  padding-left: clamp(3rem, 8vw, 6rem);
+  opacity: 0.85;
+}
+.signature__foot {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid rgba(196, 150, 91, 0.2);
+}
+.signature__rule {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--brass);
+  flex-shrink: 0;
+}
+.signature__cta-block {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.signature__cta-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: rgba(244, 239, 230, 0.75);
+  font-weight: 300;
+  margin: 0;
+}
+.signature__cta-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(196, 150, 91, 0.4);
+  transition: border-color 0.4s var(--ease), color 0.4s var(--ease), padding 0.4s var(--ease);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.signature__cta-link:hover {
+  border-color: var(--brass);
+  padding-right: 0.4rem;
+}
+.signature__cta-link .arr {
+  transition: transform 0.4s var(--ease);
+  display: inline-block;
+}
+.signature__cta-link:hover .arr {
+  transform: translateX(4px);
+}
+
+@media (max-width: 720px) {
+  .signature__foot { flex-direction: column; align-items: flex-start; }
+  .signature__rule { width: 40px; }
+}
+
+/* =========================================================
+   BRAND SLIDE HOVER BRACKETS — subtle brass corner marks
+   that draw themselves on hover. Adds a cinematic "framing"
+   detail that reads as intentional not decorative.
+   ========================================================= */
+.brand-slide {
+  position: relative;
+}
+.brand-slide::before,
+.brand-slide::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: solid var(--brass);
+  border-width: 0;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease), width 0.5s var(--ease), height 0.5s var(--ease);
+  pointer-events: none;
+  z-index: 3;
+}
+.brand-slide::before {
+  top: 14px;
+  left: 14px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.brand-slide::after {
+  bottom: 14px;
+  right: 14px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+.brand-slide:hover::before,
+.brand-slide:hover::after {
+  opacity: 0.85;
+  width: 32px;
+  height: 32px;
+}
+
+/* =========================================================
+   HERO OVERLAY EYEBROW — asymmetric variant. Chapter number
+   in mono caps, italic Playfair mixed with sans caps for
+   the volume title, single hairline on the left.
+   ========================================================= */
+.hero__overlay-eyebrow--asym {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-start;
+  /* Slight left offset from center — break the symmetry */
+  transform: translateX(-4vw);
+}
+.hero__overlay-line--left {
+  width: 48px;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.7;
+}
+.hero__overlay-chapter {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brass);
+  font-weight: 500;
+}
+.hero__overlay-em {
+  color: rgba(196, 150, 91, 0.5);
+  font-size: 0.9rem;
+}
+.hero__overlay-vol {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.75);
+  font-weight: 500;
+}
+.hero__overlay-vol em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1.3em;
+  color: var(--parchment);
+  margin-right: 0.3em;
+  vertical-align: -0.05em;
+}
+
+@media (max-width: 640px) {
+  .hero__overlay-eyebrow--asym { transform: none; gap: 0.6rem; }
+  .hero__overlay-line--left { width: 24px; }
 }

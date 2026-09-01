@@ -12,66 +12,58 @@
 </head>
 <body>
 
-<!-- Preloader — 4s cinematic, GSAP-driven -->
+<!-- Preloader — "The Curtain Rises" (2026 rebuild) — theatrical staging in ~3.5s. No bar, no counter. -->
 <div class="preloader" id="preloader" aria-hidden="true">
-  <div class="preloader__inner">
-    <div class="preloader__top">
-      <span class="preloader__label">World of Hospitality</span>
-      <span class="preloader__location">Doha · QA</span>
-    </div>
-    <div class="preloader__center">
-      <img class="preloader__logo" src="images/woh-logo.png" alt="">
-      <p class="preloader__eyebrow">Four houses of Doha</p>
-      <div class="preloader__brands" aria-hidden="true">
-        <div class="pre-brand" data-bi="0" style="--bc:#C4965B">
-          <span class="pre-brand__num">01</span>
-          <span class="pre-brand__logo">
-            <img src="images/brands/gunaydin.svg" alt="Günaydın" loading="eager">
-          </span>
-          <span class="pre-brand__rail"><span class="pre-brand__rail-fill"></span></span>
-          <span class="pre-brand__type">Turkish · Open</span>
-        </div>
-        <div class="pre-brand" data-bi="1" style="--bc:#D97757">
-          <span class="pre-brand__num">02</span>
-          <span class="pre-brand__logo pre-brand__logo--wide">
-            <img src="images/brands/kumar.svg" alt="Kumar" loading="eager">
-          </span>
-          <span class="pre-brand__rail"><span class="pre-brand__rail-fill"></span></span>
-          <span class="pre-brand__type">Indian · Open</span>
-        </div>
-        <div class="pre-brand" data-bi="2" style="--bc:#3F7A4C">
-          <span class="pre-brand__num">03</span>
-          <span class="pre-brand__logo pre-brand__logo--green">
-            <img src="images/brands/eleven-green.jpg" alt="Eleven Green" loading="eager">
-          </span>
-          <span class="pre-brand__rail"><span class="pre-brand__rail-fill"></span></span>
-          <span class="pre-brand__type">Burgers · Coming</span>
-        </div>
-        <div class="pre-brand" data-bi="3" style="--bc:#9B3833">
-          <span class="pre-brand__num">04</span>
-          <span class="pre-brand__logo pre-brand__logo--wide">
-            <img src="images/brands/al-beiruti.svg" alt="Al Beiruti" loading="eager">
-          </span>
-          <span class="pre-brand__rail"><span class="pre-brand__rail-fill"></span></span>
-          <span class="pre-brand__type">Lebanese · Open</span>
-        </div>
-        <div class="pre-brand pre-brand--more" data-bi="4">
-          <span class="pre-brand__num">+</span>
-          <span class="pre-brand__name">More concepts</span>
-          <span class="pre-brand__rail"><span class="pre-brand__rail-fill"></span></span>
-          <span class="pre-brand__type">In development</span>
-        </div>
-      </div>
-    </div>
-    <div class="preloader__bottom">
-      <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
-      <div class="preloader__counter-wrap">
-        <span class="preloader__counter" id="preCounter">00</span>
-        <span class="preloader__counter-sep">/</span>
-        <span class="preloader__counter-max">100</span>
-      </div>
+  <!-- Corner marks — like camera framing marks / theatre proscenium corners -->
+  <span class="preloader__corner preloader__corner--tl"></span>
+  <span class="preloader__corner preloader__corner--tr"></span>
+  <span class="preloader__corner preloader__corner--bl"></span>
+  <span class="preloader__corner preloader__corner--br"></span>
+
+  <!-- Top-strip label (fades in during phase 3) -->
+  <div class="preloader__strip preloader__strip--top">
+    <span class="preloader__strip-tag">World of Hospitality</span>
+    <span class="preloader__strip-dot"></span>
+    <span class="preloader__strip-tag preloader__strip-tag--muted">Doha · QA</span>
+  </div>
+
+  <!-- Two brass curtain lines that expand from the center then split apart -->
+  <div class="preloader__curtain preloader__curtain--upper" aria-hidden="true"></div>
+  <div class="preloader__curtain preloader__curtain--lower" aria-hidden="true"></div>
+
+  <!-- Center stage: the real WOH logo + italic tagline -->
+  <div class="preloader__stage">
+    <img class="preloader__mark" src="images/woh-logo.png" alt="World of Hospitality">
+    <p class="preloader__tagline"><em>The Houses</em> of Doha</p>
+  </div>
+
+  <!-- Bottom marquee — the whole portfolio in one drifting line -->
+  <div class="preloader__marquee" aria-hidden="true">
+    <div class="preloader__marquee-track">
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#C4965B"></i>Günaydın</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#D97757"></i>Kumar</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#9B3833"></i>Al Beiruti</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#014131"></i>Eleven Green</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#E8B4A0"></i>Brunch &amp; Cake</span>
+      <span class="pm-brand-sep">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#C4965B"></i>Günaydın</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#D97757"></i>Kumar</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#9B3833"></i>Al Beiruti</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#014131"></i>Eleven Green</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#E8B4A0"></i>Brunch &amp; Cake</span>
+      <span class="pm-brand-sep">·</span>
     </div>
   </div>
+
   <div class="preloader__veil"></div>
 </div>
 
@@ -107,29 +99,35 @@
 <!-- =============== HERO — Full-bleed cinematic video stage =============== -->
 <section class="hero" id="hero">
   <div class="hero__stage" id="heroStage">
-    <!-- 4 stacked video layers; only one is active at a time -->
-    <div class="hero__video-wrap is-active" data-brand="gunaydin" data-num="01" data-cuisine="Doha · Turkish">
+    <!-- 5 stacked video layers; only one is active at a time.
+         Order = opening chronology: Günaydın, Kumar, Al Beiruti (open) → Eleven Green, Brunch & Cake (coming). -->
+    <div class="hero__video-wrap is-active" data-brand="gunaydin" data-num="01" data-cuisine="Doha · Turkish" data-status="Open">
       <video class="hero__video" muted loop playsinline autoplay preload="auto"
         poster="https://images.unsplash.com/photo-1544025162-d76694265947?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Gunaydin-Website-Video-1-1.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="hero__video-wrap" data-brand="kumar" data-num="02" data-cuisine="Doha · Indian">
+    <div class="hero__video-wrap" data-brand="kumar" data-num="02" data-cuisine="Doha · Indian" data-status="Open">
       <video class="hero__video" muted loop playsinline preload="metadata"
         poster="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Kumar-Website-Video-1-1.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="hero__video-wrap" data-brand="eleven-green" data-num="03" data-cuisine="Doha · Burgers">
+    <div class="hero__video-wrap" data-brand="al-beiruti" data-num="03" data-cuisine="Doha · Lebanese" data-status="Just opened">
+      <video class="hero__video" muted loop playsinline preload="metadata"
+        poster="images/brands/al-beiruti-mezze.jpg">
+        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero__video-wrap" data-brand="eleven-green" data-num="04" data-cuisine="Doha · Burgers" data-status="Opening soon">
       <video class="hero__video" muted loop playsinline preload="metadata"
         poster="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=2000&auto=format&fit=crop&q=85">
         <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/05/IMG_7763-1.mp4" type="video/mp4">
       </video>
     </div>
-    <div class="hero__video-wrap" data-brand="al-beiruti" data-num="04" data-cuisine="Doha · Lebanese">
+    <div class="hero__video-wrap" data-brand="brunch-cake" data-num="05" data-cuisine="Doha · All-day" data-status="Late 2026">
       <video class="hero__video" muted loop playsinline preload="metadata"
-        poster="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=2000&auto=format&fit=crop&q=85">
-        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
+        poster="https://brunchandcake.com/wp-content/uploads/2024/12/brunchandcake-barcelona-restaurant-franchise-spain-rosello.jpg">
       </video>
     </div>
     <!-- Vignette overlay for legibility -->
@@ -138,23 +136,24 @@
 
   <!-- TOP — meta strip -->
   <div class="hero__top">
-    <span><strong>WOH</strong> · Doha · <span class="clock" id="clock">--:--</span></span>
+    <span><strong>WOH</strong> · Doha</span>
   </div>
 
   <!-- CENTER — massive overlay headline with mix-blend-mode -->
   <div class="hero__overlay">
-    <div class="hero__overlay-eyebrow">
-      <span class="hero__overlay-line"></span>
-      <span>№ 01 — The Houses of Doha</span>
-      <span class="hero__overlay-line"></span>
+    <div class="hero__overlay-eyebrow hero__overlay-eyebrow--asym">
+      <span class="hero__overlay-line hero__overlay-line--left"></span>
+      <span class="hero__overlay-chapter">No. 01</span>
+      <span class="hero__overlay-em">·</span>
+      <span class="hero__overlay-vol"><em>The Houses of</em> Doha</span>
     </div>
     <h1 class="hero__overlay-headline">
       Restaurants you<br><em>return</em> to.
     </h1>
-    <p class="hero__overlay-lede">Four houses. End to end. Doha.</p>
+    <p class="hero__overlay-lede">Five houses, <em>five reasons</em>&nbsp;— all in Doha.</p>
   </div>
 
-  <!-- BOTTOM — brand markers (all 4 always visible) -->
+  <!-- BOTTOM — brand markers (all 5 always visible) -->
   <div class="hero__markers" id="heroMarkers">
     <button class="marker is-active" data-index="0" data-brand="gunaydin" aria-label="Switch to Günaydın">
       <span class="marker__num">01</span>
@@ -168,16 +167,22 @@
       <span class="marker__cuisine">Doha · Indian</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
-    <button class="marker" data-index="2" data-brand="eleven-green" aria-label="Switch to Eleven Green">
+    <button class="marker" data-index="2" data-brand="al-beiruti" aria-label="Switch to Al Beiruti">
       <span class="marker__num">03</span>
+      <span class="marker__name">Al Beiruti</span>
+      <span class="marker__cuisine">Doha · Lebanese</span>
+      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
+    </button>
+    <button class="marker" data-index="3" data-brand="eleven-green" aria-label="Switch to Eleven Green">
+      <span class="marker__num">04</span>
       <span class="marker__name">Eleven Green</span>
       <span class="marker__cuisine">Doha · Burgers</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
-    <button class="marker" data-index="3" data-brand="al-beiruti" aria-label="Switch to Al Beiruti">
-      <span class="marker__num">04</span>
-      <span class="marker__name">Al Beiruti</span>
-      <span class="marker__cuisine">Doha · Lebanese</span>
+    <button class="marker" data-index="4" data-brand="brunch-cake" aria-label="Switch to Brunch &amp; Cake">
+      <span class="marker__num">05</span>
+      <span class="marker__name">Brunch &amp; Cake</span>
+      <span class="marker__cuisine">Doha · All-day</span>
       <span class="marker__bar"><span class="marker__bar-fill"></span></span>
     </button>
   </div>
@@ -254,13 +259,25 @@
   </div>
 </section>
 
+<!-- =============== PULL QUOTE — editorial rhythm break =============== -->
+<section class="pull-quote">
+  <div class="pull-quote__inner">
+    <span class="pull-quote__mark" aria-hidden="true">&ldquo;</span>
+    <blockquote class="pull-quote__body" data-reveal>
+      A restaurant is a room, a rhythm, and a reason to come back.
+      <em>We build all three,</em> then we stay.
+    </blockquote>
+    <span class="pull-quote__attribution">— WOH · House Principle No. 1</span>
+  </div>
+</section>
+
 <!-- =============== BRANDS — Horizontal pinned scroll =============== -->
 <section class="brands-h" id="brandsH">
   <div class="brands-h__pin">
     <div class="brands-h__head">
       <div>
         <p class="brands-h__eyebrow" data-reveal>The Houses</p>
-        <h2 style="margin:0.5rem 0 0; font-size:clamp(2rem, 4vw, 3.5rem); line-height:1; letter-spacing:-0.01em; font-weight:400;" data-reveal data-reveal-delay="1">Four houses. <em style="color:var(--brass); font-style:italic;">One</em> standard.</h2>
+        <h2 style="margin:0.5rem 0 0; font-size:clamp(2rem, 4vw, 3.5rem); line-height:1; letter-spacing:-0.01em; font-weight:400;" data-reveal data-reveal-delay="1">Five houses. <em style="color:var(--brass); font-style:italic;">One</em> standard.</h2>
         <!-- Creative drag hint — left-aligned beneath the section title, above the first card -->
         <div class="brands-h__hint" id="brandsHint" aria-hidden="true">
           <span class="brands-h__hint-rail">
@@ -269,7 +286,7 @@
           <span class="brands-h__hint-text">Drag to traverse</span>
         </div>
       </div>
-      <p class="brands-h__count"><span id="brandsHIdx"><strong>01</strong></span> / 04 <span style="color:var(--brass);">+</span></p>
+      <p class="brands-h__count"><span id="brandsHIdx"><strong>01</strong></span> / 05 <span style="color:var(--brass);">+</span></p>
     </div>
     <div class="brands-h__track-wrap">
       <div class="brands-h__track" id="brandsHTrack">
@@ -307,24 +324,7 @@
           </div>
         </a>
 
-        <a href="brands.html#eleven-green" class="brand-slide" data-cursor="View" data-brand="eleven-green">
-          <div class="brand-slide__media">
-            <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1400&auto=format&fit=crop&q=85');"></div>
-            <span class="brand-slide__num">Doha · Burgers</span>
-            <span class="brand-slide__tag" style="color:var(--brass);">Coming</span>
-          </div>
-          <div class="brand-slide__footer">
-            <div class="brand-slide__title-block">
-              <h3 class="brand-slide__name">Eleven Green</h3>
-              <p class="brand-slide__desc">The Bull Burger, fries, and a few smart sides. From Dubai, coming to Doha.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="brands.html#al-beiruti" class="brand-slide" data-cursor="Preview" data-brand="al-beiruti">
+        <a href="brands.html#al-beiruti" class="brand-slide" data-cursor="View" data-brand="al-beiruti">
           <div class="brand-slide__media">
             <div class="brand-slide__img" style="background-image:url('images/brands/al-beiruti-spread.jpg');"></div>
             <span class="brand-slide__num">Lebanese · Levantine</span>
@@ -341,7 +341,41 @@
           </div>
         </a>
 
-        <!-- 5th "More concepts ahead" teaser slide — signals expanding portfolio -->
+        <a href="brands.html#eleven-green" class="brand-slide" data-cursor="Preview" data-brand="eleven-green">
+          <div class="brand-slide__media">
+            <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1400&auto=format&fit=crop&q=85'); background-color:#014131;"></div>
+            <span class="brand-slide__num">Doha · Burgers</span>
+            <span class="brand-slide__tag" style="color:var(--brass);">Opening soon</span>
+          </div>
+          <div class="brand-slide__footer">
+            <div class="brand-slide__title-block">
+              <h3 class="brand-slide__name">Eleven Green</h3>
+              <p class="brand-slide__desc">The Bull Burger, fries, and a few smart sides. From Dubai, days from Doha.</p>
+            </div>
+            <span class="brand-slide__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="brands.html#brunch-cake" class="brand-slide" data-cursor="Preview" data-brand="brunch-cake">
+          <div class="brand-slide__media">
+            <div class="brand-slide__img" style="background-image:url('https://brunchandcake.com/wp-content/uploads/2024/12/brunchandcake-barcelona-restaurant-franchise-spain-rosello.jpg'); background-color:#E8B4A0;"></div>
+            <span class="brand-slide__num">All-day · Mediterranean</span>
+            <span class="brand-slide__tag" style="color:var(--brass);">Late 2026</span>
+          </div>
+          <div class="brand-slide__footer">
+            <div class="brand-slide__title-block">
+              <h3 class="brand-slide__name">Brunch &amp; Cake</h3>
+              <p class="brand-slide__desc">Born in Barcelona, 2010. Grandma's goodness, thoughtfully served — coming to Doha end of year.</p>
+            </div>
+            <span class="brand-slide__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- 6th "More concepts ahead" teaser slide — signals expanding portfolio -->
         <a href="partnerships.html" class="brand-slide brand-slide--more" data-cursor="Partner with us">
           <div class="brand-slide__media">
             <div class="brand-slide__more-bg"></div>
@@ -352,7 +386,7 @@
           </div>
           <div class="brand-slide__body">
             <div>
-              <span class="brand-slide__num">05 +</span>
+              <span class="brand-slide__num">06 +</span>
               <h3 class="brand-slide__name">More houses ahead</h3>
               <p class="brand-slide__desc">New concepts in development across Doha. Partner with us to bring yours next.</p>
             </div>
@@ -462,19 +496,22 @@
   </div>
 </section>
 
-<!-- =============== PARTNERSHIP CTA =============== -->
-<section class="partner">
-  <div class="container">
-    <div class="partner__inner">
-      <div>
-        <p class="eyebrow" data-reveal>For brand owners</p>
-        <h2 data-reveal data-reveal-delay="1">Your brand. <em>Our</em> Qatar.</h2>
-      </div>
-      <div data-reveal data-reveal-delay="2">
-        <p class="partner__quote">
-          Local operations for international F&amp;B. Your concept stays yours.
-        </p>
-        <a href="partnerships.html" class="btn" style="margin-top:2rem;">Start the conversation <span class="arr">→</span></a>
+<!-- =============== SIGNATURE — the manifesto close =============== -->
+<section class="signature">
+  <div class="signature__inner">
+    <p class="signature__eyebrow" data-reveal>Signature</p>
+
+    <div class="signature__lines" data-reveal data-reveal-delay="1">
+      <p class="signature__line signature__line--1">We do not chase trends.</p>
+      <p class="signature__line signature__line--2">We <em>curate</em> houses.</p>
+      <p class="signature__line signature__line--3">And we stay for the long dinner.</p>
+    </div>
+
+    <div class="signature__foot" data-reveal data-reveal-delay="2">
+      <span class="signature__rule" aria-hidden="true"></span>
+      <div class="signature__cta-block">
+        <p class="signature__cta-label">If your brand belongs here,</p>
+        <a href="partnerships.html" class="signature__cta-link">start the conversation <span class="arr">→</span></a>
       </div>
     </div>
   </div>
@@ -488,7 +525,7 @@
         <img src="images/woh-logo.png" alt="World of Hospitality" class="foot__logo">
         <small>F&amp;B Management · Doha · QA</small>
       </div>
-      <p class="foot__tag">Four houses. One standard. Doha.</p>
+      <p class="foot__tag">Five houses. One standard. Doha.</p>
     </div>
     <div>
       <h4>Explore</h4>

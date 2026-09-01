@@ -23,92 +23,35 @@
   // ScrollTrigger uses native scroll; no proxy needed
 
   /* ============================================================
-     0a) PRELOADER — 4-second cinematic GSAP timeline
+     0a) PRELOADER v2 — "The Curtain Rises"
+     Fully CSS-animated (~3.5s intro). JS only triggers the exit fade
+     and clears the html.is-loading gate. No GSAP dependency; falls
+     back gracefully if the intro is longer than the CSS finishes.
      ============================================================ */
-  const preloader  = document.getElementById('preloader');
-  const preCounter = document.getElementById('preCounter');
+  const preloader = document.getElementById('preloader');
 
   const hidePreloader = () => {
-    if (!preloader) {
-      document.documentElement.classList.remove('is-loading');
-      return;
+    document.documentElement.classList.remove('is-loading');
+    if (!preloader) return;
+    preloader.classList.add('is-hidden');
+    // Fully remove after the fade completes so it's not in the DOM
+    setTimeout(() => { if (preloader && preloader.parentNode) preloader.remove(); }, 950);
+    if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
+      setTimeout(() => window.ScrollTrigger.refresh(), 400);
     }
-    if (!hasGSAP) {
-      preloader.style.transition = 'opacity 0.8s';
-      preloader.style.opacity = 0;
-      setTimeout(() => preloader.remove(), 800);
-      document.documentElement.classList.remove('is-loading');
-      return;
-    }
-    const gsap = window.gsap;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        preloader.style.display = 'none';
-        document.documentElement.classList.remove('is-loading');
-        if (hasST) window.ScrollTrigger.refresh();
-      }
-    });
-    tl.to('.preloader__veil', { y: '0%', duration: 1.0, ease: 'expo.inOut' })
-      .to(preloader, { opacity: 0, duration: 0.4, ease: 'power1.in' }, '-=0.05');
   };
 
-  if (preloader && hasGSAP) {
-    const gsap = window.gsap;
-    // Inline opacity so nothing flashes pre-tween
-    gsap.set('.preloader__top', { opacity: 0, y: -10 });
-    gsap.set('.preloader__bottom', { opacity: 0, y: 10 });
-    gsap.set('.preloader__logo', { opacity: 0, y: 20 });
+  if (preloader) {
+    // Total CSS intro budget: ~3.5s. Hide slightly after to let the flourish settle.
+    const INTRO_MS = 3700;
+    // Respect reduced-motion — snap out fast (composition already static from CSS)
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(hidePreloader, reduced ? 900 : INTRO_MS);
 
-    const intro = gsap.timeline({
-      onComplete: () => {
-        // Wait minimum total ~4 seconds (intro is ~3.4s); then add a brief pause and reveal
-        gsap.delayedCall(0.35, hidePreloader);
-      }
-    });
-
-    const brandEls = document.querySelectorAll('.pre-brand');
-    const revealBrandAt = (idx) => {
-      brandEls.forEach((b, i) => {
-        if (i <= idx) b.classList.add('is-shown');
-        b.classList.toggle('is-active', i === idx);
-      });
-    };
-
-    intro
-      .to('.preloader__top', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.15)
-      .to('.preloader__logo', { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.3)
-      .to('.preloader__bottom', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.6)
-      .to('.preloader__bar-fill', { scaleX: 1, duration: 2.5, ease: 'power2.inOut' }, 0.9)
-      .to(preCounter, {
-        innerText: 100,
-        duration: 2.5,
-        snap: { innerText: 1 },
-        ease: 'power2.inOut',
-        onUpdate: function () {
-          const v = Math.floor(this.targets()[0].innerText || 0);
-          if (preCounter) preCounter.textContent = String(v).padStart(2, '0');
-          // Reveal brands at quarter milestones
-          if (v >= 25 && !brandEls[0]?.classList.contains('is-shown')) revealBrandAt(0);
-          if (v >= 50) revealBrandAt(1);
-          if (v >= 75) revealBrandAt(2);
-          if (v >= 95) revealBrandAt(3);
-          if (v >= 100) {
-            // Reveal the "+ more concepts" line too, but keep Al Beiruti as the visually active one
-            const moreEl = document.querySelector('.pre-brand--more');
-            if (moreEl) moreEl.classList.add('is-shown');
-            revealBrandAt(3);
-          }
-        }
-      }, 0.9)
-      .to('.preloader__logo', { y: -6, duration: 0.45, ease: 'power2.out' }, 3.0);
-  } else if (preloader) {
-    // No GSAP fallback — hide after 4s
+    // Safety: if the page has been visible >7s, force-hide (edge case with slow tabs)
     setTimeout(() => {
-      preloader.style.transition = 'opacity 0.8s';
-      preloader.style.opacity = 0;
-      setTimeout(() => preloader.remove(), 800);
-      document.documentElement.classList.remove('is-loading');
-    }, 4000);
+      if (preloader && preloader.parentNode && !preloader.classList.contains('is-hidden')) hidePreloader();
+    }, 7000);
   } else {
     document.documentElement.classList.remove('is-loading');
   }
@@ -646,7 +589,7 @@
       startProgress(0);
       startCycle();
     };
-    setTimeout(initialPlay, 4400);
+    setTimeout(initialPlay, 3600);
     // Backup — if a user gesture happens before then, kick off immediately
     const userKick = () => {
       if (videos[0] && videos[0].paused) tryPlay(videos[0]);
@@ -680,24 +623,6 @@
     document.querySelectorAll('.brand-card').forEach(el => attachTilt(el, 5));
     document.querySelectorAll('.gallery__cell').forEach(el => attachTilt(el, 8));
     document.querySelectorAll('.brand-spread__media').forEach(el => attachTilt(el, 4));
-  }
-
-  /* ============================================================
-     7) LIVE CLOCK (Doha)
-     ============================================================ */
-  const clock = document.getElementById('clock');
-  if (clock) {
-    const renderClock = () => {
-      try {
-        const fmt = new Intl.DateTimeFormat('en-GB', {
-          hour: '2-digit', minute: '2-digit', hour12: false,
-          timeZone: 'Asia/Qatar'
-        });
-        clock.textContent = fmt.format(new Date()) + ' AST';
-      } catch (e) { clock.textContent = ''; }
-    };
-    renderClock();
-    setInterval(renderClock, 30000);
   }
 
   /* ============================================================
