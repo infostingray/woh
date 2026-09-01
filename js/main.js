@@ -742,45 +742,19 @@
   }
 
   /* ============================================================
-     4d) HOW WE WORK — hover-activated steps (no scroll-jacking)
+     4d) JOURNEY — rail fills when the section enters view
      ============================================================ */
-  const hwSection = document.getElementById('howwework');
-  if (hwSection) {
-    const steps  = Array.from(hwSection.querySelectorAll('.hw-step'));
-    const words  = Array.from(hwSection.querySelectorAll('.hw-word'));
-    const fillEl = document.getElementById('hwProgressFill');
-    const idxEl  = document.getElementById('hwIdx');
-    const STEP_COUNT = steps.length;
-
-    const setActive = (idx) => {
-      const clamped = Math.max(0, Math.min(STEP_COUNT - 1, idx));
-      steps.forEach((s, i)  => s.classList.toggle('is-active', i === clamped));
-      words.forEach((w, i)  => w.classList.toggle('is-active', i === clamped));
-      if (idxEl)  idxEl.textContent = '0' + (clamped + 1);
-      if (fillEl) fillEl.style.transform = `scaleX(${(clamped + 1) / STEP_COUNT})`;
-    };
-
-    steps.forEach((step, i) => {
-      step.addEventListener('mouseenter', () => setActive(i));
-      step.addEventListener('focus', () => setActive(i));
-      step.addEventListener('click', () => {
-        // On mobile/touch, allow clicking the active step to close it (accordion)
-        const isTouch = matchMedia('(hover: none)').matches;
-        const alreadyActive = step.classList.contains('is-active');
-        if (isTouch && alreadyActive) {
-          steps.forEach(s => s.classList.remove('is-active'));
-          words.forEach(w => w.classList.remove('is-active'));
-          if (idxEl) idxEl.textContent = '00';
-          if (fillEl) fillEl.style.transform = 'scaleX(0)';
-        } else {
-          setActive(i);
+  const journeySection = document.querySelector('.journey');
+  if (journeySection && 'IntersectionObserver' in window) {
+    const journeyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in-view');
+          journeyObserver.unobserve(entry.target);
         }
       });
-      step.setAttribute('tabindex', '0');
-    });
-
-    // Initialize first as active
-    setActive(0);
+    }, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
+    journeyObserver.observe(journeySection);
   }
 
   /* ============================================================

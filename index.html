@@ -190,84 +190,147 @@
 </section>
 
 
-<!-- =============== HOW WE WORK — Sticky-scroll synchronized =============== -->
-<section class="howwework" id="howwework">
-  <div class="howwework__inner">
-    <!-- LEFT — sticky text column with steps -->
-    <div class="howwework__text">
-      <p class="eyebrow" data-reveal>The Approach</p>
-      <h2 data-reveal data-reveal-delay="1">How we <em style="color:var(--brass); font-style:italic;">work</em>.</h2>
+<!-- =============== HOW WE WORK — Editorial journey (5 real stages) =============== -->
+<section class="journey" id="howwework">
+  <div class="journey__intro">
+    <p class="eyebrow" data-reveal>The Journey</p>
+    <h2 class="journey__title" data-reveal data-reveal-delay="1">
+      From <em>first conversation</em><br>to last seating.
+    </h2>
+    <p class="journey__lede" data-reveal data-reveal-delay="2">
+      Every house we operate travels the same road. It's not a formula &mdash; it's a discipline.
+    </p>
+  </div>
 
-      <div class="hw-steps">
-        <article class="hw-step is-active" data-step="0">
-          <span class="hw-step__num">01</span>
-          <div class="hw-step__body">
-            <h3 class="hw-step__title">Origin first.</h3>
-            <p>Recipes, rhythm, room. We adapt — we don't dilute.</p>
-          </div>
-        </article>
-        <article class="hw-step" data-step="1">
-          <span class="hw-step__num">02</span>
-          <div class="hw-step__body">
-            <h3 class="hw-step__title">End to end.</h3>
-            <p>Site to opening, opening to last seating. One team carries it all.</p>
-          </div>
-        </article>
-        <article class="hw-step" data-step="2">
-          <span class="hw-step__num">03</span>
-          <div class="hw-step__body">
-            <h3 class="hw-step__title">Built to last.</h3>
-            <p>Shared back-office. Sized for multi-unit. Made to last.</p>
-          </div>
-        </article>
-      </div>
+  <!-- The road: 5 stages plotted along a continuous horizontal hairline -->
+  <div class="journey__rail" data-reveal>
+    <div class="journey__line" aria-hidden="true">
+      <span class="journey__line-fill" id="journeyFill"></span>
     </div>
 
-    <!-- RIGHT — sticky typographic editorial that swaps per step -->
-    <div class="howwework__media">
-      <div class="hw-media-stage hw-media-stage--typographic">
-        <div class="hw-word is-active" data-step="0">
-          <span class="hw-word__chapter">Chapter I</span>
-          <h3 class="hw-word__display"><em>Origin.</em></h3>
-          <blockquote class="hw-word__quote">
-            "We adapt the recipe. We do not rewrite the room."
-          </blockquote>
+    <div class="journey__stages">
+      <article class="j-stage" data-stage="1">
+        <div class="j-stage__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+            <circle cx="20" cy="20" r="15"/>
+            <circle cx="20" cy="20" r="3"/>
+            <line x1="20" y1="5" x2="20" y2="8"/>
+            <line x1="20" y1="32" x2="20" y2="35"/>
+            <line x1="5" y1="20" x2="8" y2="20"/>
+            <line x1="32" y1="20" x2="35" y2="20"/>
+          </svg>
         </div>
-        <div class="hw-word" data-step="1">
-          <span class="hw-word__chapter">Chapter II</span>
-          <h3 class="hw-word__display"><em>Execution.</em></h3>
-          <blockquote class="hw-word__quote">
-            "First site visit to last seating. One team carries it."
-          </blockquote>
+        <p class="j-stage__num">01</p>
+        <h3 class="j-stage__title">The concept.</h3>
+        <p class="j-stage__body">You bring the brand. We listen for what makes it worth traveling for.</p>
+      </article>
+
+      <article class="j-stage" data-stage="2">
+        <div class="j-stage__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+            <path d="M20 6 C13 6, 8 11, 8 18 C8 26, 20 34, 20 34 C20 34, 32 26, 32 18 C32 11, 27 6, 20 6 Z"/>
+            <circle cx="20" cy="18" r="3"/>
+          </svg>
         </div>
-        <div class="hw-word" data-step="2">
-          <span class="hw-word__chapter">Chapter III</span>
-          <h3 class="hw-word__display"><em>Continuity.</em></h3>
-          <blockquote class="hw-word__quote">
-            "Houses, not pop-ups. The second location is earned."
-          </blockquote>
+        <p class="j-stage__num">02</p>
+        <h3 class="j-stage__title">The site.</h3>
+        <p class="j-stage__body">Doha, Lusail, Landmark, Vend&ocirc;me. We know every landlord and every foot count.</p>
+      </article>
+
+      <article class="j-stage" data-stage="3">
+        <div class="j-stage__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 34 L6 18 L20 8 L34 18 L34 34 Z"/>
+            <line x1="6" y1="34" x2="34" y2="34"/>
+            <line x1="16" y1="34" x2="16" y2="24"/>
+            <line x1="24" y1="34" x2="24" y2="24"/>
+            <line x1="16" y1="24" x2="24" y2="24"/>
+          </svg>
         </div>
-      </div>
-      <!-- Progress rail -->
-      <div class="hw-progress" aria-hidden="true">
-        <span class="hw-progress__rail">
-          <span class="hw-progress__fill" id="hwProgressFill"></span>
-        </span>
-        <span class="hw-progress__count"><span id="hwIdx">01</span> <em>/ 03</em></span>
-      </div>
+        <p class="j-stage__num">03</p>
+        <h3 class="j-stage__title">The house.</h3>
+        <p class="j-stage__body">Fit-out, permits, kitchen, staffing. Twenty-four months, one point of contact.</p>
+      </article>
+
+      <article class="j-stage" data-stage="4">
+        <div class="j-stage__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+            <path d="M8 34 L8 12 C8 10, 10 8, 12 8 L28 8 C30 8, 32 10, 32 12 L32 34"/>
+            <line x1="4" y1="34" x2="36" y2="34"/>
+            <circle cx="26" cy="20" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <p class="j-stage__num">04</p>
+        <h3 class="j-stage__title">The opening.</h3>
+        <p class="j-stage__body">Soft launch, then service. We're on the floor for the first hundred covers.</p>
+      </article>
+
+      <article class="j-stage" data-stage="5">
+        <div class="j-stage__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="20" cy="20" r="15"/>
+            <path d="M20 11 L20 20 L27 24"/>
+          </svg>
+        </div>
+        <p class="j-stage__num">05</p>
+        <h3 class="j-stage__title">The long dinner.</h3>
+        <p class="j-stage__body">Years, not seasons. We stay operators &mdash; you stay the brand.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- =============== PULL QUOTE — editorial rhythm break =============== -->
-<section class="pull-quote">
-  <div class="pull-quote__inner">
-    <span class="pull-quote__mark" aria-hidden="true">&ldquo;</span>
-    <blockquote class="pull-quote__body" data-reveal>
-      A restaurant is a room, a rhythm, and a reason to come back.
-      <em>We build all three,</em> then we stay.
-    </blockquote>
-    <span class="pull-quote__attribution">— WOH · House Principle No. 1</span>
+<!-- =============== BY THE NUMBERS — editorial data spread =============== -->
+<section class="ledger">
+  <div class="ledger__inner">
+    <div class="ledger__header" data-reveal>
+      <p class="ledger__eyebrow"><span class="ledger__eyebrow-rule"></span>The Ledger</p>
+      <h2 class="ledger__title">
+        Six years in Doha, <em>on the floor.</em>
+      </h2>
+    </div>
+
+    <div class="ledger__grid">
+      <article class="ledger__cell ledger__cell--wide" data-reveal>
+        <p class="ledger__figure">05</p>
+        <div class="ledger__cell-body">
+          <p class="ledger__label">Houses</p>
+          <p class="ledger__note">Three open, two opening &mdash; each one operated by us, not licensed out.</p>
+        </div>
+      </article>
+
+      <article class="ledger__cell" data-reveal data-reveal-delay="1">
+        <p class="ledger__figure">2019</p>
+        <div class="ledger__cell-body">
+          <p class="ledger__label">First house</p>
+          <p class="ledger__note">G&uuml;nayd&yacute;n Doha, still open.</p>
+        </div>
+      </article>
+
+      <article class="ledger__cell" data-reveal data-reveal-delay="2">
+        <p class="ledger__figure">04<span class="ledger__figure-em">cuisines</span></p>
+        <div class="ledger__cell-body">
+          <p class="ledger__label">Cultures at the pass</p>
+          <p class="ledger__note">Turkish, Indian, Lebanese, Mediterranean &mdash; American burgers next.</p>
+        </div>
+      </article>
+
+      <article class="ledger__cell" data-reveal data-reveal-delay="3">
+        <p class="ledger__figure">03<span class="ledger__figure-em">countries</span></p>
+        <div class="ledger__cell-body">
+          <p class="ledger__label">Brands we've brought to Qatar</p>
+          <p class="ledger__note">Istanbul, Beirut, Barcelona &mdash; without diluting the source.</p>
+        </div>
+      </article>
+
+      <article class="ledger__cell ledger__cell--wide" data-reveal data-reveal-delay="4">
+        <p class="ledger__figure">00</p>
+        <div class="ledger__cell-body">
+          <p class="ledger__label">Concepts closed</p>
+          <p class="ledger__note">Every house we've opened is still trading. We measure success in years, not seasons.</p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
