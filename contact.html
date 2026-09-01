@@ -12,25 +12,58 @@
 </head>
 <body>
 
-<!-- Preloader — 4s cinematic, GSAP-driven -->
+<!-- Preloader — "The Curtain Rises" (2026 rebuild) — theatrical staging in ~3.5s. No bar, no counter. -->
 <div class="preloader" id="preloader" aria-hidden="true">
-  <div class="preloader__inner">
-    <div class="preloader__top">
-      <span class="preloader__label">World of Hospitality</span>
-      <span class="preloader__location">Doha · QA</span>
-    </div>
-    <div class="preloader__center">
-      <img class="preloader__logo" src="images/woh-logo.png" alt="">
-    </div>
-    <div class="preloader__bottom">
-      <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
-      <div class="preloader__counter-wrap">
-        <span class="preloader__counter" id="preCounter">00</span>
-        <span class="preloader__counter-sep">/</span>
-        <span class="preloader__counter-max">100</span>
-      </div>
+  <!-- Corner marks — like camera framing marks / theatre proscenium corners -->
+  <span class="preloader__corner preloader__corner--tl"></span>
+  <span class="preloader__corner preloader__corner--tr"></span>
+  <span class="preloader__corner preloader__corner--bl"></span>
+  <span class="preloader__corner preloader__corner--br"></span>
+
+  <!-- Top-strip label (fades in during phase 3) -->
+  <div class="preloader__strip preloader__strip--top">
+    <span class="preloader__strip-tag">World of Hospitality</span>
+    <span class="preloader__strip-dot"></span>
+    <span class="preloader__strip-tag preloader__strip-tag--muted">Doha · QA</span>
+  </div>
+
+  <!-- Two brass curtain lines that expand from the center then split apart -->
+  <div class="preloader__curtain preloader__curtain--upper" aria-hidden="true"></div>
+  <div class="preloader__curtain preloader__curtain--lower" aria-hidden="true"></div>
+
+  <!-- Center stage: the real WOH logo + italic tagline -->
+  <div class="preloader__stage">
+    <img class="preloader__mark" src="images/woh-logo.png" alt="World of Hospitality">
+    <p class="preloader__tagline"><em>The Houses</em> of Doha</p>
+  </div>
+
+  <!-- Bottom marquee — the whole portfolio in one drifting line -->
+  <div class="preloader__marquee" aria-hidden="true">
+    <div class="preloader__marquee-track">
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#C4965B"></i>Günaydın</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#D97757"></i>Kumar</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#9B3833"></i>Al Beiruti</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#014131"></i>Eleven Green</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#E8B4A0"></i>Brunch &amp; Cake</span>
+      <span class="pm-brand-sep">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#C4965B"></i>Günaydın</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#D97757"></i>Kumar</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#9B3833"></i>Al Beiruti</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#014131"></i>Eleven Green</span>
+      <span class="pm-brand-sep">·</span>
+      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#E8B4A0"></i>Brunch &amp; Cake</span>
+      <span class="pm-brand-sep">·</span>
     </div>
   </div>
+
   <div class="preloader__veil"></div>
 </div>
 
@@ -141,19 +174,19 @@
           <h3>Head office</h3>
           <dl>
             <div>
-              <dt><svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Address</dt>
+              <dt><svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Address</dt>
               <dd>Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha, Qatar</dd>
             </div>
             <div>
-              <dt><svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>Phone</dt>
+              <dt><svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>Phone</dt>
               <dd><a href="tel:+97470323311">+974 7032 3311</a></dd>
             </div>
             <div>
-              <dt><svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</dt>
+              <dt><svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</dt>
               <dd><a href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a></dd>
             </div>
             <div>
-              <dt><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Hours</dt>
+              <dt><svg class="icon" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Hours</dt>
               <dd>Sunday – Thursday · 9am – 6pm AST</dd>
             </div>
             <div>
@@ -161,10 +194,10 @@
               <dd>
                 <div class="social-row" style="margin:0;">
                   <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener" aria-label="LinkedIn">
-                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
                   </a>
                   <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener" aria-label="Instagram">
-                    <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                   </a>
                 </div>
               </dd>
@@ -213,10 +246,10 @@
       <h4>Follow</h4>
       <div class="social-row">
         <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
         </a>
         <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
       </div>
     </div>
