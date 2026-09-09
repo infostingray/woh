@@ -3,618 +3,269 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>World of Hospitality — Restaurants that earn the seat at the table.</title>
-<meta name="description" content="World of Hospitality manages and develops premium F&amp;B brands across Qatar. From concept to last seating — we run the whole house.">
+<title>World of Hospitality</title>
+<meta name="description" content="World of Hospitality operates five restaurant houses in Doha. Günaydın, Kumar, Al Beiruti, Eleven Green, Brunch &amp; Cake.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/home.css">
 </head>
-<body>
+<body class="is-loading">
 
-<!-- Preloader — "The Curtain Rises" (2026 rebuild) — theatrical staging in ~3.5s. No bar, no counter. -->
-<div class="preloader" id="preloader" aria-hidden="true">
-  <!-- Corner marks — like camera framing marks / theatre proscenium corners -->
-  <span class="preloader__corner preloader__corner--tl"></span>
-  <span class="preloader__corner preloader__corner--tr"></span>
-  <span class="preloader__corner preloader__corner--bl"></span>
-  <span class="preloader__corner preloader__corner--br"></span>
-
-  <!-- Two brass curtain lines that expand from the center then split apart -->
-  <div class="preloader__curtain preloader__curtain--upper" aria-hidden="true"></div>
-  <div class="preloader__curtain preloader__curtain--lower" aria-hidden="true"></div>
-
-  <!-- Center stage: the real WOH logo + italic tagline -->
-  <div class="preloader__stage">
-    <img class="preloader__mark" src="images/woh-logo.png" alt="World of Hospitality">
-    <p class="preloader__tagline"><em>The Houses</em> of Doha</p>
-  </div>
-
-  <!-- Bottom marquee — the whole portfolio in one drifting line -->
-  <div class="preloader__marquee" aria-hidden="true">
-    <div class="preloader__marquee-track">
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#C4965B"></i>Günaydın</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#D97757"></i>Kumar</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#9B3833"></i>Al Beiruti</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#014131"></i>Eleven Green</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#E8B4A0"></i>Brunch &amp; Cake</span>
-      <span class="pm-brand-sep">·</span>
-      <!-- duplicate for seamless loop -->
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#C4965B"></i>Günaydın</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#D97757"></i>Kumar</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#9B3833"></i>Al Beiruti</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#014131"></i>Eleven Green</span>
-      <span class="pm-brand-sep">·</span>
-      <span class="pm-brand"><i class="pm-brand-dot" style="--bc:#E8B4A0"></i>Brunch &amp; Cake</span>
-      <span class="pm-brand-sep">·</span>
-    </div>
-  </div>
-
-  <div class="preloader__veil"></div>
+<!-- Load veil: one orchestrated moment, then the page -->
+<div class="veil" id="veil" aria-hidden="true">
+  <img class="veil__mark" src="images/woh-logo.png" alt="" width="180" height="60">
 </div>
 
-<!-- Scroll progress -->
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<!-- =============== NAV =============== -->
-<header class="nav">
+<header class="nav" id="nav">
   <a href="index.html" class="nav__brand" aria-label="World of Hospitality home">
-    <img src="images/woh-logo.png" alt="World of Hospitality" class="nav__logo">
+    <img src="images/woh-logo.png" alt="World of Hospitality" class="nav__logo" width="150" height="50">
   </a>
-  <nav>
-    <ul class="nav__links">
-      <li><a href="index.html"       data-page="index.html">Home</a></li>
-      <li><a href="about.html"       data-page="about.html">About</a></li>
-      <li><a href="brands.html"      data-page="brands.html">Brands</a></li>
-      <li><a href="careers.html"      data-page="careers.html">Careers</a></li>
-        <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
-  <a href="partnerships.html" class="nav__cta nav__cta--partner">Partner with us</a>
-  <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
-  <div class="nav__panel">
-    <a href="index.html">Home</a>
+  <nav class="nav__links" aria-label="Primary">
     <a href="about.html">About</a>
-    <a href="brands.html">Brands</a>
+    <a href="brands.html">Houses</a>
     <a href="careers.html">Careers</a>
     <a href="contact.html">Contact</a>
-    <a href="partnerships.html" class="nav__panel-cta">Partner with us <span class="arr">→</span></a>
-  </div>
+  </nav>
+  <a href="partnerships.html" class="nav__cta">Partner with us</a>
+  <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
 </header>
 
-<!-- =============== HERO — Full-bleed cinematic video stage =============== -->
-<section class="hero" id="hero">
-  <div class="hero__stage" id="heroStage">
-    <!-- 5 stacked video layers; only one is active at a time.
-         Order = opening chronology: Günaydın, Kumar, Al Beiruti (open) → Eleven Green, Brunch & Cake (coming). -->
-    <div class="hero__video-wrap is-active" data-brand="gunaydin" data-num="01" data-cuisine="Doha · Turkish" data-status="Open">
-      <video class="hero__video" muted loop playsinline autoplay preload="auto"
-        poster="https://images.unsplash.com/photo-1544025162-d76694265947?w=2000&auto=format&fit=crop&q=85">
-        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Gunaydin-Website-Video-1-1.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero__video-wrap" data-brand="kumar" data-num="02" data-cuisine="Doha · Indian" data-status="Open">
-      <video class="hero__video" muted loop playsinline preload="metadata"
-        poster="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=2000&auto=format&fit=crop&q=85">
-        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Kumar-Website-Video-1-1.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero__video-wrap" data-brand="al-beiruti" data-num="03" data-cuisine="Doha · Lebanese" data-status="Just opened">
-      <video class="hero__video" muted loop playsinline preload="metadata"
-        poster="images/brands/al-beiruti-mezze.jpg">
-        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero__video-wrap" data-brand="eleven-green" data-num="04" data-cuisine="Doha · Burgers" data-status="Opening soon">
-      <video class="hero__video" muted loop playsinline preload="metadata"
-        poster="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=2000&auto=format&fit=crop&q=85">
-        <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/05/IMG_7763-1.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero__video-wrap" data-brand="brunch-cake" data-num="05" data-cuisine="Doha · All-day" data-status="Late 2026">
-      <video class="hero__video" muted loop playsinline preload="metadata"
-        poster="https://brunchandcake.com/wp-content/uploads/2024/12/brunchandcake-barcelona-restaurant-franchise-spain-rosello.jpg">
-      </video>
-    </div>
-    <!-- Vignette overlay for legibility -->
-    <div class="hero__vignette"></div>
-  </div>
+<div class="menu" id="menu" aria-hidden="true">
+  <nav class="menu__links" aria-label="Mobile">
+    <a href="about.html">About</a>
+    <a href="brands.html">Houses</a>
+    <a href="careers.html">Careers</a>
+    <a href="contact.html">Contact</a>
+    <a href="partnerships.html">Partner with us</a>
+  </nav>
+  <p class="menu__foot">Landmark Mall, Doha<br>+974 7032 3311</p>
+</div>
 
-  <!-- CENTER — massive overlay headline with mix-blend-mode -->
-  <div class="hero__overlay">
-    <div class="hero__overlay-eyebrow hero__overlay-eyebrow--asym">
-      <span class="hero__overlay-line hero__overlay-line--left"></span>
-      <span class="hero__overlay-chapter">No. 01</span>
-      <span class="hero__overlay-em">·</span>
-      <span class="hero__overlay-vol"><em>The Houses of</em> Doha</span>
-    </div>
-    <h1 class="hero__overlay-headline">
-      Restaurants you<br><em>return</em> to.
-    </h1>
-    <p class="hero__overlay-lede">Five houses. <em>Five reasons.</em> All in Doha.</p>
-  </div>
+<!-- ============ HERO: the house atlas ============ -->
+<section class="atlas" id="atlas">
+  <div class="atlas__stage">
 
-  <!-- BOTTOM — brand markers (all 5 always visible) -->
-  <div class="hero__markers" id="heroMarkers">
-    <button class="marker is-active" data-index="0" data-brand="gunaydin" aria-label="Switch to Günaydın">
-      <span class="marker__num">01</span>
-      <span class="marker__name">Günaydın</span>
-      <span class="marker__cuisine">Doha · Turkish</span>
-      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
-    </button>
-    <button class="marker" data-index="1" data-brand="kumar" aria-label="Switch to Kumar">
-      <span class="marker__num">02</span>
-      <span class="marker__name">Kumar</span>
-      <span class="marker__cuisine">Doha · Indian</span>
-      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
-    </button>
-    <button class="marker" data-index="2" data-brand="al-beiruti" aria-label="Switch to Al Beiruti">
-      <span class="marker__num">03</span>
-      <span class="marker__name">Al Beiruti</span>
-      <span class="marker__cuisine">Doha · Lebanese</span>
-      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
-    </button>
-    <button class="marker" data-index="3" data-brand="eleven-green" aria-label="Switch to Eleven Green">
-      <span class="marker__num">04</span>
-      <span class="marker__name">Eleven Green</span>
-      <span class="marker__cuisine">Doha · Burgers</span>
-      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
-    </button>
-    <button class="marker" data-index="4" data-brand="brunch-cake" aria-label="Switch to Brunch &amp; Cake">
-      <span class="marker__num">05</span>
-      <span class="marker__name">Brunch &amp; Cake</span>
-      <span class="marker__cuisine">Doha · All-day</span>
-      <span class="marker__bar"><span class="marker__bar-fill"></span></span>
-    </button>
-  </div>
-
-</section>
-
-
-<!-- =============== HOW WE WORK — Editorial journey (5 real stages) =============== -->
-<section class="journey" id="howwework">
-  <div class="journey__intro">
-    <p class="eyebrow" data-reveal>The Journey</p>
-    <h2 class="journey__title" data-reveal data-reveal-delay="1">
-      From <em>first conversation</em><br>to last seating.
-    </h2>
-    <p class="journey__lede" data-reveal data-reveal-delay="2">
-      Every house we operate travels the same road. It's not a formula. It's a discipline.
-    </p>
-  </div>
-
-  <!-- The road: 5 stages plotted along a continuous horizontal hairline -->
-  <div class="journey__rail" data-reveal>
-    <div class="journey__line" aria-hidden="true">
-      <span class="journey__line-fill" id="journeyFill"></span>
+    <div class="atlas__film">
+      <div class="atlas__house is-active" data-house="0">
+        <video muted loop playsinline autoplay preload="auto" poster="images/brands/gunaydin-1.jpg">
+          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Gunaydin-Website-Video-1-1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="atlas__house" data-house="1">
+        <video muted loop playsinline preload="metadata" poster="images/brands/kumar-1.jpg">
+          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/Kumar-Website-Video-1-1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="atlas__house" data-house="2">
+        <video muted loop playsinline preload="metadata" poster="images/brands/al-beiruti-spread.jpg">
+          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/03/IMG_5377-3.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="atlas__house" data-house="3">
+        <video muted loop playsinline preload="metadata" poster="images/brands/eleven-green.jpg">
+          <source src="https://worldofhospitality.com.qa/wp-content/uploads/2026/05/IMG_7763-1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="atlas__house atlas__house--still" data-house="4">
+        <img src="https://brunchandcake.com/wp-content/uploads/2024/12/brunchandcake-barcelona-restaurant-franchise-spain-rosello.jpg" alt="" loading="lazy">
+      </div>
+      <div class="atlas__grade"></div>
     </div>
 
-    <div class="journey__stages">
-      <article class="j-stage" data-stage="1">
-        <div class="j-stage__icon" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
-            <circle cx="20" cy="20" r="15"/>
-            <circle cx="20" cy="20" r="3"/>
-            <line x1="20" y1="5" x2="20" y2="8"/>
-            <line x1="20" y1="32" x2="20" y2="35"/>
-            <line x1="5" y1="20" x2="8" y2="20"/>
-            <line x1="32" y1="20" x2="35" y2="20"/>
-          </svg>
-        </div>
-        <h3 class="j-stage__title">The concept.</h3>
-        <p class="j-stage__body">You bring the brand. We listen for what makes it worth traveling for.</p>
-      </article>
+    <!-- Act 0: the headline -->
+    <div class="atlas__intro" id="atlasIntro">
+      <h1 class="atlas__headline">
+        <span class="line"><span>Restaurants</span></span>
+        <span class="line"><span>you return to.</span></span>
+      </h1>
+      <p class="atlas__lede"><span>Five houses in Doha. One standard, kept nightly.</span></p>
+    </div>
 
-      <article class="j-stage" data-stage="2">
-        <div class="j-stage__icon" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
-            <path d="M20 6 C13 6, 8 11, 8 18 C8 26, 20 34, 20 34 C20 34, 32 26, 32 18 C32 11, 27 6, 20 6 Z"/>
-            <circle cx="20" cy="18" r="3"/>
-          </svg>
-        </div>
-        <h3 class="j-stage__title">The site.</h3>
-        <p class="j-stage__body">Doha, Lusail, Landmark, Vend&ocirc;me. We know every landlord and every foot count.</p>
-      </article>
+    <!-- Acts 1 to 5: the houses -->
+    <div class="atlas__names" aria-live="polite">
+      <div class="atlas__name" data-house="0">
+        <span class="atlas__name-text">Günaydın</span>
+        <span class="atlas__name-meta">Turkish grill house, from Istanbul. Open.</span>
+      </div>
+      <div class="atlas__name" data-house="1">
+        <span class="atlas__name-text">Kumar</span>
+        <span class="atlas__name-meta">Indian, with MK Group provenance. Open.</span>
+      </div>
+      <div class="atlas__name" data-house="2">
+        <span class="atlas__name-text">Al Beiruti</span>
+        <span class="atlas__name-meta">Beirut as it should be. Just opened.</span>
+      </div>
+      <div class="atlas__name" data-house="3">
+        <span class="atlas__name-text">Eleven Green</span>
+        <span class="atlas__name-meta">The Bull Burger, from Dubai. Opening soon.</span>
+      </div>
+      <div class="atlas__name" data-house="4">
+        <span class="atlas__name-text">Brunch &amp; Cake</span>
+        <span class="atlas__name-meta">Barcelona, since 2010. Late 2026.</span>
+      </div>
+    </div>
 
-      <article class="j-stage" data-stage="3">
-        <div class="j-stage__icon" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 34 L6 18 L20 8 L34 18 L34 34 Z"/>
-            <line x1="6" y1="34" x2="34" y2="34"/>
-            <line x1="16" y1="34" x2="16" y2="24"/>
-            <line x1="24" y1="34" x2="24" y2="24"/>
-            <line x1="16" y1="24" x2="24" y2="24"/>
-          </svg>
-        </div>
-        <h3 class="j-stage__title">The house.</h3>
-        <p class="j-stage__body">Fit-out, permits, kitchen, staffing. Twenty-four months, one point of contact.</p>
-      </article>
+    <!-- Index: five hairlines, the active one fills -->
+    <ol class="atlas__index" id="atlasIndex">
+      <li data-house="0"><button type="button">Günaydın</button></li>
+      <li data-house="1"><button type="button">Kumar</button></li>
+      <li data-house="2"><button type="button">Al Beiruti</button></li>
+      <li data-house="3"><button type="button">Eleven Green</button></li>
+      <li data-house="4"><button type="button">Brunch &amp; Cake</button></li>
+    </ol>
 
-      <article class="j-stage" data-stage="4">
-        <div class="j-stage__icon" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
-            <path d="M8 34 L8 12 C8 10, 10 8, 12 8 L28 8 C30 8, 32 10, 32 12 L32 34"/>
-            <line x1="4" y1="34" x2="36" y2="34"/>
-            <circle cx="26" cy="20" r="1.5" fill="currentColor"/>
-          </svg>
-        </div>
-        <h3 class="j-stage__title">The opening.</h3>
-        <p class="j-stage__body">Soft launch, then service. We're on the floor for the first hundred covers.</p>
-      </article>
-
-      <article class="j-stage" data-stage="5">
-        <div class="j-stage__icon" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="20" cy="20" r="15"/>
-            <path d="M20 11 L20 20 L27 24"/>
-          </svg>
-        </div>
-        <h3 class="j-stage__title">The long dinner.</h3>
-        <p class="j-stage__body">Years, not seasons. We stay operators. You stay the brand.</p>
-      </article>
+    <div class="atlas__scroll" id="atlasScroll" aria-hidden="true">
+      <span>Scroll</span>
+      <i></i>
     </div>
   </div>
 </section>
 
-<!-- =============== BY THE NUMBERS — editorial data spread =============== -->
-<section class="ledger">
-  <div class="ledger__inner">
-    <div class="ledger__header" data-reveal>
-      <p class="ledger__eyebrow"><span class="ledger__eyebrow-rule"></span>The Ledger</p>
-      <h2 class="ledger__title">
-        Six years in Doha, <em>on the floor.</em>
-      </h2>
-    </div>
+<!-- ============ STATEMENT ============ -->
+<section class="statement" id="about">
+  <p class="statement__text" data-split>
+    We are operators, not licensors. Every house carries our name on the lease, our people on the floor, and our standard on the plate. We bring a brand from its city to Doha and keep it exactly what it was, only here.
+  </p>
+</section>
 
-    <div class="ledger__grid">
-      <article class="ledger__cell ledger__cell--wide" data-reveal>
-        <p class="ledger__figure">05</p>
-        <div class="ledger__cell-body">
-          <p class="ledger__label">Houses</p>
-          <p class="ledger__note">Three open, two opening. Each one operated by us, not licensed out.</p>
-        </div>
-      </article>
+<!-- ============ JOURNEY ============ -->
+<section class="journey" id="journey">
+  <div class="journey__head">
+    <h2 class="journey__title">From first conversation<br>to last seating.</h2>
+    <p class="journey__lede">Every house travels the same road. Not a formula, a discipline.</p>
+  </div>
+  <ol class="journey__list" id="journeyList">
+    <li class="journey__stage">
+      <h3>The concept</h3>
+      <p>You bring the brand. We listen for what makes it worth travelling for.</p>
+    </li>
+    <li class="journey__stage">
+      <h3>The site</h3>
+      <p>Doha, Lusail, Landmark, Vendôme. We know every landlord and every foot count.</p>
+    </li>
+    <li class="journey__stage">
+      <h3>The house</h3>
+      <p>Fit-out, permits, kitchen, staffing. Twenty-four months, one point of contact.</p>
+    </li>
+    <li class="journey__stage">
+      <h3>The opening</h3>
+      <p>Soft launch, then service. We are on the floor for the first hundred covers.</p>
+    </li>
+    <li class="journey__stage">
+      <h3>The long dinner</h3>
+      <p>Years, not seasons. We stay operators. You stay the brand.</p>
+    </li>
+  </ol>
+</section>
 
-      <article class="ledger__cell" data-reveal data-reveal-delay="1">
-        <p class="ledger__figure">2019</p>
-        <div class="ledger__cell-body">
-          <p class="ledger__label">First house</p>
-          <p class="ledger__note">GG&uuml;nayd&#305;naydG&uuml;nayd&#305;n Doha, still open.</p>
-        </div>
-      </article>
-
-      <article class="ledger__cell" data-reveal data-reveal-delay="2">
-        <p class="ledger__figure">04<span class="ledger__figure-em">cuisines</span></p>
-        <div class="ledger__cell-body">
-          <p class="ledger__label">Cultures at the pass</p>
-          <p class="ledger__note">Turkish, Indian, Lebanese, Mediterranean. American burgers next.</p>
-        </div>
-      </article>
-
-      <article class="ledger__cell" data-reveal data-reveal-delay="3">
-        <p class="ledger__figure">03<span class="ledger__figure-em">countries</span></p>
-        <div class="ledger__cell-body">
-          <p class="ledger__label">Brands we've brought to Qatar</p>
-          <p class="ledger__note">Istanbul, Beirut, Barcelona, without diluting the source.</p>
-        </div>
-      </article>
-
-      <article class="ledger__cell ledger__cell--wide" data-reveal data-reveal-delay="4">
-        <p class="ledger__figure">00</p>
-        <div class="ledger__cell-body">
-          <p class="ledger__label">Concepts closed</p>
-          <p class="ledger__note">Every house we've opened is still trading. We measure success in years, not seasons.</p>
-        </div>
-      </article>
-    </div>
+<!-- ============ LEDGER: one typographic line ============ -->
+<section class="ledger" id="ledger">
+  <div class="ledger__row">
+    <div class="ledger__item"><span class="ledger__num" data-count="5">0</span><span class="ledger__lab">houses in Doha</span></div>
+    <div class="ledger__item"><span class="ledger__num" data-count="2019">2000</span><span class="ledger__lab">first house, still open</span></div>
+    <div class="ledger__item"><span class="ledger__num" data-count="4">0</span><span class="ledger__lab">cuisines at the pass</span></div>
+    <div class="ledger__item"><span class="ledger__num" data-count="3">0</span><span class="ledger__lab">countries brought to Qatar</span></div>
+    <div class="ledger__item"><span class="ledger__num" data-count="0">0</span><span class="ledger__lab">concepts closed</span></div>
   </div>
 </section>
 
-<!-- =============== BRANDS — Horizontal pinned scroll =============== -->
-<section class="brands-h" id="brandsH">
-  <div class="brands-h__pin">
-    <div class="brands-h__head">
-      <div>
-        <p class="brands-h__eyebrow" data-reveal>The Houses</p>
-        <h2 style="margin:0.5rem 0 0; font-size:clamp(2rem, 4vw, 3.5rem); line-height:1; letter-spacing:-0.01em; font-weight:400;" data-reveal data-reveal-delay="1">Five houses. <em style="color:var(--brass); font-style:italic;">One</em> standard.</h2>
-        <!-- Creative drag hint — left-aligned beneath the section title, above the first card -->
-        <div class="brands-h__hint" id="brandsHint" aria-hidden="true">
-          <span class="brands-h__hint-rail">
-            <span class="brands-h__hint-dot"></span>
-          </span>
-          <span class="brands-h__hint-text">Drag to traverse</span>
-        </div>
-      </div>
-      <p class="brands-h__count"><span id="brandsHIdx"><strong>01</strong></span> / 05 <span style="color:var(--brass);">+</span></p>
-    </div>
-    <div class="brands-h__track-wrap">
-      <div class="brands-h__track" id="brandsHTrack">
-        <a href="brands.html#gunaydin" class="brand-slide" data-cursor="View" data-brand="gunaydin">
-          <div class="brand-slide__media">
-            <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&auto=format&fit=crop&q=85');"></div>
-            <span class="brand-slide__num">Turkish Steakhouse</span>
-            <span class="brand-slide__tag">Open</span>
-          </div>
-          <div class="brand-slide__footer">
-            <div class="brand-slide__title-block">
-              <h3 class="brand-slide__name">Günaydın</h3>
-              <p class="brand-slide__desc">A grill house from Istanbul. Charcoal, butter, salt. Open in Doha.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="brands.html#kumar" class="brand-slide" data-cursor="View" data-brand="kumar">
-          <div class="brand-slide__media">
-            <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1400&auto=format&fit=crop&q=85');"></div>
-            <span class="brand-slide__num">Doha · Indian</span>
-            <span class="brand-slide__tag">Open</span>
-          </div>
-          <div class="brand-slide__footer">
-            <div class="brand-slide__title-block">
-              <h3 class="brand-slide__name">Kumar</h3>
-              <p class="brand-slide__desc">Doha · Indian with MK Group provenance. Open in Doha.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="brands.html#al-beiruti" class="brand-slide" data-cursor="View" data-brand="al-beiruti">
-          <div class="brand-slide__media">
-            <div class="brand-slide__img" style="background-image:url('images/brands/al-beiruti-spread.jpg');"></div>
-            <span class="brand-slide__num">Lebanese · Levantine</span>
-            <span class="brand-slide__tag">Now Open</span>
-          </div>
-          <div class="brand-slide__footer">
-            <div class="brand-slide__title-block">
-              <h3 class="brand-slide__name">Al Beiruti</h3>
-              <p class="brand-slide__desc">Beirut as it should be. Mezze, mangal, mountain wines. Now open in Doha.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="brands.html#eleven-green" class="brand-slide" data-cursor="Preview" data-brand="eleven-green">
-          <div class="brand-slide__media">
-            <div class="brand-slide__img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1400&auto=format&fit=crop&q=85'); background-color:#014131;"></div>
-            <span class="brand-slide__num">Doha · Burgers</span>
-            <span class="brand-slide__tag" style="color:var(--brass);">Opening soon</span>
-          </div>
-          <div class="brand-slide__footer">
-            <div class="brand-slide__title-block">
-              <h3 class="brand-slide__name">Eleven Green</h3>
-              <p class="brand-slide__desc">The Bull Burger, fries, and a few smart sides. From Dubai, days from Doha.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="brands.html#brunch-cake" class="brand-slide" data-cursor="Preview" data-brand="brunch-cake">
-          <div class="brand-slide__media">
-            <div class="brand-slide__img" style="background-image:url('https://brunchandcake.com/wp-content/uploads/2024/12/brunchandcake-barcelona-restaurant-franchise-spain-rosello.jpg'); background-color:#E8B4A0;"></div>
-            <span class="brand-slide__num">All-day · Mediterranean</span>
-            <span class="brand-slide__tag" style="color:var(--brass);">Late 2026</span>
-          </div>
-          <div class="brand-slide__footer">
-            <div class="brand-slide__title-block">
-              <h3 class="brand-slide__name">Brunch &amp; Cake</h3>
-              <p class="brand-slide__desc">Born in Barcelona, 2010. Grandma's goodness, thoughtfully served. Coming to Doha end of year.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-
-        <!-- 6th "More concepts ahead" teaser slide — signals expanding portfolio -->
-        <a href="partnerships.html" class="brand-slide brand-slide--more" data-cursor="Partner with us">
-          <div class="brand-slide__media">
-            <div class="brand-slide__more-bg"></div>
-            <div class="brand-slide__more-content">
-              <span class="brand-slide__more-plus">+</span>
-              <p class="brand-slide__more-label">More to come</p>
-            </div>
-          </div>
-          <div class="brand-slide__body">
-            <div>
-              <span class="brand-slide__num">06 +</span>
-              <h3 class="brand-slide__name">More houses ahead</h3>
-              <p class="brand-slide__desc">New concepts in development across Doha. Partner with us to bring yours next.</p>
-            </div>
-            <span class="brand-slide__arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
-            </span>
-          </div>
-        </a>
-      </div>
-    </div>
+<!-- ============ JUST OPENED ============ -->
+<section class="opened" id="opened">
+  <div class="opened__media">
+    <img src="images/brands/al-beiruti-mezze.jpg" alt="Al Beiruti mezze" loading="lazy">
+  </div>
+  <div class="opened__copy">
+    <p class="opened__status">Now serving</p>
+    <h2 class="opened__title">Al Beiruti</h2>
+    <p class="opened__text">A long table for the city. Mezze the old way, bread from the saj every twelve minutes, charcoal until late.</p>
+    <dl class="opened__facts">
+      <div><dt>180</dt><dd>seats, long table and terrace</dd></div>
+      <div><dt>4</dt><dd>charcoal grills, open until late</dd></div>
+      <div><dt>Daily</dt><dd>lunch and dinner</dd></div>
+    </dl>
+    <a href="brands.html#al-beiruti" class="link">Visit the house</a>
   </div>
 </section>
 
-<!-- =============== GALLERY — Horizontal scroll strip =============== -->
-<section class="gallery-strip">
-  <div class="container">
-    <div class="gallery-strip__header">
-      <p class="eyebrow" data-reveal>Inside the Rooms</p>
-      <h2 data-reveal data-reveal-delay="1">Plate, fire, light, hand.</h2>
-    </div>
-  </div>
-  <div class="gallery-strip__track-wrap" data-reveal>
-    <div class="gallery-strip__track">
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>01</span>The Room</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>02</span>The Plate</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>03</span>The Hand</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>04</span>The Pour</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>05</span>The Fire</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>06</span>The Table</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>07</span>The Char</figcaption>
-      </figure>
-      <figure class="gs-cell">
-        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&auto=format&fit=crop&q=85" alt="">
-        <figcaption><span>08</span>The Mezze</figcaption>
-      </figure>
-    </div>
-  </div>
+<!-- ============ HOUSES INDEX ============ -->
+<section class="houses" id="houses">
+  <a class="houses__row" href="brands.html#gunaydin">
+    <span class="houses__name">Günaydın</span>
+    <span class="houses__type">Turkish grill</span>
+    <span class="houses__status">Open</span>
+  </a>
+  <a class="houses__row" href="brands.html#kumar">
+    <span class="houses__name">Kumar</span>
+    <span class="houses__type">Indian</span>
+    <span class="houses__status">Open</span>
+  </a>
+  <a class="houses__row" href="brands.html#al-beiruti">
+    <span class="houses__name">Al Beiruti</span>
+    <span class="houses__type">Lebanese</span>
+    <span class="houses__status">Just opened</span>
+  </a>
+  <a class="houses__row" href="brands.html#eleven-green">
+    <span class="houses__name">Eleven Green</span>
+    <span class="houses__type">Burgers</span>
+    <span class="houses__status">Opening soon</span>
+  </a>
+  <a class="houses__row" href="brands.html#brunch-cake">
+    <span class="houses__name">Brunch &amp; Cake</span>
+    <span class="houses__type">All-day, Mediterranean</span>
+    <span class="houses__status">Late 2026</span>
+  </a>
+  <a class="houses__row houses__row--next" href="partnerships.html">
+    <span class="houses__name">The next house</span>
+    <span class="houses__type">Yours, if it belongs here</span>
+    <span class="houses__status">Talk to us</span>
+  </a>
 </section>
 
-<!-- =============== JUST OPENED — Al Beiruti launch celebration =============== -->
-<section class="just-opened" data-reveal>
-  <div class="just-opened__media">
-    <img class="just-opened__img" src="images/brands/al-beiruti-mezze.jpg" alt="Al Beiruti Lebanese mezze spread">
-    <span class="just-opened__badge" aria-hidden="true">
-      <span class="just-opened__badge-dot"></span>
-      <span class="just-opened__badge-text">Now Open</span>
-    </span>
-  </div>
-  <div class="just-opened__overlay"></div>
-  <div class="just-opened__inner">
-    <div class="just-opened__head">
-      <div>
-        <p class="eyebrow" style="color:var(--brass);" data-reveal>Just Opened</p>
-        <h2 data-reveal data-reveal-delay="1">Al Beiruti, <em>open</em>.</h2>
-      </div>
-      <div data-reveal data-reveal-delay="2">
-        <p>A long table for the city. Mezze the old way, bread out of the saj every twelve minutes, charcoal until late. Now serving in Doha.</p>
-        <div class="just-opened__cta-row" style="margin-top:1.75rem;">
-          <a href="contact.html" class="btn btn--light">Book a table <span class="arr">→</span></a>
-          <a href="brands.html#al-beiruti" class="btn btn--ghost">Explore the house <span class="arr">→</span></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="opening-facts" data-reveal>
-      <div class="op-fact">
-        <p class="op-fact__num">180+</p>
-        <h4>Seats</h4>
-        <p>Long table &amp; terrace</p>
-      </div>
-      <div class="op-fact">
-        <p class="op-fact__num">12<em>min</em></p>
-        <h4>Saj bread</h4>
-        <p>Fresh, all evening</p>
-      </div>
-      <div class="op-fact">
-        <p class="op-fact__num">04</p>
-        <h4>Charcoal grills</h4>
-        <p>Open until late</p>
-      </div>
-      <div class="op-fact">
-        <p class="op-fact__num">Daily</p>
-        <h4>Now serving</h4>
-        <p>Lunch &amp; dinner</p>
-      </div>
-    </div>
-  </div>
+<!-- ============ CLOSE ============ -->
+<section class="close" id="close">
+  <p class="close__lines">
+    <span class="line"><span>We do not chase trends.</span></span>
+    <span class="line"><span>We keep houses.</span></span>
+    <span class="line"><span>And we stay for the long dinner.</span></span>
+  </p>
+  <a href="partnerships.html" class="close__cta">Start the conversation</a>
 </section>
 
-<!-- =============== SIGNATURE — the manifesto close =============== -->
-<section class="signature">
-  <div class="signature__inner">
-    <p class="signature__eyebrow" data-reveal>Signature</p>
-
-    <div class="signature__lines" data-reveal data-reveal-delay="1">
-      <p class="signature__line signature__line--1">We do not chase trends.</p>
-      <p class="signature__line signature__line--2">We <em>curate</em> houses.</p>
-      <p class="signature__line signature__line--3">And we stay for the long dinner.</p>
-    </div>
-
-    <div class="signature__foot" data-reveal data-reveal-delay="2">
-      <span class="signature__rule" aria-hidden="true"></span>
-      <div class="signature__cta-block">
-        <p class="signature__cta-label">If your brand belongs here,</p>
-        <a href="partnerships.html" class="signature__cta-link">start the conversation <span class="arr">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== FOOTER =============== -->
 <footer class="foot">
-  <div class="foot__inner">
-    <div class="foot__brand-block">
-      <div class="foot__brand-display">
-        <img src="images/woh-logo.png" alt="World of Hospitality" class="foot__logo">
-        <small>F&amp;B Management · Doha · QA</small>
-      </div>
-      <p class="foot__tag">Five houses. One standard. Doha.</p>
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <img src="images/woh-logo.png" alt="World of Hospitality" width="150" height="50">
+      <p>Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha, Qatar</p>
     </div>
-    <div>
-      <h4>Explore</h4>
-      <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="brands.html">Our Brands</a></li>
-        <li><a href="careers.html">Careers</a></li>
-      </ul>
+    <div class="foot__col">
+      <a href="about.html">About</a>
+      <a href="brands.html">Houses</a>
+      <a href="careers.html">Careers</a>
+      <a href="partnerships.html">Partnerships</a>
     </div>
-    <div>
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="tel:+97470323311">+974 7032 3311</a></li>
-        <li><a href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a></li>
-        <li style="opacity:0.6; margin-top:0.5rem;">Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha</li>
-      </ul>
+    <div class="foot__col">
+      <a href="tel:+97470323311">+974 7032 3311</a>
+      <a href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a>
+      <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener">LinkedIn</a>
     </div>
-    <div>
-      <h4>Follow</h4>
-      <div class="social-row">
-        <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-      </div>
-      <h4 style="margin-top:1.5rem;">Affiliations</h4>
-      <ul>
-        <li><a href="https://www.mkgroup.com.kw/" target="_blank" rel="noopener">MK Group</a></li>
-        <li><a href="https://gunaydinet.com/" target="_blank" rel="noopener">Günaydın Et</a></li>
-      </ul>
+    <div class="foot__col">
+      <a href="https://www.mkgroup.com.kw/" target="_blank" rel="noopener">MK Group</a>
+      <a href="https://gunaydinet.com/" target="_blank" rel="noopener">Günaydın Et</a>
     </div>
   </div>
   <div class="foot__bottom">
-    <span>© <span data-year>2026</span> World of Hospitality. All rights reserved.</span>
+    <span>© <span data-year>2026</span> World of Hospitality</span>
     <span>Doha, Qatar</span>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-
-<script src="js/main.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="js/home.js"></script>
 </body>
 </html>
