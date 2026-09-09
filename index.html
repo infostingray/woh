@@ -20,6 +20,9 @@
   <img class="veil__mark" src="images/woh-logo.png" alt="" width="180" height="60">
 </div>
 
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
 <header class="nav" id="nav">
   <a href="index.html" class="nav__brand" aria-label="World of Hospitality home">
     <img src="images/woh-logo.png" alt="World of Hospitality" class="nav__logo" width="150" height="50">
@@ -157,6 +160,13 @@
   <div class="journey__head">
     <h2 class="journey__title">From first conversation<br>to last seating.</h2>
     <p class="journey__lede">Every house travels the same road. Not a formula, a discipline.</p>
+    <div class="journey__frame" aria-hidden="true">
+      <img src="images/brands/kumar-2.jpg" alt="" data-stage="0">
+      <img src="images/brands/gunaydin-2.jpg" alt="" data-stage="1" loading="lazy">
+      <img src="images/brands/al-beiruti-spread.jpg" alt="" data-stage="2" loading="lazy">
+      <img src="images/brands/gunaydin-1.jpg" alt="" data-stage="3" loading="lazy">
+      <img src="images/brands/kumar-1.jpg" alt="" data-stage="4" loading="lazy">
+    </div>
   </div>
   <ol class="journey__list" id="journeyList">
     <li class="journey__stage">
@@ -193,6 +203,21 @@
   </div>
 </section>
 
+<!-- ============ GALLERY: pinned horizontal ============ -->
+<section class="gallery" id="gallery">
+  <div class="gallery__pin">
+    <div class="gallery__track" id="galleryTrack">
+      <figure class="gallery__cell gallery__cell--tall"><img src="images/brands/gunaydin-1.jpg" alt="Günaydın, the grill" loading="lazy"><figcaption>Günaydın, the grill</figcaption></figure>
+      <figure class="gallery__cell"><img src="images/brands/kumar-2.jpg" alt="Kumar, the table" loading="lazy"><figcaption>Kumar, the table</figcaption></figure>
+      <figure class="gallery__cell gallery__cell--wide"><img src="images/brands/al-beiruti-mezze.jpg" alt="Al Beiruti, mezze" loading="lazy"><figcaption>Al Beiruti, mezze</figcaption></figure>
+      <figure class="gallery__cell"><img src="images/brands/gunaydin-3.jpg" alt="Günaydın, the cut" loading="lazy"><figcaption>Günaydın, the cut</figcaption></figure>
+      <figure class="gallery__cell gallery__cell--tall"><img src="images/brands/kumar-3.jpg" alt="Kumar, the pass" loading="lazy"><figcaption>Kumar, the pass</figcaption></figure>
+      <figure class="gallery__cell"><img src="images/brands/gunaydin-2.jpg" alt="Günaydın, the room" loading="lazy"><figcaption>Günaydın, the room</figcaption></figure>
+      <figure class="gallery__cell gallery__cell--wide"><img src="images/brands/al-beiruti-spread.jpg" alt="Al Beiruti, the spread" loading="lazy"><figcaption>Al Beiruti, the spread</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============ JUST OPENED ============ -->
 <section class="opened" id="opened">
   <div class="opened__media">
@@ -213,27 +238,28 @@
 
 <!-- ============ HOUSES INDEX ============ -->
 <section class="houses" id="houses">
-  <a class="houses__row" href="brands.html#gunaydin">
+  <div class="houses__peek" id="housesPeek" aria-hidden="true"><img src="images/brands/gunaydin-1.jpg" alt=""></div>
+  <a class="houses__row" href="brands.html#gunaydin" data-peek="images/brands/gunaydin-1.jpg">
     <span class="houses__name">Günaydın</span>
     <span class="houses__type">Turkish grill</span>
     <span class="houses__status">Open</span>
   </a>
-  <a class="houses__row" href="brands.html#kumar">
+  <a class="houses__row" href="brands.html#kumar" data-peek="images/brands/kumar-2.jpg">
     <span class="houses__name">Kumar</span>
     <span class="houses__type">Indian</span>
     <span class="houses__status">Open</span>
   </a>
-  <a class="houses__row" href="brands.html#al-beiruti">
+  <a class="houses__row" href="brands.html#al-beiruti" data-peek="images/brands/al-beiruti-spread.jpg">
     <span class="houses__name">Al Beiruti</span>
     <span class="houses__type">Lebanese</span>
     <span class="houses__status">Just opened</span>
   </a>
-  <a class="houses__row" href="brands.html#eleven-green">
+  <a class="houses__row" href="brands.html#eleven-green" data-peek="images/brands/eleven-green.jpg">
     <span class="houses__name">Eleven Green</span>
     <span class="houses__type">Burgers</span>
     <span class="houses__status">Opening soon</span>
   </a>
-  <a class="houses__row" href="brands.html#brunch-cake">
+  <a class="houses__row" href="brands.html#brunch-cake" data-peek="images/brands/kumar-3.jpg">
     <span class="houses__name">Brunch &amp; Cake</span>
     <span class="houses__type">All-day, Mediterranean</span>
     <span class="houses__status">Late 2026</span>

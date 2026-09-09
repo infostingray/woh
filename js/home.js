@@ -38,6 +38,10 @@
   const intro = document.getElementById('atlasIntro');
   const scrollCue = document.getElementById('atlasScroll');
   const N = houses.length;
+  names.forEach(n => {
+    const t = n.querySelector('.atlas__name-text');
+    t.innerHTML = Array.from(t.textContent).map(c => c === ' ' ? ' ' : `<span class="ch">${c}</span>`).join('');
+  });
   let current = -1;
 
   function playOnly(i) {
@@ -73,7 +77,8 @@
       const m = n.querySelector('.atlas__name-meta');
       if (k === i && !fromIntro) {
         gsap.set(n, { opacity: 1 });
-        gsap.fromTo(t, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', overwrite: true });
+        gsap.set(t, { y: 0, opacity: 1 });
+        gsap.fromTo(t.querySelectorAll('.ch'), { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.035, ease: 'power3.out', overwrite: true });
         gsap.fromTo(m, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: 0.15, ease: 'power3.out', overwrite: true });
       } else if (n.style.opacity !== '0') {
         gsap.to([t, m], { y: -20, opacity: 0, duration: 0.45, ease: 'power2.in', overwrite: true, onComplete: () => gsap.set(n, { opacity: 0 }) });
@@ -164,14 +169,66 @@
     } else ws.forEach(w => w.classList.add('is-lit'));
   }
 
-  /* ---------- Journey: stages light as they pass centre ---------- */
+  /* ---------- Journey: stages light as they pass centre, frame swaps ---------- */
   const stages = document.querySelectorAll('.journey__stage');
+  const frames = document.querySelectorAll('.journey__frame img');
+  const showFrame = i => frames.forEach((f, k) => f.classList.toggle('is-on', k === i));
+  showFrame(0);
   if (hasGsap && !reduce) {
-    stages.forEach(s => ScrollTrigger.create({
+    stages.forEach((s, i) => ScrollTrigger.create({
       trigger: s, start: 'top 60%', end: 'bottom 40%',
-      onToggle: self => s.classList.toggle('is-lit', self.isActive)
+      onToggle: self => { s.classList.toggle('is-lit', self.isActive); if (self.isActive) showFrame(i); }
     }));
   } else stages.forEach(s => s.classList.add('is-lit'));
+
+  /* ---------- Gallery: pinned horizontal scrub ---------- */
+  const track = document.getElementById('galleryTrack');
+  if (track && hasGsap && !reduce && window.innerWidth > 900) {
+    const dist = () => track.scrollWidth - window.innerWidth;
+    gsap.to(track, { x: () => -dist(), ease: 'none',
+      scrollTrigger: { trigger: '.gallery', start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true } });
+    gsap.utils.toArray('.gallery__cell img').forEach(img => {
+      gsap.to(img, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.gallery', start: 'top top', end: 'bottom bottom', scrub: true } });
+    });
+  }
+
+  /* ---------- Houses: image follows the cursor ---------- */
+  const peek = document.getElementById('housesPeek');
+  const housesWrap = document.querySelector('.houses');
+  if (peek && housesWrap && hasGsap && !reduce && window.matchMedia('(hover: hover)').matches) {
+    const pimg = peek.querySelector('img');
+    const qx = gsap.quickTo(peek, 'left', { duration: 0.5, ease: 'power3' });
+    const qy = gsap.quickTo(peek, 'top', { duration: 0.5, ease: 'power3' });
+    housesWrap.addEventListener('mousemove', e => {
+      const r = housesWrap.getBoundingClientRect();
+      qx(e.clientX - r.left); qy(e.clientY - r.top);
+    });
+    document.querySelectorAll('.houses__row').forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        if (row.dataset.peek) { pimg.src = row.dataset.peek; gsap.to(peek, { opacity: 1, rotate: 0, duration: 0.5, ease: 'power3.out' }); }
+        else gsap.to(peek, { opacity: 0, duration: 0.3 });
+      });
+    });
+    housesWrap.addEventListener('mouseleave', () => gsap.to(peek, { opacity: 0, rotate: -3, duration: 0.4 }));
+  }
+
+  /* ---------- Cursor ---------- */
+  const cur = document.getElementById('cursor');
+  if (cur && hasGsap && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cx = gsap.quickTo(cur, 'x', { duration: 0.18, ease: 'power3' });
+    const cy = gsap.quickTo(cur, 'y', { duration: 0.18, ease: 'power3' });
+    window.addEventListener('mousemove', e => { cx(e.clientX); cy(e.clientY); cur.classList.add('is-on'); });
+    document.addEventListener('mouseleave', () => cur.classList.remove('is-on'));
+    document.addEventListener('mouseover', e => cur.classList.toggle('is-link', !!e.target.closest('a, button')));
+  }
+
+  /* ---------- Nav hides on scroll down, returns on scroll up ---------- */
+  if (nav && hasGsap) {
+    ScrollTrigger.create({
+      start: 'top -80', end: 99999,
+      onUpdate: self => nav.classList.toggle('is-hidden', self.direction === 1)
+    });
+  }
 
   /* ---------- Ledger: count up once ---------- */
   document.querySelectorAll('.ledger__num').forEach(el => {
