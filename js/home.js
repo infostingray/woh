@@ -5,6 +5,8 @@
   const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
+  const isPhone = window.matchMedia('(max-width: 900px)').matches;
+  if (isPhone) document.querySelectorAll('.atlas__house video:not([autoplay])').forEach(v => v.preload = 'none');
   document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
   /* ---------- Smooth scroll ---------- */
@@ -40,7 +42,8 @@
   const N = houses.length;
   names.forEach(n => {
     const t = n.querySelector('.atlas__name-text');
-    t.innerHTML = Array.from(t.textContent).map(c => c === ' ' ? ' ' : `<span class="ch">${c}</span>`).join('');
+    t.innerHTML = t.textContent.trim().split(/\s+/).map(w =>
+      '<span class="wd">' + Array.from(w).map(c => `<span class="ch">${c}</span>`).join('') + '</span>').join(' ');
   });
   let current = -1;
 
@@ -48,7 +51,8 @@
     houses.forEach((h, k) => {
       const v = h.querySelector('video');
       if (!v) return;
-      if (k === i) { v.play().catch(() => {}); } else if (Math.abs(k - i) > 1) { v.pause(); }
+      if (k === i) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => {}); }
+      else if (Math.abs(k - i) > 1) { v.pause(); }
     });
   }
 

@@ -325,46 +325,6 @@ ol { padding: 0; list-style: none; }
 .foot__bottom { margin-top: 4rem; display: flex; justify-content: space-between; color: var(--ash); font-size: 0.8rem; }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px) {
-  .nav__links, .nav__cta { display: none; }
-  .nav__toggle { display: flex; }
-  .atlas { height: 460vh; }
-  .atlas__marks {
-  position: absolute; right: var(--gutter); top: clamp(5rem, 12vh, 8rem);
-  width: 220px; height: 130px; pointer-events: none;
-}
-.atlas__mark { position: absolute; top: 0; right: 0; opacity: 0; }
-.atlas__mark img { height: auto; }
-.atlas__mark--type span {
-  display: block; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; white-space: nowrap; line-height: 1;
-}
-
-.marks {
-  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-  padding: clamp(2.5rem, 6vh, 4rem) var(--gutter);
-  border-bottom: 1px solid var(--hair);
-}
-.marks a { display: block; flex: 0 0 auto; opacity: 0.85; transition: opacity 0.4s; }
-.marks a:hover { opacity: 1; }
-.marks img { height: auto; }
-.marks__type { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 2vw, 2rem); white-space: nowrap; line-height: 1; }
-
-.atlas__index { display: none; }
-  .atlas__intro { right: var(--gutter); }
-  .atlas__headline { font-size: clamp(2.6rem, 12vw, 4rem); }
-  .atlas__scroll { display: none; }
-  .atlas__name-text { white-space: normal; font-size: clamp(3.4rem, 15vw, 6rem); }
-  .journey { grid-template-columns: 1fr; }
-  .journey__head { position: static; }
-  .journey__stage { grid-template-columns: 1fr; gap: 0.6rem; }
-  .ledger__row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 1.5rem; }
-  .opened { grid-template-columns: 1fr; min-height: 0; }
-  .opened__media { aspect-ratio: 4 / 3; }
-  .houses__row { grid-template-columns: 1fr auto; }
-  .houses__type { grid-column: 1; color: var(--ash); font-size: 0.9rem; }
-  .houses__status { grid-column: 2; grid-row: 1; }
-  .foot__grid { grid-template-columns: 1fr 1fr; }
-  .foot__brand { grid-column: 1 / -1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -410,6 +370,7 @@ ol { padding: 0; list-style: none; }
     linear-gradient(to top, rgba(14,12,10,0.88) 0%, rgba(14,12,10,0.25) 45%, rgba(14,12,10,0.2) 100%),
     radial-gradient(120% 80% at 50% 50%, rgba(196,150,91,0.10), rgba(14,12,10,0.35));
 }
+.atlas__name-text .wd { display: inline-block; white-space: nowrap; }
 .atlas__name-text .ch { display: inline-block; }
 
 .cursor {
@@ -449,17 +410,85 @@ ol { padding: 0; list-style: none; }
 }
 .houses__peek img { width: 100%; height: 100%; object-fit: cover; }
 
-@media (max-width: 900px) {
-  .cursor { display: none; }
-  .journey__frame { display: none; }
-  .gallery { height: auto; border-top: 1px solid var(--hair); }
-  .gallery__pin { position: static; height: auto; display: block; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 2rem 0; }
-  .gallery__track { padding: 0 var(--gutter); }
-  .gallery__cell, .gallery__cell--tall, .gallery__cell--wide { width: 72vw; aspect-ratio: 4 / 5; scroll-snap-align: start; }
-  .gallery__cell img { transform: none; }
-  .houses__peek { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .grain { animation: none; }
   .journey__frame img:first-child { opacity: 1; transform: none; }
+}
+
+@media (max-width: 900px) {
+  :root { --gutter: 1.25rem; }
+  .nav { padding: 1.1rem var(--gutter); }
+  .nav__links, .nav__cta { display: none; }
+  .nav__toggle { display: flex; }
+
+  .atlas { height: 420vh; }
+  .atlas__index, .atlas__scroll { display: none; }
+  .atlas__grade { background: linear-gradient(to top, rgba(14,12,10,0.92) 0%, rgba(14,12,10,0.35) 50%, rgba(14,12,10,0.3) 100%); }
+  .atlas__intro { right: var(--gutter); bottom: 3.5rem; }
+  .atlas__headline { font-size: clamp(2.6rem, 12vw, 4rem); }
+  .atlas__lede { margin-top: 1rem; font-size: 0.95rem; }
+  .atlas__names { bottom: 3.5rem; }
+  .atlas__name-text { white-space: normal; font-size: clamp(2.6rem, 12.5vw, 4.4rem); line-height: 0.95; }
+  .atlas__name-meta { margin-top: 0.9rem; font-size: 0.9rem; }
+  .atlas__marks { top: 4.75rem; right: var(--gutter); width: 120px; height: 80px; }
+  .atlas__mark img { width: auto; height: 64px; }
+  .atlas__mark[data-house="1"] img { height: 40px; }
+  .atlas__mark[data-house="2"] img { height: 56px; }
+  .atlas__mark--type span { font-size: 1.2rem; }
+
+  .marks {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center; align-items: center; gap: 2.25rem 1rem;
+    padding: 2.5rem var(--gutter);
+  }
+  .marks a { flex: none; }
+  .marks img { width: auto; height: 60px; }
+  .marks img[alt="Kumar"] { height: 42px; }
+  .marks img[alt="Al Beiruti"] { height: 54px; }
+  .marks img[alt="Eleven Green"] { height: 60px; }
+  .marks__type { grid-column: 1 / -1; font-size: 1.5rem; }
+
+  .statement { padding: 5rem var(--gutter); }
+  .statement__text { font-size: clamp(1.5rem, 6.4vw, 2rem); }
+
+  .journey { grid-template-columns: 1fr; gap: 2rem; padding: 4rem var(--gutter); }
+  .journey__head { position: static; }
+  .journey__frame { display: none; }
+  .journey__stage { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem 0; }
+
+  .ledger { padding: 4rem var(--gutter); }
+  .ledger__row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 1.5rem; }
+  .ledger__num { font-size: clamp(3rem, 14vw, 4.5rem); }
+
+  .gallery { height: auto; }
+  .gallery__pin { position: static; height: auto; display: block; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 2.5rem 0; scrollbar-width: none; }
+  .gallery__pin::-webkit-scrollbar { display: none; }
+  .gallery__track { padding: 0 var(--gutter); gap: 0.75rem; }
+  .gallery__cell, .gallery__cell--tall, .gallery__cell--wide { width: 74vw; aspect-ratio: 4 / 5; scroll-snap-align: start; }
+  .gallery__cell img { transform: none; }
+
+  .opened { grid-template-columns: 1fr; min-height: 0; }
+  .opened__media { aspect-ratio: 4 / 3; }
+  .opened__media img { transform: none; }
+  .opened__copy { padding: 2.5rem var(--gutter) 3rem; }
+  .opened__title { font-size: clamp(2.6rem, 12vw, 4rem); }
+
+  .houses__peek { display: none; }
+  .houses__row { grid-template-columns: 1fr auto; gap: 0.35rem 1rem; padding: 1.4rem var(--gutter); }
+  .houses__name { font-size: clamp(1.8rem, 8vw, 2.6rem); }
+  .houses__type { grid-column: 1; color: var(--ash); font-size: 0.85rem; }
+  .houses__status { grid-column: 2; grid-row: 1; font-size: 0.8rem; }
+
+  .close { padding: 6rem var(--gutter); }
+  .close__lines { font-size: clamp(1.9rem, 8vw, 2.8rem); }
+  .close__cta { margin-top: 2.5rem; }
+
+  .foot { padding: 3rem var(--gutter) 1.5rem; }
+  .foot__grid { grid-template-columns: 1fr 1fr; gap: 2rem 1rem; }
+  .foot__brand { grid-column: 1 / -1; }
+  .foot__bottom { margin-top: 3rem; flex-direction: column; gap: 0.4rem; }
+
+  .grain { animation: none; opacity: 0.05; }
+  .cursor { display: none; }
 }
