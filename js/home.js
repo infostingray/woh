@@ -33,6 +33,7 @@
   /* ---------- Atlas ---------- */
   const houses = Array.from(document.querySelectorAll('.atlas__house'));
   const names = Array.from(document.querySelectorAll('.atlas__name'));
+  const marks = Array.from(document.querySelectorAll('.atlas__mark'));
   const index = Array.from(document.querySelectorAll('#atlasIndex li'));
   const intro = document.getElementById('atlasIntro');
   const scrollCue = document.getElementById('atlasScroll');
@@ -56,8 +57,13 @@
     playOnly(i);
     if (!hasGsap || reduce) {
       names.forEach((n, k) => n.style.opacity = k === i && !fromIntro ? 1 : 0);
+      marks.forEach((m, k) => m.style.opacity = k === i && !fromIntro ? 1 : 0);
       return;
     }
+    marks.forEach((m, k) => {
+      if (k === i && !fromIntro) gsap.fromTo(m, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.25, ease: 'power3.out', overwrite: true });
+      else gsap.to(m, { opacity: 0, duration: 0.35, overwrite: true });
+    });
     houses.forEach((h, k) => {
       if (k === i) gsap.fromTo(h, { opacity: 0 }, { opacity: 1, duration: 1.1, ease: 'power2.out', overwrite: true });
       else if (k === prev) gsap.to(h, { opacity: 0, duration: 1.1, ease: 'power2.out', overwrite: true });
@@ -94,7 +100,7 @@
         gsap.set('#atlasIndex', { opacity: inIntro ? Math.min(1, p / 0.6) : 1 });
         if (inIntro) {
           if (current !== 0) setHouse(0, true);
-          else names.forEach(n => gsap.set(n, { opacity: 0 }));
+          else { names.forEach(n => gsap.set(n, { opacity: 0 })); marks.forEach(m => gsap.set(m, { opacity: 0 })); }
         } else {
           setHouse(act - 1, false);
         }
@@ -125,9 +131,12 @@
       return;
     }
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.to('.veil__mark', { opacity: 1, duration: 0.8 })
-      .to('.veil__mark', { opacity: 0, duration: 0.5, delay: 0.4 })
-      .to(veil, { yPercent: -100, duration: 1.1, ease: 'power4.inOut' }, '-=0.2')
+    tl.to('.veil__line', { scaleX: 1, duration: 1.0, ease: 'power3.inOut' }, 0.2)
+      .to('.veil__mark', { clipPath: 'inset(0% 0 0% 0)', duration: 1.0, ease: 'power3.inOut' }, '-=0.45')
+      .to('.veil__mark', { opacity: 0, duration: 0.45, delay: 0.55 })
+      .to('.veil__line', { scaleX: 1.6, opacity: 0, duration: 0.7, ease: 'power2.in' }, '-=0.3')
+      .to('.veil__panel--top', { yPercent: -100, duration: 1.15, ease: 'power4.inOut' }, '-=0.2')
+      .to('.veil__panel--bottom', { yPercent: 100, duration: 1.15, ease: 'power4.inOut' }, '<')
       .to('.atlas__house.is-active video, .atlas__house.is-active img', { scale: 1.0, duration: 2.4, ease: 'power2.out' }, '-=0.9')
       .to('.atlas__intro .line > span', { y: 0, duration: 1.1, stagger: 0.09 }, '-=2.0')
       .to('.atlas__lede span', { y: 0, duration: 0.9 }, '-=0.7')

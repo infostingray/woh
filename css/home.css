@@ -47,12 +47,18 @@ ol { padding: 0; list-style: none; }
 .line > span { display: block; transform: translateY(110%); }
 
 /* ---------- Veil ---------- */
-.veil {
-  position: fixed; inset: 0; z-index: 100;
-  background: var(--ink);
-  display: grid; place-items: center;
+.veil { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; }
+.veil__panel { position: absolute; left: 0; right: 0; height: 50%; background: var(--ink); }
+.veil__panel--top { top: 0; }
+.veil__panel--bottom { bottom: 0; }
+.veil__line {
+  position: absolute; left: 50%; top: 50%; width: min(70vw, 720px); height: 1px;
+  background: var(--brass); transform: translate(-50%, -50%) scaleX(0);
 }
-.veil__mark { width: clamp(120px, 14vw, 180px); height: auto; opacity: 0; }
+.veil__mark {
+  position: relative; width: clamp(140px, 16vw, 210px); height: auto;
+  clip-path: inset(50% 0 50% 0);
+}
 
 /* ---------- Nav ---------- */
 .nav {
@@ -154,6 +160,26 @@ ol { padding: 0; list-style: none; }
   display: block; margin-top: 1.25rem;
   font-size: clamp(0.9rem, 1vw, 1.05rem); color: var(--bone-2);
 }
+
+.atlas__marks {
+  position: absolute; right: var(--gutter); top: clamp(5rem, 12vh, 8rem);
+  width: 220px; height: 130px; pointer-events: none;
+}
+.atlas__mark { position: absolute; top: 0; right: 0; opacity: 0; }
+.atlas__mark img { height: auto; }
+.atlas__mark--type span {
+  display: block; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; white-space: nowrap; line-height: 1;
+}
+
+.marks {
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  padding: clamp(2.5rem, 6vh, 4rem) var(--gutter);
+  border-bottom: 1px solid var(--hair);
+}
+.marks a { display: block; flex: 0 0 auto; opacity: 0.85; transition: opacity 0.4s; }
+.marks a:hover { opacity: 1; }
+.marks img { height: auto; }
+.marks__type { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 2vw, 2rem); white-space: nowrap; line-height: 1; }
 
 .atlas__index {
   position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%);
@@ -303,7 +329,27 @@ ol { padding: 0; list-style: none; }
   .nav__links, .nav__cta { display: none; }
   .nav__toggle { display: flex; }
   .atlas { height: 460vh; }
-  .atlas__index { display: none; }
+  .atlas__marks {
+  position: absolute; right: var(--gutter); top: clamp(5rem, 12vh, 8rem);
+  width: 220px; height: 130px; pointer-events: none;
+}
+.atlas__mark { position: absolute; top: 0; right: 0; opacity: 0; }
+.atlas__mark img { height: auto; }
+.atlas__mark--type span {
+  display: block; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; white-space: nowrap; line-height: 1;
+}
+
+.marks {
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  padding: clamp(2.5rem, 6vh, 4rem) var(--gutter);
+  border-bottom: 1px solid var(--hair);
+}
+.marks a { display: block; flex: 0 0 auto; opacity: 0.85; transition: opacity 0.4s; }
+.marks a:hover { opacity: 1; }
+.marks img { height: auto; }
+.marks__type { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 2vw, 2rem); white-space: nowrap; line-height: 1; }
+
+.atlas__index { display: none; }
   .atlas__intro { right: var(--gutter); }
   .atlas__headline { font-size: clamp(2.6rem, 12vw, 4rem); }
   .atlas__scroll { display: none; }
@@ -324,7 +370,27 @@ ol { padding: 0; list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   .line > span, .atlas__lede span, .close__lines .line > span { transform: none; }
   .atlas__scroll i::after { animation: none; }
-  .nav, .atlas__index { opacity: 1; transform: none; }
+  .nav, .atlas__marks {
+  position: absolute; right: var(--gutter); top: clamp(5rem, 12vh, 8rem);
+  width: 220px; height: 130px; pointer-events: none;
+}
+.atlas__mark { position: absolute; top: 0; right: 0; opacity: 0; }
+.atlas__mark img { height: auto; }
+.atlas__mark--type span {
+  display: block; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; white-space: nowrap; line-height: 1;
+}
+
+.marks {
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  padding: clamp(2.5rem, 6vh, 4rem) var(--gutter);
+  border-bottom: 1px solid var(--hair);
+}
+.marks a { display: block; flex: 0 0 auto; opacity: 0.85; transition: opacity 0.4s; }
+.marks a:hover { opacity: 1; }
+.marks img { height: auto; }
+.marks__type { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 2vw, 2rem); white-space: nowrap; line-height: 1; }
+
+.atlas__index { opacity: 1; transform: none; }
   .veil { display: none; }
   body.is-loading { overflow: auto; }
   .statement__text .w { color: var(--bone); }
