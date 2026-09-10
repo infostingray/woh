@@ -79,7 +79,7 @@
   /* ---------- Nav hides on scroll down ---------- */
   ScrollTrigger.create({
     start: 'top -80', end: 99999,
-    onUpdate: self => nav.classList.toggle('is-hidden', self.direction === 1)
+    onUpdate: self => { nav.classList.toggle('is-hidden', self.direction === 1); nav.classList.toggle('is-solid', self.scroll() > 120); }
   });
 
   /* ---------- Hero parallax and dissolve ---------- */
@@ -89,28 +89,6 @@
   }
   if (document.querySelector('.open__media')) {
     gsap.to('.open__media img', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.open', start: 'top top', end: 'bottom top', scrub: true } });
-  }
-
-  /* ---------- Route: draw origin to Doha, readouts travel with it ---------- */
-  const route = document.querySelector('.route');
-  if (route) {
-    const lat = route.querySelector('.route__read-lat');
-    const lon = route.querySelector('.route__read-lon');
-    const fmt = (v, s) => v.toFixed(2) + '° ' + s;
-    const state = { p: 0 };
-    const tl = gsap.timeline({ scrollTrigger: { trigger: '.route__map', start: 'top 75%', end: 'bottom 45%', scrub: 0.6 } });
-    tl.to('.route__pt--origin', { opacity: 1, duration: 0.1 }, 0)
-      .to('.route__lab', { opacity: (i, el) => el.classList.contains('route__lab--co') ? 0.8 : 1, duration: 0.15, stagger: 0.02 }, 0.02)
-      .to('.route__path', { strokeDashoffset: 0, duration: 0.8, ease: 'none' }, 0.1)
-      .to(state, {
-        p: 1, duration: 0.8, ease: 'none', onUpdate() {
-          if (!lat || !lon) return;
-          const la = +lat.dataset.from + (+lat.dataset.to - +lat.dataset.from) * state.p;
-          const lo = +lon.dataset.from + (+lon.dataset.to - +lon.dataset.from) * state.p;
-          lat.textContent = fmt(la, 'N'); lon.textContent = fmt(lo, 'E');
-        }
-      }, 0.1)
-      .fromTo('.route__pt--doha', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 0.88);
   }
 
   /* ---------- Story: words light up as you read ---------- */

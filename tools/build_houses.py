@@ -264,19 +264,6 @@ def build(i, h, PH):
   <div class="hero__cue" aria-hidden="true"><span></span></div>
 </section>
 
-<!-- ============ ROUTE: origin to Doha ============ -->
-<section class="route" id="route">
-  <div class="route__head">
-    <h2 class="route__title">From {h['origin']}<br>to Doha.</h2>
-    <p class="route__lede">Brought here as it was there. Nothing translated, nothing diluted.</p>
-  </div>
-  <div class="route__map">{route_svg(h)}</div>
-  <div class="route__read" aria-hidden="true">
-    <span class="route__read-lat" data-from="{h['lat']}" data-to="{DOHA[0]}">{h['lat']:.2f}° N</span>
-    <span class="route__read-lon" data-from="{h['lon']}" data-to="{DOHA[1]}">{h['lon']:.2f}° E</span>
-  </div>
-</section>
-
 <!-- ============ STORY over film ============ -->
 <section class="story" id="story">
   <div class="story__media"><img src="{PH.get(h['gallery'][1][0], h['gallery'][1][0]) if len(h['gallery'])>1 else h['poster']}" alt="" loading="lazy"></div>
@@ -293,17 +280,20 @@ def build(i, h, PH):
 {gallery}  </div>
 </section>
 
-<!-- ============ VISIT ============ -->
+<!-- ============ VISIT over film ============ -->
 <section class="visit" id="visit">
-  <div class="visit__col">
-    <h2 class="visit__title">Visit</h2>
-    <p class="visit__addr">{dict(h['facts'])['Address']}<br>Doha, Qatar</p>
-    <p class="visit__hours">Opening hours to be confirmed.</p>
-    {ph_note}
-  </div>
-  <div class="visit__col visit__col--act">
-    <a class="visit__cta" href="{h['cta'][1]}">{h['cta'][0]}</a>
-    <div class="visit__links">{links}<a class="link" href="contact.html">Contact the group</a></div>
+  <div class="visit__media"><img src="{PH.get(h['gallery'][0][0], h['gallery'][0][0])}" alt="" loading="lazy"></div>
+  <div class="visit__inner">
+    <div class="visit__col" data-reveal>
+      {logo_block(h, "visit__logo")}
+      <p class="visit__addr">{dict(h['facts'])['Address']}, Doha</p>
+      <p class="visit__hours">Opening hours to be confirmed</p>
+      {ph_note}
+    </div>
+    <div class="visit__col visit__col--act" data-reveal>
+      <a class="visit__cta" href="{h['cta'][1]}">{h['cta'][0]}</a>
+      <div class="visit__links">{links}<a class="link" href="contact.html">Contact the group</a></div>
+    </div>
   </div>
 </section>
 
