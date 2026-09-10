@@ -4,9 +4,7 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
-
   const isPhone = window.matchMedia('(max-width: 900px)').matches;
-  if (isPhone) document.querySelectorAll('.atlas__house video:not([autoplay])').forEach(v => v.preload = 'none');
   document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
   /* ---------- Smooth scroll ---------- */
@@ -32,101 +30,34 @@
     });
   }
 
-  /* ---------- Atlas ---------- */
-  const houses = Array.from(document.querySelectorAll('.atlas__house'));
-  const names = Array.from(document.querySelectorAll('.atlas__name'));
-  const marks = Array.from(document.querySelectorAll('.atlas__mark'));
-  const index = Array.from(document.querySelectorAll('#atlasIndex li'));
-  const intro = document.getElementById('atlasIntro');
-  const scrollCue = document.getElementById('atlasScroll');
-  const N = houses.length;
-  names.forEach(n => {
-    const t = n.querySelector('.atlas__name-text');
-    t.innerHTML = t.textContent.trim().split(/\s+/).map(w =>
-      '<span class="wd">' + Array.from(w).map(c => `<span class="ch">${c}</span>`).join('') + '</span>').join(' ');
-  });
-  let current = -1;
-
-  function playOnly(i) {
-    houses.forEach((h, k) => {
-      const v = h.querySelector('video');
-      if (!v) return;
-      if (k === i) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => {}); }
-      else if (Math.abs(k - i) > 1) { v.pause(); }
+  /* ---------- Wall: hover widens a house and plays its film ---------- */
+  const wall = document.getElementById('wall');
+  const panels = Array.from(document.querySelectorAll('.wall__panel'));
+  const caption = document.getElementById('wallCaption');
+  function playVideo(p) { const v = p.querySelector('video'); if (v) { if (v.preload === 'none') v.load(); v.play().catch(() => {}); } }
+  function stopVideo(p) { const v = p.querySelector('video'); if (v) v.pause(); }
+  if (wall && !isPhone) {
+    panels.forEach(p => {
+      p.addEventListener('mouseenter', () => {
+        wall.classList.add('is-hover');
+        panels.forEach(q => { q.classList.toggle('is-on', q === p); if (q !== p) stopVideo(q); });
+        playVideo(p);
+        if (caption) caption.innerHTML = p.querySelector('.wall__name').textContent + ' <span>· ' + p.querySelector('.wall__meta').textContent + '</span>';
+      });
     });
+    wall.addEventListener('mouseleave', () => {
+      wall.classList.remove('is-hover');
+      panels.forEach(q => { q.classList.remove('is-on'); stopVideo(q); });
+      if (caption) caption.innerHTML = 'Five houses in Doha <span>· Choose one</span>';
+    });
+  } else if (wall) {
+    const io = new IntersectionObserver(en => en.forEach(e => { e.isIntersecting ? playVideo(e.target) : stopVideo(e.target); }), { threshold: 0.6 });
+    panels.forEach(p => io.observe(p));
   }
 
-  function setHouse(i, fromIntro) {
-    if (i === current) return;
-    const prev = current;
-    current = i;
-    houses.forEach((h, k) => h.classList.toggle('is-active', k === i));
-    index.forEach((li, k) => li.classList.toggle('is-active', k === i));
-    playOnly(i);
-    if (!hasGsap || reduce) {
-      names.forEach((n, k) => n.style.opacity = k === i && !fromIntro ? 1 : 0);
-      marks.forEach((m, k) => m.style.opacity = k === i && !fromIntro ? 1 : 0);
-      return;
-    }
-    marks.forEach((m, k) => {
-      if (k === i && !fromIntro) gsap.fromTo(m, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.25, ease: 'power3.out', overwrite: true });
-      else gsap.to(m, { opacity: 0, duration: 0.35, overwrite: true });
-    });
-    houses.forEach((h, k) => {
-      if (k === i) gsap.fromTo(h, { opacity: 0 }, { opacity: 1, duration: 1.1, ease: 'power2.out', overwrite: true });
-      else if (k === prev) gsap.to(h, { opacity: 0, duration: 1.1, ease: 'power2.out', overwrite: true });
-    });
-    names.forEach((n, k) => {
-      const t = n.querySelector('.atlas__name-text');
-      const m = n.querySelector('.atlas__name-meta');
-      if (k === i && !fromIntro) {
-        gsap.set(n, { opacity: 1 });
-        gsap.set(t, { y: 0, opacity: 1 });
-        gsap.fromTo(t.querySelectorAll('.ch'), { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.035, ease: 'power3.out', overwrite: true });
-        gsap.fromTo(m, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: 0.15, ease: 'power3.out', overwrite: true });
-      } else if (n.style.opacity !== '0') {
-        gsap.to([t, m], { y: -20, opacity: 0, duration: 0.45, ease: 'power2.in', overwrite: true, onComplete: () => gsap.set(n, { opacity: 0 }) });
-      }
-    });
-  }
-
-  if (hasGsap && N) {
-    // Act 0 is the headline; acts 1..N are houses. Split the pinned scroll into N+1 bands.
-    ScrollTrigger.create({
-      trigger: '#atlas',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate(self) {
-        const bands = N + 1;
-        const p = self.progress * bands;
-        const act = Math.min(bands - 1, Math.floor(p));
-        const inIntro = act === 0;
-        if (intro) {
-          const fade = Math.min(1, Math.max(0, (p - 0.55) / 0.35)); // headline dissolves in the last part of act 0
-          gsap.set(intro, { opacity: 1 - fade, y: -30 * fade });
-        }
-        if (scrollCue) gsap.set(scrollCue, { opacity: inIntro ? 1 - Math.min(1, p / 0.6) : 0 });
-        gsap.set('#atlasIndex', { opacity: inIntro ? Math.min(1, p / 0.6) : 1 });
-        if (inIntro) {
-          if (current !== 0) setHouse(0, true);
-          else { names.forEach(n => gsap.set(n, { opacity: 0 })); marks.forEach(m => gsap.set(m, { opacity: 0 })); }
-        } else {
-          setHouse(act - 1, false);
-        }
-      }
-    });
-
-    // Index click: jump to that house's band
-    index.forEach((li, k) => li.querySelector('button').addEventListener('click', () => {
-      const atlas = document.getElementById('atlas');
-      const total = atlas.offsetHeight - window.innerHeight;
-      const y = atlas.offsetTop + total * ((k + 1) / (N + 1) + 0.02);
-      lenis ? lenis.scrollTo(y) : window.scrollTo({ top: y, behavior: 'smooth' });
-    }));
-  } else {
-    houses[0] && houses[0].classList.add('is-active');
-    if (intro) intro.style.opacity = 1;
-  }
+  /* ---------- Split the intro into words ---------- */
+  const st = document.querySelector('[data-split]');
+  if (st) st.innerHTML = st.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
 
   /* ---------- Load sequence ---------- */
   const veil = document.getElementById('veil');
@@ -134,135 +65,105 @@
   function reveal() {
     document.body.classList.remove('is-loading');
     if (!hasGsap || reduce) {
+      document.body.classList.add('no-motion');
       if (veil) veil.remove();
       if (nav) { nav.style.opacity = 1; nav.style.transform = 'none'; }
-      document.querySelectorAll('.atlas__intro .line > span, .atlas__lede span').forEach(s => s.style.transform = 'none');
-      const lg = document.querySelector('.atlas__logos'); if (lg) { lg.style.opacity = 1; lg.style.transform = 'none'; }
       return;
     }
+    const quick = sessionStorage.getItem('woh-seen') === '1';
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.to('.veil__corner', { strokeDashoffset: 0, duration: 1.1, stagger: 0.08, ease: 'power3.out' }, 0.15)
+    const open = (at) => tl
+      .to('.veil__panel--left', { xPercent: -100, duration: 1.2, ease: 'power4.inOut' }, at)
+      .to('.veil__panel--right', { xPercent: 100, duration: 1.2, ease: 'power4.inOut' }, at)
+      .fromTo('.wall__panel', { opacity: 0 }, { opacity: 1, duration: 1.2, stagger: 0.08 }, at + 0.35)
+      .to('.wall__caption', { opacity: 1, duration: 0.8 }, at + 1.0)
+      .to(nav, { opacity: 1, y: 0, duration: 0.9 }, at + 0.8)
+      .set(veil, { display: 'none' });
+    if (quick) { gsap.set('.veil__centre, .veil__frame', { opacity: 0 }); open(0); return; }
+    tl.to('.veil__corner', { strokeDashoffset: 0, duration: 1.1, stagger: 0.08 }, 0.15)
       .set('.veil__sweep', { opacity: 1 }, 0.5)
       .to('.veil__mark', { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'power2.inOut' }, 0.5)
       .to('.veil__sweep', { left: '100%', duration: 1.3, ease: 'power2.inOut' }, 0.5)
       .to('.veil__sweep', { opacity: 0, duration: 0.3 }, 1.7)
       .to('.veil__rule', { width: 'min(60vw, 520px)', duration: 0.9, ease: 'power3.inOut' }, 1.2)
       .to('.veil__houses span', { opacity: 1, y: 0, duration: 0.6, stagger: 0.09, ease: 'power2.out' }, 1.5)
-      .to('.veil__centre', { opacity: 0, y: -10, duration: 0.5, ease: 'power2.in' }, 3.0)
-      .to('.veil__corner', { opacity: 0, duration: 0.4 }, 3.0)
-      .to('.veil__panel--left', { xPercent: -100, duration: 1.2, ease: 'power4.inOut' }, 3.2)
-      .to('.veil__panel--right', { xPercent: 100, duration: 1.2, ease: 'power4.inOut' }, 3.2)
-      .to('.atlas__house.is-active video, .atlas__house.is-active img', { scale: 1.0, duration: 2.4, ease: 'power2.out' }, '-=0.9')
-      .to('.atlas__intro .line > span', { y: 0, duration: 1.1, stagger: 0.09 }, '-=2.0')
-      .to('.atlas__lede span', { y: 0, duration: 0.9 }, '-=0.7')
-      .to('.atlas__logos', { opacity: 1, y: 0, duration: 1.0 }, '-=0.5')
-      .to(nav, { opacity: 1, y: 0, duration: 0.9 }, '-=0.8')
-      .to(scrollCue, { opacity: 1, duration: 0.8 }, '-=0.6')
-      .set(veil, { display: 'none' });
+      .to('.veil__centre', { opacity: 0, y: -10, duration: 0.5, ease: 'power2.in' }, 2.8)
+      .to('.veil__corner', { opacity: 0, duration: 0.4 }, 2.8);
+    open(3.0);
   }
   if (document.readyState === 'complete') reveal();
   else window.addEventListener('load', reveal, { once: true });
 
-  /* ---------- Statement: words light as you read ---------- */
-  const st = document.querySelector('[data-split]');
-  if (st) {
-    const words = st.textContent.trim().split(/\s+/);
-    st.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
-    const ws = st.querySelectorAll('.w');
-    if (hasGsap && !reduce) {
-      ScrollTrigger.create({
-        trigger: st, start: 'top 80%', end: 'bottom 45%', scrub: true,
-        onUpdate(self) {
-          const n = Math.round(self.progress * ws.length);
-          ws.forEach((w, i) => w.classList.toggle('is-lit', i < n));
-        }
-      });
-    } else ws.forEach(w => w.classList.add('is-lit'));
-  }
+  if (!hasGsap || reduce) return;
 
-  /* ---------- Journey: stages light as they pass centre, frame swaps ---------- */
-  const stages = document.querySelectorAll('.journey__stage');
-  const frames = document.querySelectorAll('.journey__frame img');
-  const showFrame = i => frames.forEach((f, k) => f.classList.toggle('is-on', k === i));
-  showFrame(0);
-  if (hasGsap && !reduce) {
-    stages.forEach((s, i) => ScrollTrigger.create({
-      trigger: s, start: 'top 60%', end: 'bottom 40%',
-      onToggle: self => { s.classList.toggle('is-lit', self.isActive); if (self.isActive) showFrame(i); }
-    }));
-  } else stages.forEach(s => s.classList.add('is-lit'));
-
-  /* ---------- Gallery: pinned horizontal scrub ---------- */
-  const track = document.getElementById('galleryTrack');
-  if (track && hasGsap && !reduce && window.innerWidth > 900) {
-    const dist = () => track.scrollWidth - window.innerWidth;
-    gsap.to(track, { x: () => -dist(), ease: 'none',
-      scrollTrigger: { trigger: '.gallery', start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true } });
-    gsap.utils.toArray('.gallery__cell img').forEach(img => {
-      gsap.to(img, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.gallery', start: 'top top', end: 'bottom bottom', scrub: true } });
-    });
-  }
-
-  /* ---------- Chapters: play footage while a chapter is in view ---------- */
-  document.querySelectorAll('.chapter').forEach(ch => {
-    const v = ch.querySelector('video');
-    const m = ch.querySelector('.chapter__media video, .chapter__media img');
-    if (hasGsap && !reduce && m) gsap.to(m, { scale: 1, ease: 'none', scrollTrigger: { trigger: ch, start: 'top bottom', end: 'top top', scrub: true } });
-    if (!v) return;
-    ScrollTrigger.create({ trigger: ch, start: 'top 80%', end: 'bottom 20%',
-      onToggle: self => { if (self.isActive) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => {}); } else v.pause(); } });
+  /* ---------- Nav: hides scrolling down, solid past the wall ---------- */
+  ScrollTrigger.create({
+    start: 'top -80', end: 99999,
+    onUpdate: self => { nav.classList.toggle('is-hidden', self.direction === 1); nav.classList.toggle('is-solid', self.scroll() > window.innerHeight * 0.9); }
   });
 
-  /* ---------- Houses: image follows the cursor ---------- */
-  const peek = document.getElementById('housesPeek');
-  const housesWrap = document.querySelector('.houses');
-  if (peek && housesWrap && hasGsap && !reduce && window.matchMedia('(hover: hover)').matches) {
-    const pimg = peek.querySelector('img');
-    const qx = gsap.quickTo(peek, 'left', { duration: 0.5, ease: 'power3' });
-    const qy = gsap.quickTo(peek, 'top', { duration: 0.5, ease: 'power3' });
-    housesWrap.addEventListener('mousemove', e => {
-      const r = housesWrap.getBoundingClientRect();
-      qx(e.clientX - r.left); qy(e.clientY - r.top);
-    });
-    document.querySelectorAll('.houses__row').forEach(row => {
-      row.addEventListener('mouseenter', () => {
-        if (row.dataset.peek) { pimg.src = row.dataset.peek; gsap.to(peek, { opacity: 1, rotate: 0, duration: 0.5, ease: 'power3.out' }); }
-        else gsap.to(peek, { opacity: 0, duration: 0.3 });
-      });
-    });
-    housesWrap.addEventListener('mouseleave', () => gsap.to(peek, { opacity: 0, rotate: -3, duration: 0.4 }));
-  }
-
-  /* ---------- Nav hides on scroll down, returns on scroll up ---------- */
-  if (nav && hasGsap) {
-    ScrollTrigger.create({
-      start: 'top -80', end: 99999,
-      onUpdate: self => nav.classList.toggle('is-hidden', self.direction === 1)
-    });
-  }
-
-  /* ---------- Ledger: count up once ---------- */
-  document.querySelectorAll('.ledger__num').forEach(el => {
-    const target = parseInt(el.dataset.count, 10);
-    if (!hasGsap || reduce) { el.textContent = target; return; }
-    const o = { v: parseInt(el.textContent, 10) || 0 };
-    ScrollTrigger.create({
-      trigger: el, start: 'top 85%', once: true,
-      onEnter: () => gsap.to(o, { v: target, duration: 1.6, ease: 'power3.out', onUpdate: () => el.textContent = Math.round(o.v) })
-    });
+  /* ---------- Intro: words light as you read ---------- */
+  const words = gsap.utils.toArray('.intro__text .w');
+  if (words.length) ScrollTrigger.create({
+    trigger: '.intro', start: 'top 70%', end: 'bottom 50%', scrub: true,
+    onUpdate(self) { const n = Math.round(self.progress * words.length); words.forEach((w, i) => w.classList.toggle('is-on', i < n)); }
   });
 
-  /* ---------- Parallax on the Al Beiruti image ---------- */
-  const opened = document.querySelector('.opened__media img');
-  if (opened && hasGsap && !reduce) {
-    gsap.fromTo(opened, { yPercent: -6 }, { yPercent: 6, ease: 'none',
-      scrollTrigger: { trigger: '.opened', start: 'top bottom', end: 'bottom top', scrub: true } });
+  /* ---------- Reveals ---------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      gsap.to(en.target, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+      const v = en.target.querySelector('video'); if (v) { v.load(); v.play().catch(() => {}); }
+      io.unobserve(en.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+  gsap.utils.toArray('.house__media img, .house__media video').forEach(m => {
+    gsap.to(m, { scale: 1, ease: 'none', scrollTrigger: { trigger: m.parentElement, start: 'top 95%', end: 'bottom 30%', scrub: true } });
+  });
+
+  /* ---------- The World: routes draw into Doha ---------- */
+  if (document.querySelector('.world')) {
+    gsap.timeline({ scrollTrigger: { trigger: '.world__map', start: 'top 75%', end: 'bottom 40%', scrub: 0.6 } })
+      .to('.world .route__pt', { opacity: 1, duration: 0.1, stagger: 0.03 }, 0)
+      .to('.world .route__lab, .world .route__logo', { opacity: 1, duration: 0.15, stagger: 0.03 }, 0.05)
+      .to('.world .route__path', { strokeDashoffset: 0, duration: 0.8, ease: 'none', stagger: 0.04 }, 0.1)
+      .fromTo('.world .route__pt--doha', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 0.9);
   }
 
-  /* ---------- Close: lines rise once ---------- */
+  /* ---------- Ledger: numbers count up once ---------- */
+  document.querySelectorAll('.ledger__num').forEach(n => {
+    const to = +n.dataset.count, o = { v: +n.textContent };
+    const pad = String(to).length === 1 ? 2 : 1;
+    ScrollTrigger.create({ trigger: n, start: 'top 85%', once: true, onEnter: () => gsap.to(o, { v: to, duration: 1.4, ease: 'power2.out', onUpdate: () => n.textContent = String(Math.round(o.v)).padStart(pad, '0') }) });
+  });
+
+  /* ---------- Close lines ---------- */
   const closeLines = document.querySelectorAll('.close__lines .line > span');
-  if (closeLines.length && hasGsap && !reduce) {
-    gsap.to(closeLines, { y: 0, duration: 1.1, stagger: 0.12, ease: 'power3.out',
-      scrollTrigger: { trigger: '.close', start: 'top 70%', once: true } });
-  } else closeLines.forEach(s => s.style.transform = 'none');
+  if (closeLines.length) {
+    const io2 = new IntersectionObserver(en => { if (!en[0].isIntersecting) return; gsap.to(closeLines, { y: 0, duration: 1.1, stagger: 0.12, ease: 'power3.out' }); io2.disconnect(); }, { rootMargin: '0px 0px -15% 0px' });
+    io2.observe(document.querySelector('.close__lines'));
+  }
+
+  /* ---------- Leaving: close the veil, then go ---------- */
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:/.test(href)) return;
+    sessionStorage.setItem('woh-seen', '1');
+    if (!veil) return;
+    e.preventDefault();
+    if (lenis) lenis.stop();
+    gsap.set(veil, { display: 'block' });
+    gsap.set('.veil__centre, .veil__frame', { opacity: 0 });
+    gsap.set('.veil__panel--left', { xPercent: -100 });
+    gsap.set('.veil__panel--right', { xPercent: 100 });
+    gsap.timeline({ onComplete: () => { window.location.href = href; } })
+      .to('.veil__panel--left', { xPercent: 0, duration: 0.7, ease: 'power4.inOut' }, 0)
+      .to('.veil__panel--right', { xPercent: 0, duration: 0.7, ease: 'power4.inOut' }, 0);
+  });
+  window.addEventListener('pageshow', e => { if (e.persisted && veil) { gsap.set(veil, { display: 'none' }); if (lenis) lenis.start(); } });
 })();
