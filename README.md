@@ -15,6 +15,9 @@ Static HTML, CSS and JS. No build step, no CMS. Push to `main` and GitHub Pages 
 Styling: `css/home.css` (tokens, shell, homepage), `css/house.css` (house pages), `css/pages.css` (inner pages).
 Motion: `js/home.js` (homepage), `js/site.js` (every other page). Libraries are self-hosted in `js/vendor/`.
 
+## Version stamp
+Every page's footer shows a version like `v14 · 10.09.26` (commit number, date). Compare it to what you see live to know whether your browser has the latest build. `tools/push.sh "message"` rebuilds all pages with a fresh stamp, commits and pushes in one go.
+
 ## How to update content
 
 The house pages and the four inner pages are generated from two Python files so all pages stay consistent. Edit the data, run the script, commit the output.

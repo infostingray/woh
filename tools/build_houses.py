@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generates the five house pages. Run from repo root."""
-import html
+import html, os
+VERSION = os.environ.get("WOH_VERSION", "dev")
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 DOHA = (25.29, 51.53)
@@ -217,7 +218,7 @@ FOOT = '''
   <div class="foot__bottom">
     <span class="foot__motif">MOTIF_HERE</span>
     <span>© <span data-year>2026</span> World of Hospitality</span>
-    <span>Doha, Qatar</span>
+    <span>Doha, Qatar <span class="foot__ver">VERSION_HERE</span></span>
   </div>
 </footer>
 
@@ -307,7 +308,7 @@ def build(i, h, PH):
 {mini_wall(exclude=h['slug'], label="The other houses")}
 '''
     head = SHELL_HEAD.format(title=h['short'], desc=html.escape(desc)).replace('MENU_LOGOS_HERE', MENU_LOGOS)
-    return head + body + FOOT.replace('MOTIF_HERE', MOTIF)
+    return head + body + FOOT.replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION)
 
 if __name__ == "__main__":
     import json, sys

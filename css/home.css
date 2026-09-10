@@ -313,3 +313,5 @@ body.no-motion .route__logo { opacity: 1; }
   .wall--mini .wall__logo img { transform: none; }
   .reel__logo .logo--eleven-green { width: 220px; } .reel__logo .logo--kumar { width: 200px; }
 }
+
+.foot__ver { margin-left: 1rem; color: var(--ash); opacity: 0.6; font-variant-numeric: tabular-nums; }

@@ -2,7 +2,7 @@
 """Generates index.html. Run from repo root: python3 tools/build_home.py"""
 import re, ast, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF
+from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF, VERSION
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
