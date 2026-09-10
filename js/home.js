@@ -56,7 +56,7 @@
   }
 
 
-  /* ---------- Load sequence: the mark arrives, then takes its place in the nav ---------- */
+  /* ---------- Load sequence: five cuts, then the frame splits into the wall ---------- */
   const veil = document.getElementById('veil');
   const nav = document.getElementById('nav');
   const navLogo = document.querySelector('.nav__logo');
@@ -70,26 +70,52 @@
     }
     const quick = sessionStorage.getItem('woh-seen') === '1';
     const mark = veil.querySelector('.veil__mark');
+    const cuts = gsap.utils.toArray('.veil__cut');
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    const settle = (at) => {
-      // Move the mark from centre to exactly where the nav logo sits, then hand over.
-      tl.add(() => {
-        gsap.set(nav, { opacity: 1, y: 0 });
-        const r = navLogo.getBoundingClientRect();
-        gsap.set(mark, { xPercent: 0, yPercent: 0, left: 0, top: 0, x: mark.getBoundingClientRect().left, y: mark.getBoundingClientRect().top, width: mark.getBoundingClientRect().width });
-        gsap.to(mark, { x: r.left, y: r.top, width: r.width, duration: 1.1, ease: 'power3.inOut' });
-      }, at)
-        .to(veil, { backgroundColor: 'rgba(14,12,10,0)', duration: 1.0, ease: 'power2.inOut' }, at + 0.35)
-        .fromTo('.wall__panel', { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 1.3, stagger: 0.09, ease: 'power2.out' }, at + 0.5)
-        .add(() => { document.body.classList.remove('is-loading'); veil.remove(); }, at + 1.15);
+
+    // Final act: the frame splits into five columns, mark travels to the nav.
+    const split = (at) => {
+      tl.to('.wall__panel', { clipPath: 'inset(0 0% 0 0%)', duration: 1.1, stagger: { each: 0.07, from: 'center' }, ease: 'power4.inOut' }, at)
+        .to(veil, { opacity: 0, duration: 0.6, ease: 'power2.inOut' }, at + 0.25)
+        .fromTo('.wall__logo', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.9, stagger: { each: 0.06, from: 'center' }, ease: 'power3.out' }, at + 0.55)
+        .add(() => {
+          gsap.set(nav, { opacity: 1, y: 0 });
+          const r = navLogo.getBoundingClientRect(), m = mark.getBoundingClientRect();
+          gsap.set(mark, { xPercent: 0, yPercent: 0, left: 0, top: 0, x: m.left, y: m.top, width: m.width, translateX: 0, translateY: 0 });
+          gsap.to(mark, { x: r.left, y: r.top, width: r.width, duration: 0.9, ease: 'power3.inOut' });
+        }, at)
+        .add(() => { document.body.classList.remove('is-loading'); veil.remove(); }, at + 1.0);
     };
+
     if (quick) {
-      gsap.set(mark, { opacity: 1, translateX: '-50%', translateY: '-50%' });
-      settle(0.1);
+      gsap.set(mark, { opacity: 1 });
+      gsap.set(veil, { backgroundColor: 'var(--ink)' });
+      split(0.15);
       return;
     }
-    tl.fromTo(mark, { opacity: 0, scale: 0.96, clipPath: 'inset(0 100% 0 0)' }, { opacity: 1, scale: 1, clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'power2.inOut' }, 0.2);
-    settle(2.0);
+
+    // Act one: the mark, with a brass flash.
+    tl.fromTo(mark, { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'power4.out' }, 0.15)
+      .fromTo('.veil__flash', { opacity: 0 }, { opacity: 0.35, duration: 0.08, ease: 'none' }, 0.15)
+      .to('.veil__flash', { opacity: 0, duration: 0.5, ease: 'power2.out' }, 0.23)
+      .to(mark, { opacity: 0, scale: 0.9, duration: 0.3, ease: 'power2.in' }, 1.15);
+
+    // Act two: five hard cuts, one per house.
+    let t = 1.35; const hold = 0.42;
+    cuts.forEach((cut, i) => {
+      const logo = cut.querySelector('.veil__cutlogo');
+      tl.set(cut, { opacity: 1 }, t)
+        .fromTo(cut.querySelector('img'), { scale: 1.12 }, { scale: 1.04, duration: hold + 0.1, ease: 'none' }, t)
+        .fromTo(logo, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.22, ease: 'power4.out' }, t + 0.02)
+        .fromTo('.veil__flash', { opacity: 0 }, { opacity: 0.18, duration: 0.05, ease: 'none' }, t)
+        .to('.veil__flash', { opacity: 0, duration: 0.3 }, t + 0.05);
+      if (i < cuts.length - 1) tl.set(cut, { opacity: 0 }, t + hold);
+      t += hold;
+    });
+    // The mark returns over the last cut, then everything splits.
+    tl.to(mark, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' }, t + 0.1)
+      .to('.veil__cut:last-child .veil__cutlogo', { opacity: 0, duration: 0.3 }, t + 0.1);
+    split(t + 0.75);
   }
   if (document.readyState === 'complete') reveal();
   else window.addEventListener('load', reveal, { once: true });

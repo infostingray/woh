@@ -46,11 +46,20 @@ ol { padding: 0; list-style: none; }
 .line { display: block; overflow: hidden; }
 .line > span { display: block; transform: translateY(110%); }
 
-/* ---------- Veil: the mark arrives, then takes its place ---------- */
-.veil { position: fixed; inset: 0; z-index: 100; background: var(--ink); }
-.veil__mark { position: absolute; left: 50%; top: 50%; width: clamp(180px, 20vw, 260px); height: auto; transform: translate(-50%, -50%); opacity: 0; transform-origin: top left; }
+/* ---------- Veil: five cuts, then the frame splits into the wall ---------- */
+.veil { position: fixed; inset: 0; z-index: 100; background: var(--ink); overflow: hidden; }
+.veil__cuts { position: absolute; inset: 0; }
+.veil__cut { position: absolute; inset: 0; opacity: 0; }
+.veil__cut img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); filter: saturate(0.85) brightness(0.75); }
+.veil__cut::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 50%, rgba(14,12,10,0.15), rgba(14,12,10,0.7)); }
+.veil__cutlogo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; justify-content: center; opacity: 0; z-index: 1; }
+.veil__cutlogo img { height: auto; filter: drop-shadow(0 6px 30px rgba(0,0,0,0.6)); }
+.veil__cutlogo .logo--gunaydin { width: clamp(180px, 20vw, 300px); } .veil__cutlogo .logo--kumar { width: clamp(300px, 36vw, 560px); } .veil__cutlogo .logo--al-beiruti { width: clamp(220px, 26vw, 400px); } .veil__cutlogo .logo--eleven-green { width: clamp(300px, 44vw, 700px); } .veil__cutlogo .logo--brunch-cake { width: clamp(260px, 30vw, 480px); }
+.veil__flash { position: absolute; inset: 0; background: var(--brass); opacity: 0; mix-blend-mode: screen; pointer-events: none; }
+.veil__mark { position: absolute; left: 50%; top: 50%; width: clamp(200px, 22vw, 300px); height: auto; transform: translate(-50%, -50%); opacity: 0; transform-origin: top left; z-index: 2; filter: drop-shadow(0 6px 30px rgba(0,0,0,0.6)); }
 .nav__logo { transition: opacity 0.3s; }
 body.is-loading .nav__logo { opacity: 0; }
+body.is-loading .wall__panel { clip-path: inset(0 50% 0 50%); }
 
 /* ---------- Nav ---------- */
 .nav {

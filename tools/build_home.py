@@ -54,6 +54,8 @@ def world_svg():
 </svg>'''
 
 VEIL = '''<div class="veil" id="veil" aria-hidden="true">
+  <div class="veil__cuts">{CUTS}</div>
+  <div class="veil__flash"></div>
   <img class="veil__mark" src="images/woh-logo.png" alt="" width="240" height="80">
 </div>'''
 
@@ -106,7 +108,8 @@ def build():
     head = head.replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
     head = head.replace('class="is-loading house-page"','class="is-loading"')
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
-    head = head.replace('<div class="veil veil--quick" id="veil" aria-hidden="true"></div>', VEIL)
+    cuts = ''.join(f'<div class="veil__cut" data-house="{x["slug"]}"><img src="{x["poster"]}" alt=""><span class="veil__cutlogo">{x["logo"]}</span></div>' for x in H)
+    head = head.replace('<div class="veil veil--quick" id="veil" aria-hidden="true"></div>', VEIL.replace('{CUTS}', cuts))
     panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
     marq=''.join(f'<a href="{x["slug"]}.html" class="marquee__item proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a><span class="marquee__dot"></span>' for x in HOUSES) + '<a href="partnerships.html" class="marquee__item marquee__next">More houses to come<em>Yours, if it belongs here</em></a><span class="marquee__dot"></span>'
     logos=''.join(f'<a href="{x["slug"]}.html" class="proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a>' for x in HOUSES)
