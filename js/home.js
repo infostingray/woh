@@ -55,9 +55,6 @@
     panels.forEach(p => io.observe(p));
   }
 
-  /* ---------- Split the intro into words ---------- */
-  const st = document.querySelector('[data-split]');
-  if (st) st.innerHTML = st.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
 
   /* ---------- Load sequence ---------- */
   const veil = document.getElementById('veil');
@@ -102,12 +99,18 @@
     onUpdate: self => { nav.classList.toggle('is-hidden', self.direction === 1); nav.classList.toggle('is-solid', self.scroll() > window.innerHeight * 0.9); }
   });
 
-  /* ---------- Intro: words light as you read ---------- */
-  const words = gsap.utils.toArray('.intro__text .w');
-  if (words.length) ScrollTrigger.create({
-    trigger: '.intro', start: 'top 70%', end: 'bottom 50%', scrub: true,
-    onUpdate(self) { const n = Math.round(self.progress * words.length); words.forEach((w, i) => w.classList.toggle('is-on', i < n)); }
+
+  /* ---------- Reel: the slide underneath settles back as the next covers it ---------- */
+  const slides = gsap.utils.toArray('.reel__slide');
+  slides.forEach((s, i) => {
+    const next = slides[i + 1];
+    if (next) gsap.to(s.querySelector('.reel__media'), { scale: 0.94, opacity: 0.35, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } });
+    gsap.to(s.querySelector('.reel__copy'), { y: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: next || s, start: next ? 'top 60%' : 'bottom 40%', end: next ? 'top top' : 'bottom top', scrub: true } });
   });
+  const reelIO = new IntersectionObserver(en => en.forEach(e => { const v = e.target.querySelector('video'); if (!v) return; if (e.isIntersecting) { if (v.preload === 'none') v.load(); v.play().catch(() => {}); } else v.pause(); }), { threshold: 0.35 });
+  slides.forEach(s => reelIO.observe(s));
+  const fin = document.querySelector('.finale video');
+  if (fin) new IntersectionObserver(en => { if (en[0].isIntersecting) { fin.load(); fin.play().catch(() => {}); } else fin.pause(); }, { threshold: 0.2 }).observe(fin);
 
   /* ---------- Reveals ---------- */
   const io = new IntersectionObserver(entries => {
@@ -120,32 +123,14 @@
   }, { rootMargin: '0px 0px -10% 0px' });
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-  gsap.utils.toArray('.house__media img, .house__media video').forEach(m => {
-    gsap.to(m, { scale: 1, ease: 'none', scrollTrigger: { trigger: m.parentElement, start: 'top 95%', end: 'bottom 30%', scrub: true } });
-  });
-
-  /* ---------- The World: routes draw into Doha ---------- */
-  if (document.querySelector('.world')) {
-    gsap.timeline({ scrollTrigger: { trigger: '.world__map', start: 'top 75%', end: 'bottom 40%', scrub: 0.6 } })
-      .to('.world .route__pt', { opacity: 1, duration: 0.1, stagger: 0.03 }, 0)
-      .to('.world .route__lab, .world .route__logo', { opacity: 1, duration: 0.15, stagger: 0.03 }, 0.05)
-      .to('.world .route__path', { strokeDashoffset: 0, duration: 0.8, ease: 'none', stagger: 0.04 }, 0.1)
-      .fromTo('.world .route__pt--doha', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 0.9);
-  }
 
   /* ---------- Ledger: numbers count up once ---------- */
-  document.querySelectorAll('.ledger__num').forEach(n => {
+  document.querySelectorAll('.numbers__num').forEach(n => {
     const to = +n.dataset.count, o = { v: +n.textContent };
     const pad = String(to).length === 1 ? 2 : 1;
     ScrollTrigger.create({ trigger: n, start: 'top 85%', once: true, onEnter: () => gsap.to(o, { v: to, duration: 1.4, ease: 'power2.out', onUpdate: () => n.textContent = String(Math.round(o.v)).padStart(pad, '0') }) });
   });
 
-  /* ---------- Close lines ---------- */
-  const closeLines = document.querySelectorAll('.close__lines .line > span');
-  if (closeLines.length) {
-    const io2 = new IntersectionObserver(en => { if (!en[0].isIntersecting) return; gsap.to(closeLines, { y: 0, duration: 1.1, stagger: 0.12, ease: 'power3.out' }); io2.disconnect(); }, { rootMargin: '0px 0px -15% 0px' });
-    io2.observe(document.querySelector('.close__lines'));
-  }
 
   /* ---------- Leaving: close the veil, then go ---------- */
   document.addEventListener('click', e => {

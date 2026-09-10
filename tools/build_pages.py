@@ -30,13 +30,10 @@ about = opener(
     "Our job is to keep all of them. That is the founding principle, and the whole strategy.",
     "images/brands/kumar-2.jpg", "The room at Kumar") + '''
 
-<section class="creed">
-  <p class="creed__text lit" data-split>We are operators, not licensors. Every house carries our name on the lease, our people on the floor, and our standard on the plate. We bring a brand from its city to Doha and keep it exactly what it was, only here.</p>
-</section>
-
-<section class="tenets" id="approach">
+<section class="tenets overfilm" id="approach">
+  <div class="overfilm__media"><img src="images/brands/gunaydin-2.jpg" alt="" loading="lazy"></div>
   <div class="tenets__head" data-reveal>
-    <h2 class="sec__title">How we actually work.</h2>
+    <h2 class="sec__title">How we work.</h2>
   </div>
   <div class="tenets__list">
     <div class="tenet" data-reveal>
@@ -109,7 +106,8 @@ partnerships = opener(
   <div class="proof__row">'''+''.join(f'<a href="{h['slug']}.html" class="proof__logo proof__logo--{h['slug']}">{LOGO[h['slug']].replace('wall__logo--type','proof__type')}</a>' for h in HOUSES)+'''</div>
 </section>
 
-<section class="gets">
+<section class="gets overfilm">
+  <div class="overfilm__media"><img src="images/brands/kumar-2.jpg" alt="" loading="lazy"></div>
   <div class="gets__head" data-reveal><h2 class="sec__title">What you get.</h2></div>
   <div class="tenets__list">
     <div class="tenet" data-reveal><h3>Real relationships.</h3><p>Landlords. Regulators. Suppliers. Built over years in Doha, not over a network.</p></div>

@@ -6,7 +6,7 @@ Static HTML, CSS and JS. No build step, no CMS. Push to `main` and GitHub Pages 
 
 | File | What it is |
 |---|---|
-| `index.html` | Home: the wall of five houses, statement, one band per house, world map, ledger, close |
+| `index.html` | Home: the wall of five houses, one-line intro, a full-screen reel of each house, numbers over film, finale over film |
 | `gunaydin.html` `kumar.html` `al-beiruti.html` `eleven-green.html` `brunch-cake.html` | One page per house |
 | `about.html` `partnerships.html` `careers.html` `contact.html` | Inner pages |
 | `brands.html` `services.html` | Redirects only, kept so old links still work |

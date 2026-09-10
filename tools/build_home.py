@@ -103,70 +103,71 @@ def house_band(h):
   </div>
 </article>'''
 
+def reel_slide(h, i):
+    media = (f'<video muted loop playsinline preload="none" poster="{h["poster"]}"><source src="{h["video"]}" type="video/mp4"></video>' if h['video'] else f'<img src="{h["poster"]}" alt="">')
+    logo = h['logo'].replace('class="wall__logo--type"','class="reel__logo--type"')
+    if '<img' in logo: logo = logo.replace('<img ', f'<img class="reel__logo reel__logo--{h["slug"]}" ')
+    flag = '<span class="house__flag">Placeholder image</span>' if h.get('ph') else ''
+    return f'''  <a class="reel__slide" href="{h['slug']}.html" data-house="{h['slug']}">
+    <div class="reel__media">{media}{flag}</div>
+    <div class="reel__copy">
+      {logo}
+      <span class="reel__line">{h['line']}</span>
+      <span class="reel__meta">{h['origin']}. {h['status']}.</span>
+      <span class="reel__go">Enter the house</span>
+    </div>
+    <span class="reel__count">{i+1} / {len(H)}</span>
+  </a>'''
+
 def build():
     head = SHELL_HEAD.format(title="Home", desc="World of Hospitality operates five restaurant houses in Doha. Günaydın, Kumar, Al Beiruti, Eleven Green, Brunch &amp; Cake.")
     head = head.replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
     head = head.replace('class="is-loading house-page"','class="is-loading"')
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
     head = re.sub(r'<div class="veil veil--quick".*?--right"></div>\n</div>\n', VEIL+'\n', head, flags=re.S)
-    panels="\n".join(wall_panel(h) for h in H); bands="\n\n".join(house_band(h) for h in H)
-    body = f'''
+    panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
+    marq=''.join(f'<a href="{x["slug"]}.html" class="marquee__item proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a><span class="marquee__dot"></span>' for x in HOUSES) + '<a href="partnerships.html" class="marquee__item marquee__next">More houses to come<em>Yours, if it belongs here</em></a><span class="marquee__dot"></span>'
+    logos=''.join(f'<a href="{x["slug"]}.html" class="proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a>' for x in HOUSES)
+    body = f"""
 <!-- ============ WALL: the five houses ============ -->
 <section class="wall" id="wall" aria-label="The houses">
 {panels}
 </section>
 
-<!-- ============ INTRO ============ -->
-<section class="intro" id="about">
-  <div class="intro__mark" data-reveal>
-    <img src="images/woh-logo.png" alt="World of Hospitality" width="200" height="67">
-    <p class="intro__sub lede">Restaurant operators, Doha. Since 2019.</p>
-  </div>
-  <div>
-    <p class="intro__text" data-split>We are operators, not licensors. Every house carries our name on the lease, our people on the floor, and our standard on the plate. We bring a brand from its city to Doha and keep it exactly what it was, only here.</p>
+<!-- ============ MARQUEE: the houses, and the next one ============ -->
+<section class="marquee" id="about" aria-label="The houses">
+  <div class="marquee__track">{marq}{marq}</div>
+</section>
+
+<!-- ============ REEL: each house, full screen ============ -->
+<section class="reel" id="houses" aria-label="The houses, one by one">
+{reel}
+</section>
+
+<!-- ============ NUMBERS over film ============ -->
+<section class="numbers" id="ledger">
+  <div class="numbers__media"><img src="images/brands/kumar-3.jpg" alt="" loading="lazy"></div>
+  <div class="numbers__row">
+    <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">houses in Doha</span></div>
+    <div data-reveal><span class="numbers__num" data-count="2019">2000</span><span class="numbers__lab">first house, still open</span></div>
+    <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">cities brought to Qatar</span></div>
+    <div data-reveal><span class="numbers__num" data-count="0">0</span><span class="numbers__lab">concepts closed</span></div>
   </div>
 </section>
 
-<!-- ============ THE HOUSES ============ -->
-<section class="houses" id="houses">
-{bands}
-</section>
-
-<!-- ============ THE WORLD ============ -->
-<section class="world" id="world">
-  <div class="world__head">
-    <h2 class="title" data-reveal>Five cities. One address.</h2>
-    <p class="lede" data-reveal>Istanbul, Kuwait, Beirut, Dubai, Barcelona. Each house travels to Doha as it is, and stays as it was.</p>
+<!-- ============ CLOSE over film ============ -->
+<section class="finale" id="close">
+  <div class="finale__media">
+    <video muted loop playsinline preload="none" poster="images/brands/al-beiruti-spread.jpg"><source src="{VID}2026/03/IMG_5377-3.mp4" type="video/mp4"></video>
   </div>
-  <div class="route__map world__map">{world_svg()}</div>
-  <ol class="world__index">'''+''.join(f'<li><a href="{h["slug"]}.html" class="proof__logo proof__logo--{h["slug"]}">{LOGO[h["slug"]].replace("wall__logo--type","proof__type")}<span>{h["origin"]}</span></a></li>' for h in HOUSES)+'''
-  </ol>
-</section>
-
-<!-- ============ LEDGER ============ -->
-<section class="ledger" id="ledger">
-  <div class="ledger__row">
-    <div class="ledger__item" data-reveal><span class="ledger__num" data-count="5">0</span><span class="ledger__lab">houses in Doha</span></div>
-    <div class="ledger__item" data-reveal><span class="ledger__num" data-count="2019">2000</span><span class="ledger__lab">first house, still open</span></div>
-    <div class="ledger__item" data-reveal><span class="ledger__num" data-count="4">0</span><span class="ledger__lab">cuisines at the pass</span></div>
-    <div class="ledger__item" data-reveal><span class="ledger__num" data-count="5">0</span><span class="ledger__lab">cities brought to Qatar</span></div>
-    <div class="ledger__item" data-reveal><span class="ledger__num" data-count="0">0</span><span class="ledger__lab">concepts closed</span></div>
+  <div class="finale__copy">
+    <img src="images/woh-logo.png" alt="World of Hospitality" width="240" height="80" data-reveal>
+    <p data-reveal>Bringing a brand to Doha?</p>
+    <a href="partnerships.html" class="close__cta" data-reveal>Start with a call</a>
   </div>
+  <div class="finale__logos" data-reveal>{logos}</div>
 </section>
-
-<!-- ============ CLOSE ============ -->
-<section class="close" id="close">
-  <div class="close__logos" data-reveal>'''+''.join(f'<a href="{h["slug"]}.html" class="proof__logo proof__logo--{h["slug"]}">{LOGO[h["slug"]].replace("wall__logo--type","proof__type")}</a>' for h in HOUSES)+'''</div>
-  <p class="close__lines">
-    <span class="line"><span>We do not chase trends.</span></span>
-    <span class="line"><span>We keep houses, and we stay for the long dinner.</span></span>
-  </p>
-  <div class="close__act" data-reveal>
-    <p class="lede">Bringing a brand to Qatar? Start with a call.</p>
-    <a href="partnerships.html" class="close__cta">Partner with us</a>
-  </div>
-</section>
-'''
+"""
     return head + body + FOOT.replace('js/site.js','js/home.js')
 
 if __name__ == "__main__":

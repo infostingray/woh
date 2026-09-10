@@ -162,65 +162,6 @@ ol { padding: 0; list-style: none; }
 .wall__caption { position: absolute; left: var(--gutter); bottom: 1.6rem; z-index: 2; pointer-events: none; font-size: 0.85rem; color: var(--bone-2); opacity: 0; }
 .wall__caption span { color: var(--ash); }
 
-/* ---------- Intro line ---------- */
-.intro { padding: clamp(4rem, 9vh, 6rem) var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; border-bottom: 1px solid var(--hair); }
-.intro__mark img { width: clamp(150px, 14vw, 200px); height: auto; }
-.intro__text { font-family: var(--serif); font-weight: 300; font-size: var(--t-display); line-height: 1.25; max-width: 30ch; }
-.intro__text .w { color: var(--ash); transition: color 0.5s; }
-.intro__text .w.is-on { color: var(--bone); }
-.intro__sub { margin-top: 1.5rem; }
-
-/* ---------- Houses: one band each ---------- */
-.house { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 5vw, 5rem); padding: clamp(3rem, 7vh, 5rem) var(--gutter); border-bottom: 1px solid var(--hair); align-items: center; }
-.house:nth-child(even) { grid-template-columns: 7fr 5fr; }
-.house:nth-child(even) .house__copy { order: 2; }
-.house__copy { display: flex; flex-direction: column; align-items: flex-start; }
-.house__logo { height: auto; width: 120px; margin-bottom: 1.5rem; }
-.house__logo--gunaydin { width: 96px; }
-.house__logo--kumar { width: 200px; }
-.house__logo--al-beiruti { width: 130px; }
-.house__logo--eleven-green { width: 130px; }
-.house__logo--type { font-family: var(--serif); font-size: 1.6rem; margin-bottom: 1.25rem; line-height: 1; }
-.house__name { font-family: var(--serif); font-weight: 400; font-size: var(--t-title); line-height: 1.1; }
-.house__line { margin-top: 0.6rem; font-family: var(--serif); font-style: italic; color: var(--bone-2); font-size: 1.1rem; }
-.house__text { margin-top: 1rem; color: var(--bone-2); max-width: 44ch; }
-.house__facts { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(3, auto); gap: 0.5rem 2rem; font-size: 0.85rem; }
-.house__facts dt { color: var(--ash); }
-.house__facts dd { margin: 0.15rem 0 0; }
-.house__copy .link { margin-top: 1.75rem; }
-.house__media { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(0.5rem, 1vw, 1rem); }
-.house__media figure { margin: 0; overflow: hidden; position: relative; }
-.house__media figure:first-child { aspect-ratio: 4 / 3; }
-.house__media figure:last-child { aspect-ratio: 4 / 5; align-self: end; }
-.house__media img, .house__media video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
-.house__media figcaption { position: absolute; left: 0.9rem; bottom: 0.8rem; font-size: 0.75rem; color: var(--bone-2); opacity: 0.85; }
-.house__flag { position: absolute; top: 0.9rem; left: 0.9rem; font-size: 0.72rem; padding: 0.3rem 0.6rem; border: 1px solid rgba(244,239,230,0.35); background: rgba(14,12,10,0.5); color: var(--bone); }
-
-/* ---------- The World ---------- */
-.world { padding: clamp(4rem, 9vh, 6rem) var(--gutter); border-bottom: 1px solid var(--hair); }
-.world__head { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: end; }
-.world__map { margin-top: 2rem; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
-.world__index { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 1.25rem; }
-.world__index li { border-right: 1px solid var(--hair); padding: 0.25rem 1rem 0.25rem 0; }
-.world__index li:last-child { border-right: 0; }
-.world__index a { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; min-height: 4.5rem; justify-content: flex-end; }
-.world__index a span { font-family: var(--sans); font-size: 0.78rem; color: var(--ash); }
-.world__index a:hover { color: var(--brass); }
-
-/* ---------- Ledger ---------- */
-.ledger { padding: clamp(3.5rem, 8vh, 5rem) var(--gutter); border-bottom: 1px solid var(--hair); }
-.ledger__row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2rem; }
-.ledger__num { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(1.9rem, 2.8vw, 2.8rem); line-height: 1; font-variant-numeric: tabular-nums; }
-.ledger__lab { display: block; margin-top: 0.6rem; font-size: 0.85rem; color: var(--ash); max-width: 16ch; }
-
-/* ---------- Close ---------- */
-.close { padding: clamp(5rem, 12vh, 8rem) var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-.close__lines { font-family: var(--serif); font-weight: 300; font-size: var(--t-display); line-height: 1.25; max-width: 24ch; }
-.close__lines .line > span { transform: translateY(110%); }
-.close__act { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
-.close__cta { display: inline-block; padding: 1rem 2rem; border: 1px solid var(--brass); color: var(--bone); transition: background 0.5s var(--ease), color 0.5s; }
-.close__cta:hover { background: var(--brass); color: var(--ink); }
-
 /* ---------- Footer ---------- */
 .foot { border-top: 1px solid var(--hair); padding: clamp(3rem, 8vh, 5rem) var(--gutter) 2rem; font-size: 0.9rem; }
 .foot__grid { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 2rem; }
@@ -260,18 +201,6 @@ body.no-motion .close__lines .line > span { transform: none; }
   .wall__foot { opacity: 1; transform: none; flex-direction: row; justify-content: space-between; align-items: baseline; }
   .wall__caption { display: none; }
 
-  .intro, .world__head, .close { grid-template-columns: 1fr; gap: 1.5rem; }
-  .house, .house:nth-child(even) { grid-template-columns: 1fr; gap: 1.5rem; }
-  .house:nth-child(even) .house__copy { order: 0; }
-  .house__facts { grid-template-columns: 1fr 1fr; }
-  .house__media { grid-template-columns: 1fr 1fr; }
-  .house__media figure:first-child, .house__media figure:last-child { aspect-ratio: 4 / 5; }
-  .world__map { overflow-x: auto; scrollbar-width: none; }
-  .world__map::-webkit-scrollbar { display: none; }
-  .world__map .route__svg { width: 190%; }
-  .world__index { grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; }
-  .world__index li { border: 0; padding: 0; }
-  .ledger__row { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .foot { padding: 3rem var(--gutter) 1.5rem; }
   .foot__grid { grid-template-columns: 1fr 1fr; gap: 2rem 1rem; }
   .foot__brand { grid-column: 1 / -1; }
@@ -311,9 +240,75 @@ body.no-motion .route__logo { opacity: 1; }
   .wall--mini .wall__logo { width: min(34%, 110px); top: 42%; }
   .wall--mini .wall__logo--wide { width: min(44%, 150px); }
   .wall--mini .wall__logo--type { font-size: 1.2rem; }
-  .close { grid-template-columns: 1fr; }
   .wall__label { position: static; padding: 1rem var(--gutter); }
   .proof__row, .close__logos { gap: 1.5rem 2rem; justify-content: flex-start; }
   .proof__logo--kumar img { width: 120px; }
   .proof__logo--eleven-green img { width: 100px; }
+}
+
+/* ---------- Marquee: the houses roll past, and the next one ---------- */
+.marquee { overflow: hidden; border-bottom: 1px solid var(--hair); padding: clamp(1.1rem, 2.6vh, 1.6rem) 0; }
+.marquee__track { display: flex; align-items: center; width: max-content; animation: marquee 48s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__item { display: flex; align-items: center; padding: 0 clamp(1.25rem, 2.4vw, 2.4rem); flex: 0 0 auto; opacity: 0.85; }
+.marquee__dot { width: 3px; height: 3px; border-radius: 50%; background: var(--brass); flex: 0 0 auto; opacity: 0.7; }
+.marquee .proof__logo--gunaydin img { width: 40px; }
+.marquee .proof__logo--kumar img { width: 100px; }
+.marquee .proof__logo--al-beiruti img { width: 58px; }
+.marquee .proof__logo--eleven-green img { width: 84px; }
+.marquee .proof__type { font-size: 0.95rem; }
+.marquee__next { flex-direction: column; align-items: flex-start; gap: 0.1rem; font-family: var(--serif); font-size: 0.95rem; color: var(--brass); white-space: nowrap; }
+.marquee__next em { font-family: var(--sans); font-style: normal; font-size: 0.68rem; color: var(--ash); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
+
+/* ---------- Reel: one house per screen, stacked ---------- */
+.reel { position: relative; }
+.reel__slide { position: sticky; top: 0; display: block; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); }
+.reel__media { position: absolute; inset: 0; }
+.reel__media img, .reel__media video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
+.reel__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.92) 0%, rgba(14,12,10,0.35) 45%, rgba(14,12,10,0.15) 100%); }
+.reel__media .house__flag { z-index: 2; top: auto; bottom: 1rem; right: 1rem; left: auto; }
+.reel__copy { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+.reel__logo { height: auto; margin-bottom: 0.75rem; filter: drop-shadow(0 4px 24px rgba(0,0,0,0.5)); }
+.reel__logo--gunaydin { width: clamp(110px, 12vw, 170px); }
+.reel__logo--kumar { width: clamp(220px, 24vw, 340px); }
+.reel__logo--al-beiruti { width: clamp(140px, 15vw, 210px); }
+.reel__logo--eleven-green { width: clamp(220px, 22vw, 320px); }
+.reel__logo--type { font-family: var(--serif); font-size: clamp(2rem, 3.4vw, 3.2rem); line-height: 1; margin-bottom: 0.75rem; text-shadow: 0 4px 24px rgba(0,0,0,0.6); }
+.reel__line { font-family: var(--serif); font-style: italic; font-size: clamp(1.05rem, 1.4vw, 1.35rem); color: var(--bone-2); }
+.reel__meta { font-size: 0.85rem; color: var(--bone); opacity: 0.8; }
+.reel__go { margin-top: 1rem; font-size: 0.85rem; padding-bottom: 0.2em; border-bottom: 1px solid var(--brass); color: var(--bone); transition: color 0.4s; }
+.reel__slide:hover .reel__go { color: var(--brass); }
+.reel__count { position: absolute; right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); font-size: 0.8rem; color: var(--bone-2); font-variant-numeric: tabular-nums; }
+
+/* ---------- Numbers over film ---------- */
+.numbers { position: relative; padding: clamp(6rem, 18vh, 12rem) var(--gutter); overflow: hidden; border-top: 1px solid var(--hair); }
+.numbers__media { position: absolute; inset: 0; }
+.numbers__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.7); }
+.numbers__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.72); }
+.numbers__row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.numbers__num { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.numbers__lab { display: block; margin-top: 0.6rem; font-size: 0.85rem; color: var(--bone-2); max-width: 16ch; }
+
+/* ---------- Finale over film ---------- */
+.finale { position: relative; height: 90vh; min-height: 560px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
+.finale__media { position: absolute; inset: 0; }
+.finale__media video, .finale__media img { width: 100%; height: 100%; object-fit: cover; }
+.finale__media::after { content: ""; position: absolute; inset: 0; background: radial-gradient(80% 70% at 50% 50%, rgba(14,12,10,0.55), rgba(14,12,10,0.85)); }
+.finale__copy { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; padding: 0 var(--gutter); }
+.finale__copy img { width: clamp(180px, 18vw, 260px); height: auto; }
+.finale__copy p { font-family: var(--serif); font-size: clamp(1.1rem, 1.6vw, 1.5rem); color: var(--bone-2); }
+.close__cta { display: inline-block; padding: 1rem 2rem; border: 1px solid var(--brass); color: var(--bone); transition: background 0.5s var(--ease), color 0.5s; }
+.close__cta:hover { background: var(--brass); color: var(--ink); }
+.finale__logos { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+
+@media (max-width: 900px) {
+  .marquee__track { animation-duration: 30s; }
+  .reel__slide { height: 82vh; min-height: 520px; }
+  .reel__logo--kumar, .reel__logo--eleven-green { width: 200px; }
+  .reel__count { display: none; }
+  .numbers__row { grid-template-columns: 1fr 1fr; }
+  .finale { height: 80vh; }
+  .finale__logos { display: none; }
 }

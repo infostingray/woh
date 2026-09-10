@@ -135,3 +135,11 @@ body.no-motion .creed__text .w { color: var(--bone); }
 .role__logo--gunaydin img { width: 48px; }
 .role__logo--kumar img { width: 110px; }
 .role__logo--al-beiruti img { width: 64px; }
+
+/* ---------- Sections over film ---------- */
+.overfilm { position: relative; overflow: hidden; padding-top: clamp(4rem, 10vh, 8rem); padding-bottom: clamp(4rem, 10vh, 8rem); }
+.overfilm__media { position: absolute; inset: 0; }
+.overfilm__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.7); }
+.overfilm__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.8); }
+.overfilm > *:not(.overfilm__media) { position: relative; }
+.overfilm .tenets__list, .overfilm .tenet { border-color: rgba(244,239,230,0.2); }

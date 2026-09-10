@@ -115,7 +115,7 @@
 
   /* ---------- Story: words light up as you read ---------- */
   const words = gsap.utils.toArray('.story__lead .w, .lit .w');
-  const litHost = document.querySelector('.story__lead, .lit');
+  const litHost = document.querySelector('.story, .lit');
   if (words.length && litHost) {
     ScrollTrigger.create({
       trigger: litHost, start: 'top 70%', end: 'bottom 45%', scrub: true,
@@ -127,12 +127,12 @@
   }
 
   /* ---------- Gallery: images settle as they arrive ---------- */
-  gsap.utils.toArray('.gal__cell img, .next__media img, .plate img').forEach(img => {
+  gsap.utils.toArray('.gal__cell img, .story__media img, .plate img').forEach(img => {
     gsap.to(img, { scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top 95%', end: 'bottom 30%', scrub: true } });
   });
 
   /* ---------- Section reveals ---------- */
-  const revealEls = gsap.utils.toArray('.route__head, .story__body, .visit__col, [data-reveal], .wall--mini .wall__panel');
+  const revealEls = gsap.utils.toArray('.route__head, .story__more, .story__facts, .visit__col, [data-reveal], .wall--mini .wall__panel');
   gsap.set(revealEls, { opacity: 0, y: 24 });
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {

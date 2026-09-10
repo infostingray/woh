@@ -277,13 +277,14 @@ def build(i, h, PH):
   </div>
 </section>
 
-<!-- ============ STORY ============ -->
+<!-- ============ STORY over film ============ -->
 <section class="story" id="story">
-  <div class="story__lead"><p data-split>{h['story'][0]}</p></div>
-  <div class="story__body">
-    <p>{h['story'][1]}</p>
-    <dl class="story__facts">{facts}</dl>
+  <div class="story__media"><img src="{PH.get(h['gallery'][1][0], h['gallery'][1][0]) if len(h['gallery'])>1 else h['poster']}" alt="" loading="lazy"></div>
+  <div class="story__copy">
+    <p class="story__lead" data-split>{h['story'][0]}</p>
+    <p class="story__more">{h['story'][1]}</p>
   </div>
+  <dl class="story__facts">{facts}</dl>
 </section>
 
 <!-- ============ GALLERY ============ -->
