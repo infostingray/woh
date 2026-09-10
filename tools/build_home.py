@@ -116,12 +116,13 @@ def road_nodes():
     lo, hi = 2018.4, 2031.3
     out = ""
     for i, n in enumerate(ROAD):
-        left = (n['x']-lo)/(hi-lo)*100
-        mark = f'<span class="road__logo">{LOGO[n["logo"]]}</span>' if n['logo'] else f'<span class="road__proj">{n["count"]:02d}</span>'
+        left = 5 + i*(90/(len(ROAD)-1))
+        title = {"gunaydin":"Günaydın","kumar":"Kumar","al-beiruti":"Al Beiruti","eleven-green":"Eleven Green","brunch-cake":"Brunch &amp; Cake"}.get(n['logo'], "Ten houses" if n['count']==10 else "Three markets")
+        mark = f'<span class="road__stop">{title}</span>'
         cls = "road__node" + (" road__node--future" if n.get('future') else "")
         href = f' href="{n["logo"]}.html"' if n['logo'] else ''
         tag = 'a' if n['logo'] else 'span'
-        out += f'<li class="{cls}" style="left:{left:.2f}%" data-i="{i}" data-yr="{n["year"]}" data-count="{n["count"]}" data-unit="{n["unit"]}" data-note="{n["note"]}" data-pct="{left:.2f}"><{tag} class="road__hit"{href}><span class="road__dot"></span>{mark}<span class="road__label">{n["year"]}<em>{n["city"]}</em></span></{tag}></li>'
+        out += f'<li class="{cls}" style="left:{left:.2f}%" data-i="{i}" data-yr="{n["year"]}" data-count="{n["count"]}" data-unit="{n["unit"]}" data-note="{n["note"]}" data-pct="{left:.2f}" data-logo="{n["logo"] or ""}"><{tag} class="road__hit"{href}><span class="road__label">{n["year"]}<em>{n["city"]}</em></span>{mark}<span class="road__dot"></span></{tag}></li>'
     return out
 
 def build():
@@ -131,7 +132,7 @@ def build():
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
     cuts = ''.join(f'<div class="veil__cut" data-house="{x["slug"]}"><img src="{x["poster"]}" alt=""><span class="veil__cutlogo">{x["logo"]}</span></div>' for x in H)
     head = head.replace('<div class="veil veil--quick" id="veil" aria-hidden="true"></div>', VEIL.replace('{CUTS}', cuts))
-    nodes=road_nodes(); backs=''.join(f'<img class="road__back" data-i="{i}" src="{n["img"]}" alt="" loading="lazy">' for i,n in enumerate(ROAD) if n.get('img')); panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
+    marks=''.join(f'<span class="road__mark" data-logo="{s}">{LOGO[s]}</span>' for s in ['gunaydin','kumar','al-beiruti','eleven-green','brunch-cake']); nodes=road_nodes(); backs=''.join(f'<img class="road__back" data-i="{i}" src="{n["img"]}" alt="" loading="lazy">' for i,n in enumerate(ROAD) if n.get('img')); panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
     marq=''.join(f'<a href="{x["slug"]}.html" class="marquee__item proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a><span class="marquee__dot"></span>' for x in HOUSES) + '<a href="partnerships.html" class="marquee__item marquee__next">More houses to come<em>Yours, if it belongs here</em></a><span class="marquee__dot"></span>'
     logos=''.join(f'<a href="{x["slug"]}.html" class="proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a>' for x in HOUSES)
     body = f"""
@@ -146,6 +147,7 @@ def build():
     <div class="road__media"><img src="images/material/stone.jpg" alt=""></div>
     <div class="road__backs">{backs}</div>
     <div class="road__head">
+      <div class="road__marks" id="roadMarks">{marks}</div>
       <span class="road__year" id="roadYear">2019</span>
       <div class="road__count"><span class="road__num" id="roadNum">01</span><span class="road__unit" id="roadUnit">house in Doha</span></div>
       <p class="road__note" id="roadNote">Günaydın opens. The first house.</p>
