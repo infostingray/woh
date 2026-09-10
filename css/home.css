@@ -47,25 +47,26 @@ ol { padding: 0; list-style: none; }
 .line > span { display: block; transform: translateY(110%); }
 
 /* ---------- Veil ---------- */
-.veil { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; }
-.veil__panel { position: absolute; left: 0; right: 0; height: 50%; background: var(--ink); }
-.veil__panel--top { top: 0; }
-.veil__panel--bottom { bottom: 0; }
-.veil__line {
-  position: absolute; left: 50%; top: 50%; width: min(70vw, 720px); height: 1px;
-  background: var(--brass); transform: translate(-50%, -50%) scaleX(0);
-}
-.veil__mark {
-  position: relative; width: clamp(140px, 16vw, 210px); height: auto;
-  clip-path: inset(50% 0 50% 0);
-}
+.veil { position: fixed; inset: 0; z-index: 100; overflow: hidden; }
+.veil__panel { position: absolute; top: 0; bottom: 0; width: 50.5%; background: var(--ink); }
+.veil__panel--left { left: 0; }
+.veil__panel--right { right: 0; }
+.veil__frame { position: absolute; inset: 26px; width: calc(100% - 52px); height: calc(100% - 52px); overflow: visible; }
+.veil__corner { fill: none; stroke: var(--brass); stroke-width: 1; stroke-dasharray: 100; stroke-dashoffset: 100; }
+.veil__centre { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; }
+.veil__markwrap { position: relative; overflow: hidden; }
+.veil__mark { width: clamp(170px, 20vw, 260px); height: auto; clip-path: inset(0 100% 0 0); }
+.veil__sweep { position: absolute; top: -10%; bottom: -10%; left: 0; width: 1px; background: var(--brass); box-shadow: 0 0 18px 2px rgba(196,150,91,0.45); transform: translateX(-4px); opacity: 0; }
+.veil__rule { display: block; width: 0; height: 1px; background: var(--hair); }
+.veil__houses { display: flex; gap: clamp(0.9rem, 2vw, 1.75rem); font-family: var(--serif); font-size: clamp(0.95rem, 1.3vw, 1.2rem); font-style: italic; color: var(--bone-2); }
+.veil__houses span { opacity: 0; transform: translateY(6px); }
 
 /* ---------- Nav ---------- */
 .nav {
+  background: linear-gradient(to bottom, rgba(14,12,10,0.55), rgba(14,12,10,0));
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 1.5rem var(--gutter);
-  mix-blend-mode: difference;
   transform: translateY(-1rem); opacity: 0;
 }
 .nav__logo { width: clamp(110px, 10vw, 150px); height: auto; }
@@ -129,7 +130,7 @@ ol { padding: 0; list-style: none; }
 }
 
 .atlas__intro {
-  position: absolute; left: var(--gutter); right: calc(var(--gutter) + 8rem); bottom: clamp(3rem, 10vh, 7rem);
+  position: absolute; left: var(--gutter); right: calc(var(--gutter) + 8rem); bottom: clamp(2.5rem, 8vh, 5rem);
 }
 .atlas__headline {
   max-width: 9em;
@@ -144,6 +145,13 @@ ol { padding: 0; list-style: none; }
 }
 .atlas__lede span { display: block; transform: translateY(110%); }
 
+.atlas__logos {
+  display: flex; align-items: center; gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  margin-top: 2.25rem; padding-top: 1.5rem; border-top: 1px solid var(--hair);
+  opacity: 0; transform: translateY(12px);
+}
+.atlas__logos img { height: auto; opacity: 0.95; }
+.atlas__logos span { font-family: var(--serif); font-size: 1.25rem; white-space: nowrap; }
 .atlas__names {
   position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(3rem, 10vh, 7rem);
   pointer-events: none;
@@ -162,9 +170,14 @@ ol { padding: 0; list-style: none; }
 }
 
 .atlas__marks {
-  position: absolute; right: var(--gutter); top: clamp(5rem, 12vh, 8rem);
-  width: 220px; height: 130px; pointer-events: none;
+  position: absolute; right: var(--gutter); top: clamp(6rem, 14vh, 9rem);
+  width: 300px; height: 180px; pointer-events: none;
 }
+.atlas__mark[data-house="0"] img { width: 170px; }
+.atlas__mark[data-house="1"] img { width: 300px; }
+.atlas__mark[data-house="2"] img { width: 200px; }
+.atlas__mark[data-house="3"] img { width: 140px; }
+.atlas__mark--type span { font-size: 2.2rem; }
 .atlas__mark { position: absolute; top: 0; right: 0; opacity: 0; }
 .atlas__mark img { height: auto; }
 .atlas__mark--type span {
@@ -331,9 +344,14 @@ ol { padding: 0; list-style: none; }
   .line > span, .atlas__lede span, .close__lines .line > span { transform: none; }
   .atlas__scroll i::after { animation: none; }
   .nav, .atlas__marks {
-  position: absolute; right: var(--gutter); top: clamp(5rem, 12vh, 8rem);
-  width: 220px; height: 130px; pointer-events: none;
+  position: absolute; right: var(--gutter); top: clamp(6rem, 14vh, 9rem);
+  width: 300px; height: 180px; pointer-events: none;
 }
+.atlas__mark[data-house="0"] img { width: 170px; }
+.atlas__mark[data-house="1"] img { width: 300px; }
+.atlas__mark[data-house="2"] img { width: 200px; }
+.atlas__mark[data-house="3"] img { width: 140px; }
+.atlas__mark--type span { font-size: 2.2rem; }
 .atlas__mark { position: absolute; top: 0; right: 0; opacity: 0; }
 .atlas__mark img { height: auto; }
 .atlas__mark--type span {
@@ -352,6 +370,7 @@ ol { padding: 0; list-style: none; }
 
 .atlas__index { opacity: 1; transform: none; }
   .veil { display: none; }
+  .atlas__logos { opacity: 1; transform: none; }
   body.is-loading { overflow: auto; }
   .statement__text .w { color: var(--bone); }
   .journey__stage { color: var(--bone); }
@@ -373,16 +392,6 @@ ol { padding: 0; list-style: none; }
 .atlas__name-text .wd { display: inline-block; white-space: nowrap; }
 .atlas__name-text .ch { display: inline-block; }
 
-.cursor {
-  position: fixed; left: 0; top: 0; z-index: 95; pointer-events: none;
-  width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
-  border: 1px solid var(--brass); background: transparent;
-  transition: width 0.35s var(--ease), height 0.35s var(--ease), margin 0.35s var(--ease), background 0.35s, opacity 0.3s;
-  opacity: 0;
-}
-.cursor.is-on { opacity: 1; }
-.cursor.is-link { width: 44px; height: 44px; margin: -22px 0 0 -22px; background: rgba(196,150,91,0.12); }
-@media (hover: hover) and (pointer: fine) { body { cursor: none; } a, button { cursor: none; } }
 
 .nav { transition: transform 0.6s var(--ease), opacity 0.6s; }
 .nav.is-hidden { transform: translateY(-110%); }
@@ -428,11 +437,17 @@ ol { padding: 0; list-style: none; }
   .atlas__intro { right: var(--gutter); bottom: 3.5rem; }
   .atlas__headline { font-size: clamp(2.6rem, 12vw, 4rem); }
   .atlas__lede { margin-top: 1rem; font-size: 0.95rem; }
+  .atlas__logos { flex-wrap: wrap; gap: 1rem 1.25rem; margin-top: 1.5rem; padding-top: 1.1rem; }
+  .atlas__logos img { height: 40px; width: auto; }
+  .atlas__logos img[alt="Kumar"] { height: 30px; }
+  .atlas__logos span { font-size: 1.05rem; }
+  .veil__houses { flex-wrap: wrap; justify-content: center; padding: 0 1.5rem; }
+  .veil__frame { inset: 16px; width: calc(100% - 32px); height: calc(100% - 32px); }
   .atlas__names { bottom: 3.5rem; }
   .atlas__name-text { white-space: normal; font-size: clamp(2.6rem, 12.5vw, 4.4rem); line-height: 0.95; }
   .atlas__name-meta { margin-top: 0.9rem; font-size: 0.9rem; }
   .atlas__marks { top: 4.75rem; right: var(--gutter); width: 120px; height: 80px; }
-  .atlas__mark img { width: auto; height: 64px; }
+  .atlas__mark img { width: auto !important; height: 64px; }
   .atlas__mark[data-house="1"] img { height: 40px; }
   .atlas__mark[data-house="2"] img { height: 56px; }
   .atlas__mark--type span { font-size: 1.2rem; }
@@ -490,5 +505,4 @@ ol { padding: 0; list-style: none; }
   .foot__bottom { margin-top: 3rem; flex-direction: column; gap: 0.4rem; }
 
   .grain { animation: none; opacity: 0.05; }
-  .cursor { display: none; }
 }

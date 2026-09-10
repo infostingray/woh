@@ -137,18 +137,25 @@
       if (veil) veil.remove();
       if (nav) { nav.style.opacity = 1; nav.style.transform = 'none'; }
       document.querySelectorAll('.atlas__intro .line > span, .atlas__lede span').forEach(s => s.style.transform = 'none');
+      const lg = document.querySelector('.atlas__logos'); if (lg) { lg.style.opacity = 1; lg.style.transform = 'none'; }
       return;
     }
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.to('.veil__line', { scaleX: 1, duration: 1.0, ease: 'power3.inOut' }, 0.2)
-      .to('.veil__mark', { clipPath: 'inset(0% 0 0% 0)', duration: 1.0, ease: 'power3.inOut' }, '-=0.45')
-      .to('.veil__mark', { opacity: 0, duration: 0.45, delay: 0.55 })
-      .to('.veil__line', { scaleX: 1.6, opacity: 0, duration: 0.7, ease: 'power2.in' }, '-=0.3')
-      .to('.veil__panel--top', { yPercent: -100, duration: 1.15, ease: 'power4.inOut' }, '-=0.2')
-      .to('.veil__panel--bottom', { yPercent: 100, duration: 1.15, ease: 'power4.inOut' }, '<')
+    tl.to('.veil__corner', { strokeDashoffset: 0, duration: 1.1, stagger: 0.08, ease: 'power3.out' }, 0.15)
+      .set('.veil__sweep', { opacity: 1 }, 0.5)
+      .to('.veil__mark', { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'power2.inOut' }, 0.5)
+      .to('.veil__sweep', { left: '100%', duration: 1.3, ease: 'power2.inOut' }, 0.5)
+      .to('.veil__sweep', { opacity: 0, duration: 0.3 }, 1.7)
+      .to('.veil__rule', { width: 'min(60vw, 520px)', duration: 0.9, ease: 'power3.inOut' }, 1.2)
+      .to('.veil__houses span', { opacity: 1, y: 0, duration: 0.6, stagger: 0.09, ease: 'power2.out' }, 1.5)
+      .to('.veil__centre', { opacity: 0, y: -10, duration: 0.5, ease: 'power2.in' }, 3.0)
+      .to('.veil__corner', { opacity: 0, duration: 0.4 }, 3.0)
+      .to('.veil__panel--left', { xPercent: -100, duration: 1.2, ease: 'power4.inOut' }, 3.2)
+      .to('.veil__panel--right', { xPercent: 100, duration: 1.2, ease: 'power4.inOut' }, 3.2)
       .to('.atlas__house.is-active video, .atlas__house.is-active img', { scale: 1.0, duration: 2.4, ease: 'power2.out' }, '-=0.9')
       .to('.atlas__intro .line > span', { y: 0, duration: 1.1, stagger: 0.09 }, '-=2.0')
       .to('.atlas__lede span', { y: 0, duration: 0.9 }, '-=0.7')
+      .to('.atlas__logos', { opacity: 1, y: 0, duration: 1.0 }, '-=0.5')
       .to(nav, { opacity: 1, y: 0, duration: 0.9 }, '-=0.8')
       .to(scrollCue, { opacity: 1, duration: 0.8 }, '-=0.6')
       .set(veil, { display: 'none' });
@@ -214,16 +221,6 @@
       });
     });
     housesWrap.addEventListener('mouseleave', () => gsap.to(peek, { opacity: 0, rotate: -3, duration: 0.4 }));
-  }
-
-  /* ---------- Cursor ---------- */
-  const cur = document.getElementById('cursor');
-  if (cur && hasGsap && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const cx = gsap.quickTo(cur, 'x', { duration: 0.18, ease: 'power3' });
-    const cy = gsap.quickTo(cur, 'y', { duration: 0.18, ease: 'power3' });
-    window.addEventListener('mousemove', e => { cx(e.clientX); cy(e.clientY); cur.classList.add('is-on'); });
-    document.addEventListener('mouseleave', () => cur.classList.remove('is-on'));
-    document.addEventListener('mouseover', e => cur.classList.toggle('is-link', !!e.target.closest('a, button')));
   }
 
   /* ---------- Nav hides on scroll down, returns on scroll up ---------- */
