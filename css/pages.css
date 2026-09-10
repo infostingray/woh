@@ -160,3 +160,8 @@ body.no-motion .creed__text .w { color: var(--bone); }
 .people.overfilm .people__copy { max-width: 60ch; }
 .people.overfilm .sec__title { font-size: clamp(1.8rem, 3vw, 2.8rem); }
 @media (max-width: 900px) { .open--about { min-height: 80vh; } }
+.open__mark { width: clamp(200px, 20vw, 300px); height: auto; margin-bottom: 2.5rem; display: block; }
+.proof--about { padding: clamp(3rem, 8vh, 5rem) var(--gutter); border-top: 1px solid var(--hair); }
+.proof--about .proof__row { justify-content: space-between; }
+.proof--about .proof__logo .logo--gunaydin { width: 60px; } .proof--about .proof__logo .logo--kumar { width: 150px; } .proof--about .proof__logo .logo--al-beiruti { width: 92px; } .proof--about .proof__logo .logo--eleven-green { width: 180px; } .proof--about .proof__logo .logo--brunch-cake { width: 140px; }
+@media (max-width: 900px) { .open__mark { width: 170px; margin-bottom: 1.5rem; } .proof--about .proof__row { gap: 1.5rem 2rem; } .proof--about .proof__logo .logo--kumar { width: 110px; } .proof--about .proof__logo .logo--eleven-green { width: 130px; } .proof--about .proof__logo .logo--brunch-cake { width: 100px; } }

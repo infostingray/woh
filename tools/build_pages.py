@@ -32,7 +32,8 @@ about = f"""
 <section class="open open--about">
   <div class="open__media"><img src="images/material/room.jpg" alt="An empty dining room before service"><div class="open__grade"></div></div>
   <div class="open__copy">
-    <p class="open__kicker">World of Hospitality, Doha, since 2019</p>
+    <img class="open__mark" src="images/woh-logo.png" alt="World of Hospitality" width="240" height="80" data-reveal>
+    <p class="open__kicker">Doha, since 2019</p>
     <h1 class="open__title open__title--lit lit" data-split>A restaurant is a thousand small promises, made nightly. Our job is to keep all of them.</h1>
   </div>
 </section>
@@ -67,7 +68,10 @@ about = f"""
   </div>
 </section>
 
-{MINI_ALL}
+<section class="proof proof--about">
+  <p class="proof__label">The houses</p>
+  <div class="proof__row">{PROOF}</div>
+</section>
 
 <section class="people overfilm" id="leadership">
   <div class="overfilm__media overfilm__media--material"><img src="images/material/bronze.jpg" alt="" loading="lazy"></div>
