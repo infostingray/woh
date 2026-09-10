@@ -203,6 +203,16 @@
     });
   }
 
+  /* ---------- Chapters: play footage while a chapter is in view ---------- */
+  document.querySelectorAll('.chapter').forEach(ch => {
+    const v = ch.querySelector('video');
+    const m = ch.querySelector('.chapter__media video, .chapter__media img');
+    if (hasGsap && !reduce && m) gsap.to(m, { scale: 1, ease: 'none', scrollTrigger: { trigger: ch, start: 'top bottom', end: 'top top', scrub: true } });
+    if (!v) return;
+    ScrollTrigger.create({ trigger: ch, start: 'top 80%', end: 'bottom 20%',
+      onToggle: self => { if (self.isActive) { if (v.preload === 'none') { v.preload = 'auto'; v.load(); } v.play().catch(() => {}); } else v.pause(); } });
+  });
+
   /* ---------- Houses: image follows the cursor ---------- */
   const peek = document.getElementById('housesPeek');
   const housesWrap = document.querySelector('.houses');
