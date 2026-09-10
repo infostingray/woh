@@ -1,6 +1,7 @@
 /* World of Hospitality: house pages. Loads after home.css and uses its tokens. */
 
-.house-page .veil--quick .veil__panel { transform: none; }
+.veil--quick, .veil--out { background: var(--ink); }
+body.house-page .nav__logo { opacity: 1; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
@@ -13,9 +14,8 @@
     radial-gradient(120% 80% at 50% 50%, rgba(196,150,91,0.08), rgba(14,12,10,0.3));
 }
 .hero__mark { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-50%); opacity: 0; }
-.hero__logo { height: auto; width: clamp(140px, 16vw, 240px); filter: drop-shadow(0 4px 24px rgba(0,0,0,0.5)); }
-.hero__logo--box { width: clamp(180px, 18vw, 260px); }
-.hero__logo--type { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3vw, 3rem); line-height: 1; white-space: nowrap; }
+.hero__logo { display: block; }
+.hero__logo img { height: auto; filter: drop-shadow(0 4px 24px rgba(0,0,0,0.5)); }
 .hero__copy { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); }
 .hero__name {
   font-family: var(--serif); font-weight: 400; line-height: 1; letter-spacing: 0;
@@ -60,10 +60,9 @@
 .visit__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.6); }
 .visit__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.82); }
 .visit__inner { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; padding: clamp(4rem, 10vh, 7rem) var(--gutter); }
-.visit__logo { height: auto; width: clamp(90px, 8vw, 120px); margin-bottom: 1.75rem; display: block; }
-.visit__logo--type, .visit__logo.hero__logo--type { font-family: var(--serif); font-size: 1.6rem; line-height: 1; margin-bottom: 1.5rem; }
-.visit__logo.hero__logo--box { width: clamp(130px, 12vw, 170px); }
-.visit__addr { font-family: var(--serif); font-size: clamp(1.15rem, 1.6vw, 1.5rem); line-height: 1.35; }
+.visit__logo { display: block; margin-bottom: 1.75rem; }
+.visit__logo img { height: auto; }
+.visit__logo--type, .visit__logo.visit__logo.visit__addr { font-family: var(--serif); font-size: clamp(1.15rem, 1.6vw, 1.5rem); line-height: 1.35; }
 .visit__hours, .visit__note { margin-top: 0.5rem; font-size: 0.85rem; color: var(--ash); }
 .visit__col--act { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 1.5rem; text-align: right; }
 .visit__cta {
@@ -93,7 +92,6 @@
 @media (max-width: 900px) {
   .hero { min-height: 100svh; }
   .hero__mark { top: 42%; }
-  .hero__logo { width: 140px; }
   .hero__name { font-size: 1.9rem; }
   .hero__line { font-size: 1.1rem; }
   .hero__meta-item + .hero__meta-item::before { width: 16px; margin: 0 0.6rem; }
@@ -119,3 +117,7 @@ body.no-motion .line > span { transform: none; }
 }
 
 .house__flag { position: absolute; top: 0.9rem; left: 0.9rem; font-size: 0.72rem; padding: 0.3rem 0.6rem; border: 1px solid rgba(244,239,230,0.35); background: rgba(14,12,10,0.5); color: var(--bone); }
+
+.hero__logo .logo--gunaydin { width: clamp(150px, 15vw, 220px); } .hero__logo .logo--kumar { width: clamp(220px, 24vw, 340px); } .hero__logo .logo--al-beiruti { width: clamp(160px, 16vw, 240px); } .hero__logo .logo--eleven-green { width: clamp(240px, 28vw, 400px); } .hero__logo .logo--brunch-cake { width: clamp(200px, 22vw, 320px); }
+.visit__logo .logo--gunaydin { width: 84px; } .visit__logo .logo--kumar { width: 160px; } .visit__logo .logo--al-beiruti { width: 110px; } .visit__logo .logo--eleven-green { width: 190px; } .visit__logo .logo--brunch-cake { width: 150px; }
+@media (max-width: 900px) { .hero__logo .logo--gunaydin { width: 120px; } .hero__logo .logo--kumar { width: 190px; } .hero__logo .logo--al-beiruti { width: 140px; } .hero__logo .logo--eleven-green { width: 220px; } .hero__logo .logo--brunch-cake { width: 180px; } }

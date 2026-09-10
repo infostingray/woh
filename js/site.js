@@ -59,8 +59,7 @@
       return;
     }
     const tl = gsap.timeline();
-    tl.to('.veil__panel--left', { xPercent: -100, duration: 1.1, ease: 'power4.inOut' }, 0)
-      .to('.veil__panel--right', { xPercent: 100, duration: 1.1, ease: 'power4.inOut' }, 0)
+    tl.to(veil, { opacity: 0, duration: 0.9, ease: 'power2.inOut' }, 0)
       .set(veil, { display: 'none' });
     if (document.querySelector('.hero__film')) tl.fromTo('.hero__film', { scale: 1.16 }, { scale: 1.08, duration: 2.4, ease: 'power2.out' }, 0.1);
     if (name) tl.to('.hero__name .ch', { y: 0, opacity: 1, duration: 1, stagger: 0.03, ease: 'power3.out' }, 0.45);
@@ -177,12 +176,8 @@
     e.preventDefault();
     sessionStorage.setItem('woh-seen', '1');
     if (lenis) lenis.stop();
-    veil.style.display = '';
-    gsap.set('.veil__panel--left', { xPercent: -100 });
-    gsap.set('.veil__panel--right', { xPercent: 100 });
-    gsap.timeline({ onComplete: () => { window.location.href = href; } })
-      .to('.veil__panel--left', { xPercent: 0, duration: 0.7, ease: 'power4.inOut' }, 0)
-      .to('.veil__panel--right', { xPercent: 0, duration: 0.7, ease: 'power4.inOut' }, 0);
+    const out = document.createElement('div'); out.className = 'veil veil--out'; document.body.appendChild(out);
+    gsap.fromTo(out, { opacity: 0 }, { opacity: 1, duration: 0.55, ease: 'power2.inOut', onComplete: () => { window.location.href = href; } });
   });
-  window.addEventListener('pageshow', e => { if (e.persisted) reveal(); });
+  window.addEventListener('pageshow', e => { if (e.persisted) { document.querySelectorAll('.veil--out').forEach(v => v.remove()); if (lenis) lenis.start(); } });
 })();

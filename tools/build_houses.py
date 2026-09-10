@@ -7,7 +7,7 @@ DOHA = (25.29, 51.53)
 
 HOUSES = [
  dict(slug="gunaydin", name="Günaydın", short="Günaydın",
-      logo=("images/brands/gunaydin.svg", 120, 120),
+      logo="gunaydin",
       origin="Istanbul", founded="1961", lat=41.01, lon=28.98,
       line="Istanbul's celebrated et lokantası, plated in Doha.",
       story=[
@@ -21,7 +21,7 @@ HOUSES = [
       cta=("Reserve a table","tel:+97470323311"),
       placeholder=False),
  dict(slug="kumar", name="Kumar", short="Kumar",
-      logo=("images/brands/kumar.svg", 240, 71),
+      logo="kumar",
       origin="Kuwait", founded="MK Group", lat=29.38, lon=47.99,
       line="A modern Indian table. Regional, warm, considered.",
       story=[
@@ -35,7 +35,7 @@ HOUSES = [
       cta=("Reserve a table","tel:+97470323311"),
       placeholder=False),
  dict(slug="al-beiruti", name="Al Beiruti", short="Al Beiruti",
-      logo=("images/brands/al-beiruti.svg", 150, 79),
+      logo="al-beiruti",
       origin="Beirut", founded="", lat=33.89, lon=35.50,
       line="A Beirut neighbourhood story, coming home.",
       story=[
@@ -49,7 +49,7 @@ HOUSES = [
       cta=("Reserve a table","tel:+97470323311"),
       placeholder=False),
  dict(slug="eleven-green", name="Eleven Green", short="Eleven Green",
-      logo=("images/brands/eleven-green.png", 220, 92),
+      logo="eleven-green",
       origin="Dubai", founded="2023", lat=25.20, lon=55.27,
       line="The Bull Burger is in town.",
       story=[
@@ -63,7 +63,7 @@ HOUSES = [
       cta=("Be first to know","mailto:info@worldofhospitality.com.qa?subject=Eleven%20Green%20opening"),
       placeholder=True),
  dict(slug="brunch-cake", name="Brunch &amp; Cake", short="Brunch & Cake",
-      logo=None,
+      logo="brunch-cake",
       origin="Barcelona", founded="2010", lat=41.39, lon=2.17,
       line="Grandma's goodness, thoughtfully served.",
       story=[
@@ -79,13 +79,13 @@ HOUSES = [
 ]
 
 LOGO = {
- "gunaydin": '<img src="images/brands/gunaydin.svg" alt="Günaydın" width="120" height="120">',
- "kumar": '<img src="images/brands/kumar.svg" alt="Kumar" width="240" height="71">',
- "al-beiruti": '<img src="images/brands/al-beiruti.svg" alt="Al Beiruti" width="150" height="79">',
- "eleven-green": '<img src="images/brands/eleven-green.png" alt="Eleven Green" width="220" height="92">',
- "brunch-cake": '<span class="wall__logo--type">Brunch<br>&amp; Cake</span>',
+ "gunaydin": '<img class="logo logo--gunaydin" src="images/brands/gunaydin.png" alt="Günaydın" width="700" height="699">',
+ "kumar": '<img class="logo logo--kumar" src="images/brands/kumar.png" alt="Kumar" width="1200" height="356">',
+ "al-beiruti": '<img class="logo logo--al-beiruti" src="images/brands/al-beiruti.png" alt="Al Beiruti" width="900" height="466">',
+ "eleven-green": '<img class="logo logo--eleven-green" src="images/brands/eleven-green.png" alt="Eleven Green" width="1200" height="114">',
+ "brunch-cake": '<img class="logo logo--brunch-cake" src="images/brands/brunch-cake.png" alt="Brunch &amp; Cake" width="1200" height="404">',
 }
-WIDE = {"kumar", "eleven-green"}
+WIDE = {"kumar", "eleven-green", "brunch-cake"}
 STILL = {"gunaydin":"images/brands/gunaydin-1.jpg","kumar":"images/brands/kumar-1.jpg","al-beiruti":"images/brands/al-beiruti-spread.jpg","eleven-green":"images/brands/eleven-green-1.jpg","brunch-cake":"images/brands/brunch-cake-1.jpg"}
 
 MENU_LOGOS = "".join(f'<a href="{s}.html" class="proof__logo proof__logo--{s}">{LOGO[s].replace("wall__logo--type","proof__type")}</a>' for s in ["gunaydin","kumar","al-beiruti","eleven-green","brunch-cake"])
@@ -149,10 +149,7 @@ SHELL_HEAD = '''<!doctype html>
 </head>
 <body class="is-loading house-page">
 
-<div class="veil veil--quick" id="veil" aria-hidden="true">
-  <div class="veil__panel veil__panel--left"></div>
-  <div class="veil__panel veil__panel--right"></div>
-</div>
+<div class="veil veil--quick" id="veil" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
@@ -230,11 +227,7 @@ def media_block(h, cls):
     return f'<img class="{cls}" src="{h["poster"]}" alt="">'
 
 def logo_block(h, cls):
-    if h['logo']:
-        src, w, hh = h['logo']
-        box = ' hero__logo--box' if 'eleven-green' in src or 'kumar' in src else ''
-        return f'<img class="{cls}{box}" src="{src}" alt="" width="{w}" height="{hh}">'
-    return f'<span class="{cls} {cls}--type">{h["name"]}</span>'
+    return f'<span class="{cls}">{LOGO[h["logo"]]}</span>'
 
 def build(i, h, PH):
     nxt = HOUSES[(i+1) % len(HOUSES)]

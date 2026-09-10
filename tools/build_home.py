@@ -6,27 +6,27 @@ from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
- dict(slug="gunaydin", name="Günaydın", logo='<img src="images/brands/gunaydin.svg" alt="Günaydın" width="120" height="120">', cls="",
+ dict(slug="gunaydin", name="Günaydın", logo=LOGO['gunaydin'], cls="",
       video=VID+"2026/03/Gunaydin-Website-Video-1-1.mp4", poster="images/brands/gunaydin-1.jpg", still="images/brands/gunaydin-2.jpg",
       origin="Istanbul, 1961", status="Open", line="Istanbul's celebrated et lokantası, plated in Doha.",
       text="A meat house before it was a restaurant. Dry-aged in its own rooms, butchered by hand, finished over charcoal. The first house we opened in Doha, in 2019, and still open.",
       facts=[("Cuisine","Turkish steakhouse"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The grill","The room")),
- dict(slug="kumar", name="Kumar", logo='<img src="images/brands/kumar.svg" alt="Kumar" width="240" height="71">', cls="wall__logo--wide",
+ dict(slug="kumar", name="Kumar", logo=LOGO['kumar'], cls="",
       video=VID+"2026/03/Kumar-Website-Video-1-1.mp4", poster="images/brands/kumar-1.jpg", still="images/brands/kumar-2.jpg",
       origin="Kuwait, with MK Group", status="Open", line="A modern Indian table. Regional, warm, considered.",
       text="India by region, not by stereotype. Coastal Kerala, Lucknowi dum biryani, Bombay street plates. Service trained to MK Group's Kuwait standards.",
       facts=[("Cuisine","Modern Indian"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The table","The room")),
- dict(slug="al-beiruti", name="Al Beiruti", logo='<img src="images/brands/al-beiruti.svg" alt="Al Beiruti" width="150" height="79">', cls="",
+ dict(slug="al-beiruti", name="Al Beiruti", logo=LOGO['al-beiruti'], cls="",
       video=VID+"2026/03/IMG_5377-3.mp4", poster="images/brands/al-beiruti-spread.jpg", still="images/brands/al-beiruti-mezze.jpg",
       origin="Beirut", status="Just opened", line="A Beirut neighbourhood story, coming home.",
       text="A long table for the city. Mezze the old way, bread out of the saj every twelve minutes, charcoal until late. One hundred and eighty seats and a terrace.",
       facts=[("Cuisine","Lebanese, Levantine"),("Seating","180 and terrace"),("Status","Just opened")], caps=("The spread","Mezze")),
- dict(slug="eleven-green", name="Eleven Green", logo='<img src="images/brands/eleven-green.png" alt="Eleven Green" width="220" height="92">', cls="wall__logo--wide",
+ dict(slug="eleven-green", name="Eleven Green", logo=LOGO['eleven-green'], cls="",
       video=VID+"2026/05/IMG_7763-1.mp4", poster="images/brands/eleven-green-1.jpg", still="images/brands/eleven-green-2.jpg",
       origin="Dubai, 2023", status="Opening soon", line="The Bull Burger is in town.",
       text="A homegrown burger bistro from Dubai's Chatila family. Hand-pressed patties ground fresh daily, Hokkaido milk bun, house bacon jam, the signature Bull sauce.",
       facts=[("Cuisine","Burger bistro"),("Signature","The Bull Burger"),("Status","Opening soon")], caps=("The Bull","The cut"), ph=True),
- dict(slug="brunch-cake", name="Brunch &amp; Cake", logo='<span class="wall__logo--type">Brunch<br>&amp; Cake</span>', cls="",
+ dict(slug="brunch-cake", name="Brunch &amp; Cake", logo=LOGO['brunch-cake'], cls="",
       video="", poster="images/brands/brunch-cake-1.jpg", still="images/brands/brunch-cake-2.jpg",
       origin="Barcelona, 2010", status="Late 2026", line="Grandma's goodness, thoughtfully served.",
       text="Born in Barcelona in 2010, now in twenty-three destinations across Spain, the Gulf, Egypt and India. Wholesome plates, generous portions, unmistakable rooms.",
@@ -54,24 +54,7 @@ def world_svg():
 </svg>'''
 
 VEIL = '''<div class="veil" id="veil" aria-hidden="true">
-  <div class="veil__panel veil__panel--left"></div>
-  <div class="veil__panel veil__panel--right"></div>
-  <svg class="veil__frame" viewBox="0 0 100 100" preserveAspectRatio="none" width="100" height="100">
-    <path class="veil__corner" d="M0 12 V0 H12" vector-effect="non-scaling-stroke"/>
-    <path class="veil__corner" d="M88 0 H100 V12" vector-effect="non-scaling-stroke"/>
-    <path class="veil__corner" d="M100 88 V100 H88" vector-effect="non-scaling-stroke"/>
-    <path class="veil__corner" d="M12 100 H0 V88" vector-effect="non-scaling-stroke"/>
-  </svg>
-  <div class="veil__centre">
-    <div class="veil__markwrap">
-      <img class="veil__mark" src="images/woh-logo.png" alt="" width="240" height="80">
-      <span class="veil__sweep"></span>
-    </div>
-    <span class="veil__rule"></span>
-    <p class="veil__houses">
-      <span>Günaydın</span><span>Kumar</span><span>Al Beiruti</span><span>Eleven Green</span><span>Brunch &amp; Cake</span>
-    </p>
-  </div>
+  <img class="veil__mark" src="images/woh-logo.png" alt="" width="240" height="80">
 </div>'''
 
 def wall_panel(h):
@@ -105,8 +88,7 @@ def house_band(h):
 
 def reel_slide(h, i):
     media = f'<img src="{h["poster"]}" alt="" loading="lazy">'
-    logo = h['logo'].replace('class="wall__logo--type"','class="reel__logo--type"')
-    if '<img' in logo: logo = logo.replace('<img ', f'<img class="reel__logo reel__logo--{h["slug"]}" ')
+    logo = f'<span class="reel__logo">{h["logo"]}</span>'
     flag = '<span class="house__flag">Placeholder image</span>' if h.get('ph') else ''
     return f'''  <a class="reel__slide" href="{h['slug']}.html" data-house="{h['slug']}">
     <div class="reel__media">{media}{flag}</div>
@@ -124,7 +106,7 @@ def build():
     head = head.replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
     head = head.replace('class="is-loading house-page"','class="is-loading"')
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
-    head = re.sub(r'<div class="veil veil--quick".*?--right"></div>\n</div>\n', VEIL+'\n', head, flags=re.S)
+    head = head.replace('<div class="veil veil--quick" id="veil" aria-hidden="true"></div>', VEIL)
     panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
     marq=''.join(f'<a href="{x["slug"]}.html" class="marquee__item proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a><span class="marquee__dot"></span>' for x in HOUSES) + '<a href="partnerships.html" class="marquee__item marquee__next">More houses to come<em>Yours, if it belongs here</em></a><span class="marquee__dot"></span>'
     logos=''.join(f'<a href="{x["slug"]}.html" class="proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a>' for x in HOUSES)
