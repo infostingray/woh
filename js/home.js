@@ -140,7 +140,14 @@
     const a = e.target.closest('a[href]');
     if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey) return;
     const href = a.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:/.test(href)) return;
+    if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:/.test(href) || a.hasAttribute('download')) return;
+    const url = new URL(href, location.href);
+    if (url.pathname === location.pathname && url.hash) {
+      const target = document.querySelector(url.hash);
+      if (target) { e.preventDefault(); if (lenis) lenis.scrollTo(target, { offset: -70, duration: 1.4 }); else target.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', url.hash); }
+      return;
+    }
+    if (href.startsWith('#')) return;
     sessionStorage.setItem('woh-seen', '1');
     e.preventDefault();
     if (lenis) lenis.stop();

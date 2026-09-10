@@ -234,7 +234,8 @@ def build(i, h, PH):
     desc = f"{h['short']} in Doha. {html.unescape(h['line'])} A World of Hospitality house."
     facts = "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k,v in h['facts'])
     gallery = ""
-    for j,(src,cap) in enumerate(h['gallery']):
+    gal_items = [g for k,g in enumerate(h['gallery']) if not (len(h['gallery'])>=3 and k==1)]
+    for j,(src,cap) in enumerate(gal_items):
         src = PH.get(src, src)
         cls = "gal__cell" + (" gal__cell--wide" if j == 0 else "")
         gallery += f'<figure class="{cls}"><img src="{src}" alt="{h["short"]}, {cap.lower()}" loading="lazy"><figcaption>{cap}</figcaption></figure>\n'

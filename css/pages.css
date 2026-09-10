@@ -35,6 +35,8 @@
 .people { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); padding: 0 var(--gutter) clamp(4rem, 10vh, 8rem); align-items: center; }
 .people__copy p { margin-top: 1.5rem; color: var(--bone-2); max-width: 44ch; }
 .people__copy .visit__cta { margin-top: 2.5rem; }
+.people__media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; }
+.people__media img { width: 100%; height: 100%; object-fit: cover; }
 .people__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
 .people__slot { aspect-ratio: 4 / 5; background: var(--ink-2); display: flex; align-items: flex-end; padding: 1rem; font-size: 0.8rem; color: var(--ash); }
 
@@ -67,7 +69,9 @@
 .role__meta span:first-child { color: var(--bone-2); font-family: var(--serif); font-size: 1.15rem; }
 .role h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.1; }
 .role p { margin-top: 0.5rem; color: var(--bone-2); max-width: 56ch; }
-.role__apply { justify-self: end; margin-top: 0.4rem; }
+.role__apply { justify-self: end; margin-top: 0.4rem; padding: 0.6rem 1.2rem; border: 1px solid var(--brass); font-size: 0.8rem; letter-spacing: 0.04em; transition: background 0.4s var(--ease), color 0.4s; }
+.role__apply::after { display: none; }
+.role__apply:hover { background: var(--brass); color: var(--ink); }
 .role--open h3 { font-style: italic; font-weight: 300; }
 
 /* ---------- Forms ---------- */
@@ -75,7 +79,7 @@
 .form__hp { position: absolute; left: -9999px; height: 0; width: 0; opacity: 0; }
 .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
 .field { display: block; margin-bottom: 1.75rem; }
-.field > span { display: block; font-size: 0.8rem; color: var(--ash); margin-bottom: 0.5rem; }
+.field > span { display: block; font-size: 0.85rem; color: var(--bone-2); margin-bottom: 0.5rem; }
 .field input, .field select, .field textarea {
   width: 100%; background: transparent; color: var(--bone); border: 0; border-bottom: 1px solid var(--hair);
   padding: 0.6rem 0; font: inherit; font-size: 1rem; border-radius: 0; transition: border-color 0.4s;
@@ -140,4 +144,4 @@ body.no-motion .creed__text .w { color: var(--bone); }
 .overfilm__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.8); }
 .overfilm > *:not(.overfilm__media) { position: relative; }
 .overfilm .tenets__list, .overfilm .tenet { border-color: rgba(244,239,230,0.2); }
-.role__logo .logo--gunaydin { width: 44px; } .role__logo .logo--kumar { width: 100px; } .role__logo .logo--al-beiruti { width: 64px; }
+.role__logo .logo--gunaydin { width: 56px; } .role__logo .logo--kumar { width: 124px; } .role__logo .logo--al-beiruti { width: 80px; }

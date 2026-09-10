@@ -36,8 +36,8 @@ Open `tools/build_houses.py`. Each house is one block in `HOUSES`. Change the te
 - **Eleven Green and Brunch & Cake photography** is AI-generated. Files: `images/brands/eleven-green-1.jpg`, `eleven-green-2.jpg`, `brunch-cake-1.jpg`, `brunch-cake-2.jpg`. Drop real photos over those filenames and nothing else needs to change. Then set `placeholder=False` on those two houses in `build_houses.py` and rerun, which removes the "placeholder photography" note from the page.
 - **Opening hours** say "to be confirmed" on every house. In `build_houses.py`, the visit block reads `Opening hours to be confirmed.`; replace that string or add an `("Hours", "...")` entry to each house's `facts`.
 - **Addresses** for Al Beiruti, Eleven Green and Brunch & Cake are just "Doha". Edit the `("Address", ...)` fact.
-- **Leadership** on the About page has four empty frames labelled by role. When bios are ready, replace the `people__grid` block in `build_pages.py` with names, titles and portraits.
-- **Logos**: Eleven Green is a JPG with a green box, Brunch & Cake is set in type. When transparent logos arrive, save them as `images/brands/eleven-green.svg` and `images/brands/brunch-cake.svg`, then update the `logo` field for each house in `build_houses.py` and the `LOGO` table at the top of `build_houses.py`, which feeds every page. Eleven Green already has a transparent version at `images/brands/eleven-green.png`.
+- **Leadership** on the About page is a paragraph and one photo. When bios are ready, replace the `people` section in `build_pages.py` with names, titles and portraits.
+- **Logos**: all five real marks are in `images/brands/` as transparent PNGs. To swap one, overwrite the file. Sizes per placement live in one table at the bottom of `css/home.css` (search `Logo sizes`).
 
 ### Videos
 The four hero videos are still loaded from the old WordPress site at `worldofhospitality.com.qa/wp-content/uploads/...`. If that hosting is switched off the videos stop playing. To make them permanent, put the MP4 files in a `videos/` folder and search-and-replace the URLs in `index.html` and `tools/build_houses.py` (the `VID` variable).

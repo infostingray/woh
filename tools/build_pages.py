@@ -24,11 +24,16 @@ def opener(title_lines, lede, img, alt=""):
   </div>
 </section>'''
 
+PROOF = ''.join(f'<a href="{h["slug"]}.html" class="proof__logo proof__logo--{h["slug"]}">{LOGO[h["slug"]]}</a>' for h in HOUSES)
+MINI_ALL = mini_wall(label="Five houses, one standard")
+
 # ---------------------------------------------------------------- ABOUT
 about = opener(
     ["A restaurant is a thousand", "small promises, made nightly."],
     "Our job is to keep all of them. That is the founding principle, and the whole strategy.",
-    "images/brands/kumar-2.jpg", "The room at Kumar") + '''
+    "images/brands/kumar-2.jpg", "The room at Kumar") + f'''
+
+{MINI_ALL}
 
 <section class="tenets overfilm" id="approach">
   <div class="overfilm__media"><img src="images/brands/gunaydin-2.jpg" alt="" loading="lazy"></div>
@@ -51,19 +56,13 @@ about = opener(
   </div>
 </section>
 
-'''+mini_wall(label="Five houses, one standard")+'''
 <section class="people" id="leadership">
   <div class="people__copy" data-reveal>
     <h2 class="sec__title">Operators, not consultants.</h2>
     <p>Our team has opened, run and turned around restaurants across the Gulf, the Levant and Europe. Leadership profiles are being prepared. Until then, ask us directly.</p>
     <a class="visit__cta" href="contact.html">Get in touch</a>
   </div>
-  <div class="people__grid" aria-hidden="true">
-    <div class="people__slot"><span>Chief Executive</span></div>
-    <div class="people__slot"><span>Operations</span></div>
-    <div class="people__slot"><span>Culinary</span></div>
-    <div class="people__slot"><span>Development</span></div>
-  </div>
+  <figure class="people__media"><img src="images/brands/gunaydin-2.jpg" alt="" loading="lazy"></figure>
 </section>
 
 '''
@@ -103,7 +102,7 @@ partnerships = opener(
 
 <section class="proof" data-reveal>
   <p class="proof__label">Trusted with</p>
-  <div class="proof__row">'''+''.join(f'<a href="{h['slug']}.html" class="proof__logo proof__logo--{h['slug']}">{LOGO[h['slug']].replace('wall__logo--type','proof__type')}</a>' for h in HOUSES)+'''</div>
+  <div class="proof__row">{PROOF}</div>
 </section>
 
 <section class="gets overfilm">
@@ -218,7 +217,7 @@ topic_opts = "".join(f'<option>{t}</option>' for t in topics)
 contact = opener(
     ["Let's talk."],
     "Brand owner, future colleague, curious guest. The right person will get back to you within two working days.",
-    None) + f'''
+    "images/brands/al-beiruti-mezze.jpg", "Al Beiruti, mezze") + f'''
 
 <section class="reach">
   <div class="reach__col" data-reveal>
