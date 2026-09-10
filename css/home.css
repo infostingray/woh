@@ -70,16 +70,20 @@ ol { padding: 0; list-style: none; }
   transform: translateY(-1rem); opacity: 0;
 }
 .nav__logo { width: clamp(110px, 10vw, 150px); height: auto; }
-.nav__links { display: flex; gap: 2.25rem; font-size: 0.9rem; }
+.nav__links { display: flex; gap: 2.5rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
 .nav__links a, .nav__cta { position: relative; }
 .nav__links a::after, .nav__cta::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -0.3em;
-  height: 1px; background: currentColor;
+  content: ""; position: absolute; left: 0; right: 0; bottom: -0.45em;
+  height: 1px; background: var(--brass);
   transform: scaleX(0); transform-origin: right;
   transition: transform 0.5s var(--ease);
 }
 .nav__links a:hover::after, .nav__cta:hover::after { transform: scaleX(1); transform-origin: left; }
-.nav__cta { font-size: 0.9rem; }
+.nav__cta { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.7rem 1.3rem; border: 1px solid var(--brass); color: var(--bone); transition: background 0.45s var(--ease), color 0.45s; }
+.nav__cta::after { display: none; }
+.nav__cta:hover { background: var(--brass); color: var(--ink); }
+.nav__links a[aria-current="page"] { color: var(--brass); }
+.nav__links a[aria-current="page"]::after { transform: scaleX(1); background: var(--brass); }
 .nav__toggle {
   display: none; width: 44px; height: 44px;
   flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px;
@@ -115,7 +119,16 @@ ol { padding: 0; list-style: none; }
 .nav { transition: transform 0.6s var(--ease), opacity 0.6s; }
 .nav.is-hidden { transform: translateY(-110%); }
 .nav.is-solid { background: rgba(14,12,10,0.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--hair); padding-top: 1rem; padding-bottom: 1rem; }
-.menu__links a { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+.menu__links a { font-size: clamp(1.6rem, 6vw, 2.2rem); font-weight: 400; }
+.menu__houses { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; align-items: center; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); transform: translateY(20px); opacity: 0; transition: transform 0.7s var(--ease) 0.25s, opacity 0.7s var(--ease) 0.25s; }
+.menu.is-open .menu__houses { transform: none; opacity: 1; }
+.menu__houses a { display: flex; align-items: center; }
+.menu__houses img { height: auto; }
+.menu__houses .proof__logo--gunaydin img { width: 44px; }
+.menu__houses .proof__logo--kumar img { width: 96px; }
+.menu__houses .proof__logo--al-beiruti img { width: 58px; }
+.menu__houses .proof__logo--eleven-green img { width: 84px; }
+.menu__houses .proof__type { font-size: 1rem; }
 
 .grain {
   position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: 0.06;

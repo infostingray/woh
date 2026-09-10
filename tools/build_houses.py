@@ -88,6 +88,8 @@ LOGO = {
 WIDE = {"kumar", "eleven-green"}
 STILL = {"gunaydin":"images/brands/gunaydin-1.jpg","kumar":"images/brands/kumar-1.jpg","al-beiruti":"images/brands/al-beiruti-spread.jpg","eleven-green":"images/brands/eleven-green-1.jpg","brunch-cake":"images/brands/brunch-cake-1.jpg"}
 
+MENU_LOGOS = "".join(f'<a href="{s}.html" class="proof__logo proof__logo--{s}">{LOGO[s].replace("wall__logo--type","proof__type")}</a>' for s in ["gunaydin","kumar","al-beiruti","eleven-green","brunch-cake"])
+
 def mini_wall(exclude=None, label=None):
     """The hero wall, smaller, as a component: every house except `exclude`."""
     panels = ""
@@ -175,6 +177,7 @@ SHELL_HEAD = '''<!doctype html>
     <a href="contact.html">Contact</a>
     <a href="partnerships.html">Partner with us</a>
   </nav>
+  <div class="menu__houses">MENU_LOGOS_HERE</div>
   <p class="menu__foot">Landmark Mall, Doha<br>+974 7032 3311</p>
 </div>
 '''
@@ -300,7 +303,7 @@ def build(i, h, PH):
 <!-- ============ THE OTHER HOUSES ============ -->
 {mini_wall(exclude=h['slug'], label="The other houses")}
 '''
-    head = SHELL_HEAD.format(title=h['short'], desc=html.escape(desc))
+    head = SHELL_HEAD.format(title=h['short'], desc=html.escape(desc)).replace('MENU_LOGOS_HERE', MENU_LOGOS)
     return head + body + FOOT
 
 if __name__ == "__main__":

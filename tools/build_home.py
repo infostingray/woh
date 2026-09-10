@@ -2,7 +2,7 @@
 """Generates index.html. Run from repo root: python3 tools/build_home.py"""
 import re, ast, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO
+from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
@@ -121,7 +121,7 @@ def reel_slide(h, i):
 
 def build():
     head = SHELL_HEAD.format(title="Home", desc="World of Hospitality operates five restaurant houses in Doha. Günaydın, Kumar, Al Beiruti, Eleven Green, Brunch &amp; Cake.")
-    head = head.replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
+    head = head.replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
     head = head.replace('class="is-loading house-page"','class="is-loading"')
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
     head = re.sub(r'<div class="veil veil--quick".*?--right"></div>\n</div>\n', VEIL+'\n', head, flags=re.S)
