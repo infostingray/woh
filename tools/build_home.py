@@ -154,7 +154,7 @@ def build():
   <div class="finale__logos" data-reveal>{logos}</div>
 </section>
 """
-    return head + body + FOOT.replace('js/site.js','js/home.js').replace('MOTIF_HERE', MOTIF)
+    return head + body + FOOT.replace('js/site.js','js/home.js').replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION)
 
 if __name__ == "__main__":
     open("index.html","w").write(build()); print("wrote index.html")
