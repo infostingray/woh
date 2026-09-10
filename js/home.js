@@ -153,27 +153,39 @@
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
 
-  /* ---------- The road: scroll scrubs the timeline, hover jumps ---------- */
+  /* ---------- The road: scroll scrubs the timeline, hover or tap jumps ---------- */
   const road = document.getElementById('road');
   if (road) {
     const nodes = gsap.utils.toArray('.road__node');
-    const num = document.getElementById('roadNum'), yr = document.getElementById('roadYear'), unit = document.getElementById('roadUnit'), note = document.getElementById('roadNote'), fill = document.getElementById('roadFill');
+    const backs = gsap.utils.toArray('.road__back');
+    const num = document.getElementById('roadNum'), yr = document.getElementById('roadYear'), unit = document.getElementById('roadUnit'), note = document.getElementById('roadNote'), fill = document.getElementById('roadFill'), cursor = document.getElementById('roadCursor');
+    const pct = nodes.map(n => +n.dataset.pct);
     const counter = { v: 1 }; let active = -1, hovering = false;
     function show(i) {
       if (i === active) return; active = i;
       const n = nodes[i];
       nodes.forEach((el, k) => { el.classList.toggle('is-on', k <= i); el.classList.toggle('is-active', k === i); });
-      gsap.to(fill, { width: n.style.left, duration: 0.7, ease: 'power3.out', overwrite: true });
+      backs.forEach(b => gsap.to(b, { opacity: +b.dataset.i === i ? 0.55 : 0, scale: +b.dataset.i === i ? 1 : 1.06, duration: 1.2, ease: 'power2.out', overwrite: true }));
       gsap.to(counter, { v: +n.dataset.count, duration: 0.8, ease: 'power2.out', overwrite: true, onUpdate: () => num.textContent = String(Math.round(counter.v)).padStart(2, '0') });
       yr.textContent = n.dataset.yr; unit.textContent = n.dataset.unit;
       gsap.fromTo(note, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.5, overwrite: true }); note.innerHTML = n.dataset.note;
+      gsap.fromTo(num, { y: 12, opacity: 0.6 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', overwrite: true });
+    }
+    function place(p) {
+      // Continuous position along the rail: the cursor and the fill glide, the stops snap.
+      const seg = p * (nodes.length - 1), i = Math.min(nodes.length - 2, Math.floor(seg)), f = seg - i;
+      const x = pct[i] + (pct[i + 1] - pct[i]) * f;
+      gsap.set(fill, { width: x + '%' }); gsap.set(cursor, { left: x + '%' });
     }
     ScrollTrigger.create({
-      trigger: road, start: 'top top', end: 'bottom bottom', scrub: true,
-      onUpdate(self) { if (!hovering) show(Math.min(nodes.length - 1, Math.floor(self.progress * nodes.length * 0.999))); }
+      trigger: road, start: 'top top', end: 'bottom bottom', scrub: 0.4,
+      onUpdate(self) { if (hovering) return; place(self.progress); show(Math.round(self.progress * (nodes.length - 1))); }
     });
-    nodes.forEach((n, i) => { n.addEventListener('mouseenter', () => { hovering = true; show(i); }); n.addEventListener('mouseleave', () => { hovering = false; }); n.addEventListener('click', () => show(i)); });
-    show(0);
+    nodes.forEach((n, i) => {
+      n.addEventListener('mouseenter', () => { hovering = true; show(i); gsap.to(fill, { width: pct[i] + '%', duration: 0.6, ease: 'power3.out' }); gsap.to(cursor, { left: pct[i] + '%', duration: 0.6, ease: 'power3.out' }); });
+      n.addEventListener('mouseleave', () => { hovering = false; });
+    });
+    show(0); place(0);
   }
 
   /* ---------- Leaving: close the veil, then go ---------- */
