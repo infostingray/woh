@@ -94,7 +94,8 @@
   const words = gsap.utils.toArray('.story__lead .w, .lit .w');
   const litHost = document.querySelector('.story, .lit');
   if (words.length && litHost) {
-    ScrollTrigger.create({
+    if (litHost.classList.contains('open__title--lit')) gsap.to({}, { duration: 2.2, delay: 0.6, ease: 'none', onUpdate() { const n = Math.round(this.progress() * words.length); words.forEach((w, i) => w.classList.toggle('is-on', i < n)); } });
+    else ScrollTrigger.create({
       trigger: litHost, start: 'top 70%', end: 'bottom 45%', scrub: true,
       onUpdate(self) {
         const n = Math.round(self.progress * words.length);
@@ -106,6 +107,14 @@
   /* ---------- Gallery: images settle as they arrive ---------- */
   gsap.utils.toArray('.gal__cell img, .story__media img, .plate img').forEach(img => {
     gsap.to(img, { scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top 95%', end: 'bottom 30%', scrub: true } });
+  });
+
+  /* ---------- Reel chapters (about) ---------- */
+  const slides = gsap.utils.toArray('.reel__slide');
+  slides.forEach((s, i) => {
+    const next = slides[i + 1];
+    if (next) gsap.to(s.querySelector('.reel__media'), { scale: 0.94, opacity: 0.35, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } });
+    gsap.to(s.querySelector('.reel__copy'), { y: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: next || s, start: next ? 'top 60%' : 'bottom 40%', end: next ? 'top top' : 'bottom top', scrub: true } });
   });
 
   /* ---------- Section reveals ---------- */
