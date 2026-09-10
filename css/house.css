@@ -31,10 +31,11 @@ body.house-page .nav__logo { opacity: 1; }
 @keyframes cue { 0% { transform: translateY(-100%); } 60% { transform: translateY(100%); } 100% { transform: translateY(100%); } }
 
 /* ---------- Story over film ---------- */
-.story { position: relative; min-height: 88vh; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+.story { position: relative; min-height: 70vh; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
 .story__media { position: absolute; inset: 0; }
 .story__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
-.story__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.96) 0%, rgba(14,12,10,0.6) 40%, rgba(14,12,10,0.2) 100%); }
+.story__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.7) 0%, rgba(14,12,10,0.3) 60%, rgba(14,12,10,0.25) 100%); }
+.story__media--material img { transform: none; }
 .story__copy { position: relative; padding: 0 var(--gutter); max-width: 900px; }
 .story__lead { font-family: var(--serif); font-weight: 300; font-size: clamp(1.35rem, 2.1vw, 2rem); line-height: 1.3; }
 .story__lead .w { color: var(--ash); transition: color 0.6s; }
@@ -57,8 +58,8 @@ body.house-page .nav__logo { opacity: 1; }
 /* ---------- Visit over film ---------- */
 .visit { position: relative; overflow: hidden; border-top: 1px solid var(--hair); }
 .visit__media { position: absolute; inset: 0; }
-.visit__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.6); }
-.visit__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.82); }
+.visit__media img { width: 100%; height: 100%; object-fit: cover; }
+.visit__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.25); }
 .visit__inner { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; padding: clamp(4rem, 10vh, 7rem) var(--gutter); }
 .visit__logo { display: block; margin-bottom: 1.75rem; }
 .visit__logo img { height: auto; }

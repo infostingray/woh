@@ -176,7 +176,8 @@ body.is-loading .wall__panel { clip-path: inset(0 50% 0 50%); }
 .foot__col { display: flex; flex-direction: column; gap: 0.6rem; }
 .foot__col a { color: var(--bone-2); width: fit-content; }
 .foot__col a:hover { color: var(--brass); }
-.foot__bottom { margin-top: 4rem; display: flex; justify-content: space-between; color: var(--ash); font-size: 0.8rem; }
+.foot__bottom { margin-top: 4rem; display: flex; justify-content: space-between; align-items: center; color: var(--ash); font-size: 0.8rem; }
+.foot__motif .motif { width: 88px; height: auto; opacity: 0.7; display: block; }
 
 /* ---------- Reveal hooks ---------- */
 [data-reveal] { opacity: 0; transform: translateY(20px); }
@@ -269,9 +270,11 @@ body.no-motion .route__logo { opacity: 1; }
 /* ---------- Numbers over film ---------- */
 .numbers { position: relative; padding: clamp(4rem, 11vh, 7rem) var(--gutter); overflow: hidden; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
 .numbers__media { position: absolute; inset: 0; }
-.numbers__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.7); }
-.numbers__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.72); }
-.numbers__row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.numbers__media img { width: 100%; height: 100%; object-fit: cover; }
+.numbers__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.35); }
+.numbers__motif { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); opacity: 0.85; }
+.numbers__motif .motif { width: clamp(140px, 14vw, 220px); height: auto; }
+.numbers__row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 72%; }
 .numbers__num { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 1; font-variant-numeric: tabular-nums; }
 .numbers__lab { display: block; margin-top: 0.6rem; font-size: 0.85rem; color: var(--bone-2); max-width: 16ch; }
 
@@ -291,7 +294,9 @@ body.no-motion .route__logo { opacity: 1; }
   .marquee__track { animation-duration: 30s; }
   .reel__slide { height: 82vh; min-height: 520px; }
   .reel__logo--kumar,   .reel__count { display: none; }
-  .numbers__row { grid-template-columns: 1fr 1fr; }
+  .numbers__row { grid-template-columns: 1fr 1fr; max-width: none; }
+  .numbers__motif { display: none; }
+  .foot__motif { display: none; }
   .finale { height: 80vh; }
   .finale__logos { display: none; }
 }

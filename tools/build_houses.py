@@ -78,6 +78,14 @@ HOUSES = [
       placeholder=True),
 ]
 
+MOTIF = '''<svg class="motif" viewBox="0 0 220 120" width="220" height="120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="none" stroke="#c4965b" stroke-width="1" vector-effect="non-scaling-stroke">
+    <path d="M20 20 Q110 20 175 96"/><path d="M60 8 Q120 30 175 96"/><path d="M110 4 Q135 40 175 96"/><path d="M160 8 Q168 50 175 96"/><path d="M205 30 Q192 70 175 96"/>
+  </g>
+  <g fill="#c4965b"><circle cx="20" cy="20" r="2"/><circle cx="60" cy="8" r="2"/><circle cx="110" cy="4" r="2"/><circle cx="160" cy="8" r="2"/><circle cx="205" cy="30" r="2"/><circle cx="175" cy="96" r="3.5"/></g>
+  <circle cx="175" cy="96" r="10" fill="none" stroke="#c4965b" stroke-width="1" opacity="0.5"/>
+</svg>'''
+
 LOGO = {
  "gunaydin": '<img class="logo logo--gunaydin" src="images/brands/gunaydin.png" alt="Günaydın" width="700" height="699">',
  "kumar": '<img class="logo logo--kumar" src="images/brands/kumar.png" alt="Kumar" width="1200" height="356">',
@@ -207,6 +215,7 @@ FOOT = '''
     </div>
   </div>
   <div class="foot__bottom">
+    <span class="foot__motif">MOTIF_HERE</span>
     <span>© <span data-year>2026</span> World of Hospitality</span>
     <span>Doha, Qatar</span>
   </div>
@@ -234,7 +243,7 @@ def build(i, h, PH):
     desc = f"{h['short']} in Doha. {html.unescape(h['line'])} A World of Hospitality house."
     facts = "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k,v in h['facts'])
     gallery = ""
-    gal_items = [g for k,g in enumerate(h['gallery']) if not (len(h['gallery'])>=3 and k==1)]
+    gal_items = h['gallery']
     for j,(src,cap) in enumerate(gal_items):
         src = PH.get(src, src)
         cls = "gal__cell" + (" gal__cell--wide" if j == 0 else "")
@@ -263,7 +272,7 @@ def build(i, h, PH):
 
 <!-- ============ STORY over film ============ -->
 <section class="story" id="story">
-  <div class="story__media"><img src="{PH.get(h['gallery'][1][0], h['gallery'][1][0]) if len(h['gallery'])>1 else h['poster']}" alt="" loading="lazy"></div>
+  <div class="story__media story__media--material"><img src="images/material/plaster.jpg" alt="" loading="lazy"></div>
   <div class="story__copy">
     <p class="story__lead" data-split>{h['story'][0]}</p>
     <p class="story__more">{h['story'][1]}</p>
@@ -279,7 +288,7 @@ def build(i, h, PH):
 
 <!-- ============ VISIT over film ============ -->
 <section class="visit" id="visit">
-  <div class="visit__media"><img src="{PH.get(h['gallery'][0][0], h['gallery'][0][0])}" alt="" loading="lazy"></div>
+  <div class="visit__media"><img src="images/material/bronze.jpg" alt="" loading="lazy"></div>
   <div class="visit__inner">
     <div class="visit__col" data-reveal>
       {logo_block(h, "visit__logo")}
@@ -298,7 +307,7 @@ def build(i, h, PH):
 {mini_wall(exclude=h['slug'], label="The other houses")}
 '''
     head = SHELL_HEAD.format(title=h['short'], desc=html.escape(desc)).replace('MENU_LOGOS_HERE', MENU_LOGOS)
-    return head + body + FOOT
+    return head + body + FOOT.replace('MOTIF_HERE', MOTIF)
 
 if __name__ == "__main__":
     import json, sys

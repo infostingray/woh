@@ -2,7 +2,7 @@
 """Generates about, partnerships, careers, contact. Run from repo root: python3 tools/build_pages.py"""
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, LOGO, mini_wall, MENU_LOGOS
+from build_houses import SHELL_HEAD, FOOT, HOUSES, LOGO, mini_wall, MENU_LOGOS, MOTIF
 
 def shell(title, desc, current, body, extra_css=""):
     head = SHELL_HEAD.format(title=title, desc=desc).replace('MENU_LOGOS_HERE', MENU_LOGOS)
@@ -10,7 +10,7 @@ def shell(title, desc, current, body, extra_css=""):
     head = head.replace(f'<a href="{current}.html">', f'<a href="{current}.html" aria-current="page">', 1)
     head = head.replace('<link rel="stylesheet" href="css/house.css">', '<link rel="stylesheet" href="css/house.css">\n<link rel="stylesheet" href="css/pages.css">')
     head = head.replace('class="is-loading house-page"', 'class="is-loading house-page inner-page"')
-    return head + body + FOOT
+    return head + body + FOOT.replace('MOTIF_HERE', MOTIF)
 
 def opener(title_lines, lede, img, alt=""):
     lines = "".join(f'<span class="line"><span>{l}</span></span>' for l in title_lines)
@@ -36,7 +36,7 @@ about = opener(
 {MINI_ALL}
 
 <section class="tenets overfilm" id="approach">
-  <div class="overfilm__media"><img src="images/brands/gunaydin-2.jpg" alt="" loading="lazy"></div>
+  <div class="overfilm__media overfilm__media--material"><img src="images/material/stone.jpg" alt="" loading="lazy"></div>
   <div class="tenets__head" data-reveal>
     <h2 class="sec__title">How we work.</h2>
   </div>
@@ -106,7 +106,7 @@ partnerships = opener(
 </section>
 
 <section class="gets overfilm">
-  <div class="overfilm__media"><img src="images/brands/kumar-2.jpg" alt="" loading="lazy"></div>
+  <div class="overfilm__media overfilm__media--material"><img src="images/material/plaster.jpg" alt="" loading="lazy"></div>
   <div class="gets__head" data-reveal><h2 class="sec__title">What you get.</h2></div>
   <div class="tenets__list">
     <div class="tenet" data-reveal><h3>Real relationships.</h3><p>Landlords. Regulators. Suppliers. Built over years in Doha, not over a network.</p></div>

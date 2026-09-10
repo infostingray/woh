@@ -55,5 +55,8 @@ They appear in the footer of every page (`FOOT` in `tools/build_houses.py`), the
 ## Adding a sixth house
 Copy any block in `HOUSES` inside `tools/build_houses.py`, give it a new `slug`, fill in the fields, set `lat`/`lon` of its origin city, add its logo to `LOGO` and a photo to `STILL`. Then add a matching block to `H` in `tools/build_home.py`. Run all three scripts. The wall, the world map, the logo strips and the mini walls pick it up automatically.
 
+### Materials
+`images/material/` holds three generated background plates (plaster, stone, bronze) used behind the numbers, story, visit and principle sections. Swap the files to change the mood; keep them dark.
+
 ## House style rules
 No em-dashes in visible copy. No numbered step markers. Every SVG has explicit width and height. Restraint over addition.

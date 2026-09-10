@@ -2,7 +2,7 @@
 """Generates index.html. Run from repo root: python3 tools/build_home.py"""
 import re, ast, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS
+from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
@@ -121,7 +121,8 @@ def build():
 
 <!-- ============ NUMBERS over film ============ -->
 <section class="numbers" id="ledger">
-  <div class="numbers__media"><img src="images/brands/kumar-3.jpg" alt="" loading="lazy"></div>
+  <div class="numbers__media"><img src="images/material/stone.jpg" alt="" loading="lazy"></div>
+  <div class="numbers__motif" data-reveal>{MOTIF}</div>
   <div class="numbers__row">
     <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">houses in Doha</span></div>
     <div data-reveal><span class="numbers__num" data-count="2019">2000</span><span class="numbers__lab">first house, still open</span></div>
@@ -153,7 +154,7 @@ def build():
   <div class="finale__logos" data-reveal>{logos}</div>
 </section>
 """
-    return head + body + FOOT.replace('js/site.js','js/home.js')
+    return head + body + FOOT.replace('js/site.js','js/home.js').replace('MOTIF_HERE', MOTIF)
 
 if __name__ == "__main__":
     open("index.html","w").write(build()); print("wrote index.html")
