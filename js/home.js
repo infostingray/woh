@@ -153,13 +153,28 @@
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
 
-  /* ---------- Ledger: numbers count up once ---------- */
-  document.querySelectorAll('.numbers__num').forEach(n => {
-    const to = +n.dataset.count, o = { v: +n.textContent };
-    const pad = String(to).length === 1 ? 2 : 1;
-    ScrollTrigger.create({ trigger: n, start: 'top 85%', once: true, onEnter: () => gsap.to(o, { v: to, duration: 1.4, ease: 'power2.out', onUpdate: () => n.textContent = String(Math.round(o.v)).padStart(pad, '0') }) });
-  });
-
+  /* ---------- The road: scroll scrubs the timeline, hover jumps ---------- */
+  const road = document.getElementById('road');
+  if (road) {
+    const nodes = gsap.utils.toArray('.road__node');
+    const num = document.getElementById('roadNum'), yr = document.getElementById('roadYear'), unit = document.getElementById('roadUnit'), note = document.getElementById('roadNote'), fill = document.getElementById('roadFill');
+    const counter = { v: 1 }; let active = -1, hovering = false;
+    function show(i) {
+      if (i === active) return; active = i;
+      const n = nodes[i];
+      nodes.forEach((el, k) => { el.classList.toggle('is-on', k <= i); el.classList.toggle('is-active', k === i); });
+      gsap.to(fill, { width: n.style.left, duration: 0.7, ease: 'power3.out', overwrite: true });
+      gsap.to(counter, { v: +n.dataset.count, duration: 0.8, ease: 'power2.out', overwrite: true, onUpdate: () => num.textContent = String(Math.round(counter.v)).padStart(2, '0') });
+      yr.textContent = n.dataset.yr; unit.textContent = n.dataset.unit;
+      gsap.fromTo(note, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.5, overwrite: true }); note.innerHTML = n.dataset.note;
+    }
+    ScrollTrigger.create({
+      trigger: road, start: 'top top', end: 'bottom bottom', scrub: true,
+      onUpdate(self) { if (!hovering) show(Math.min(nodes.length - 1, Math.floor(self.progress * nodes.length * 0.999))); }
+    });
+    nodes.forEach((n, i) => { n.addEventListener('mouseenter', () => { hovering = true; show(i); }); n.addEventListener('mouseleave', () => { hovering = false; }); n.addEventListener('click', () => show(i)); });
+    show(0);
+  }
 
   /* ---------- Leaving: close the veil, then go ---------- */
   document.addEventListener('click', e => {

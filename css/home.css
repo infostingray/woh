@@ -266,15 +266,33 @@ body.no-motion .route__logo { opacity: 1; }
 .reel__slide:hover .reel__go { color: var(--brass); }
 .reel__count { position: absolute; right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); font-size: 0.8rem; color: var(--bone-2); font-variant-numeric: tabular-nums; }
 
-/* ---------- Numbers over film ---------- */
-.numbers { position: relative; padding: clamp(5rem, 14vh, 9rem) var(--gutter); overflow: hidden; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
-.numbers__media { position: absolute; inset: 0; }
-.numbers__media img { width: 100%; height: 100%; object-fit: cover; }
-.numbers__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.35); }
-
-.numbers__row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-.numbers__num { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(3.2rem, 6.5vw, 6.5rem); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-.numbers__lab { display: block; margin-top: 0.9rem; font-size: 0.9rem; color: var(--bone-2); max-width: 16ch; }
+/* ---------- The road: scroll-driven timeline ---------- */
+.road { position: relative; height: 320vh; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.road__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 7rem var(--gutter) 5rem; }
+.road__media { position: absolute; inset: 0; z-index: 0; }
+.road__media img { width: 100%; height: 100%; object-fit: cover; }
+.road__media::after { content: ""; position: absolute; inset: 0; background: rgba(14,12,10,0.45); }
+.road__head { position: relative; z-index: 1; }
+.road__year { display: block; font-size: 0.85rem; letter-spacing: 0.08em; color: var(--brass); font-variant-numeric: tabular-nums; }
+.road__count { display: flex; align-items: baseline; gap: 1.25rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.road__num { font-family: var(--serif); font-weight: 300; font-size: clamp(5rem, 15vw, 15rem); line-height: 0.9; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.road__unit { font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2vw, 1.9rem); color: var(--bone-2); }
+.road__note { margin-top: 1.25rem; max-width: 40ch; color: var(--bone-2); min-height: 1.6em; }
+.road__rail { position: relative; z-index: 1; height: 150px; }
+.road__line { position: absolute; left: 0; right: 0; top: 60px; height: 1px; background: rgba(244,239,230,0.18); }
+.road__fill { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: var(--brass); box-shadow: 0 0 14px rgba(196,150,91,0.55); }
+.road__nodes { position: absolute; inset: 0; }
+.road__node { position: absolute; top: 0; transform: translateX(-50%); width: 130px; display: flex; flex-direction: column; align-items: center; cursor: pointer; opacity: 0.4; transition: opacity 0.5s; }
+.road__node.is-on { opacity: 1; }
+.road__node.is-active .road__dot { transform: scale(1.8); box-shadow: 0 0 0 6px rgba(196,150,91,0.2); }
+.road__dot { position: absolute; top: 56px; width: 9px; height: 9px; border-radius: 50%; background: var(--ink); border: 1px solid var(--brass); transition: transform 0.4s var(--ease), background 0.4s, box-shadow 0.4s; }
+.road__node.is-on .road__dot { background: var(--brass); }
+.road__node--future .road__dot { border-style: dashed; }
+.road__logo { height: 44px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 8px; }
+.road__logo img { height: auto; filter: drop-shadow(0 3px 12px rgba(0,0,0,0.6)); }
+.road__logo .logo--gunaydin { width: 44px; } .road__logo .logo--kumar { width: 96px; } .road__logo .logo--al-beiruti { width: 62px; } .road__logo .logo--eleven-green { width: 96px; } .road__logo .logo--brunch-cake { width: 92px; }
+.road__proj { height: 44px; display: flex; align-items: flex-end; margin-bottom: 8px; font-family: var(--serif); font-size: 1.6rem; color: var(--brass); }
+.road__label { position: absolute; top: 80px; font-size: 0.78rem; color: var(--bone-2); font-variant-numeric: tabular-nums; }
 
 /* ---------- Finale over film ---------- */
 .finale { position: relative; height: 90vh; min-height: 560px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
@@ -292,7 +310,14 @@ body.no-motion .route__logo { opacity: 1; }
   .marquee__track { animation-duration: 30s; }
   .reel__slide { height: 82vh; min-height: 520px; }
   .reel__logo--kumar,   .reel__count { display: none; }
-  .numbers__row { grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
+  .road { height: 260vh; }
+  .road__stage { padding: 5.5rem var(--gutter) 3rem; }
+  .road__num { font-size: clamp(4.5rem, 24vw, 7rem); }
+  .road__rail { height: 120px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
+  .road__rail::-webkit-scrollbar { display: none; }
+  .road__line, .road__nodes { width: 220vw; }
+  .road__node { width: 96px; }
+  .road__logo .logo--kumar { width: 80px; } .road__logo .logo--eleven-green { width: 90px; } .road__logo .logo--brunch-cake { width: 72px; }
   .finale { height: 80vh; }
   .finale__logos { display: none; }
 }

@@ -103,6 +103,25 @@ def reel_slide(h, i):
     <span class="reel__count">{i+1} / {len(H)}</span>
   </a>'''
 
+ROAD = [
+ dict(year="2019", x=2019.0, logo="gunaydin", count=1, unit="house in Doha", note="Günaydın opens. The first house."),
+ dict(year="2024", x=2024.0, logo="kumar", count=2, unit="houses in Doha", note="Kumar opens at Place Vendôme, with MK Group."),
+ dict(year="2026", x=2025.3, logo="al-beiruti", count=3, unit="houses in Doha", note="Al Beiruti opens. Beirut, the long table."),
+ dict(year="2026", x=2026.6, logo="eleven-green", count=4, unit="houses in Doha", note="Eleven Green. The Bull Burger arrives from Dubai."),
+ dict(year="2026", x=2027.9, logo="brunch-cake", count=5, unit="houses in Doha", note="Brunch &amp; Cake, from Barcelona. Late 2026."),
+ dict(year="2028", x=2029.3, logo=None, count=10, unit="houses", note="Ten houses. The next five are in conversation now.", future=True),
+ dict(year="2030", x=2030.6, logo=None, count=3, unit="Gulf markets", note="Doha, then two more Gulf capitals.", future=True),
+]
+def road_nodes():
+    lo, hi = 2018.4, 2031.3
+    out = ""
+    for i, n in enumerate(ROAD):
+        left = (n['x']-lo)/(hi-lo)*100
+        mark = f'<span class="road__logo">{LOGO[n["logo"]]}</span>' if n['logo'] else f'<span class="road__proj">{n["count"]:02d}</span>'
+        cls = "road__node" + (" road__node--future" if n.get('future') else "")
+        out += f'<li class="{cls}" style="left:{left:.2f}%" data-i="{i}" data-yr="{n["year"]}" data-count="{n["count"]}" data-unit="{n["unit"]}" data-note="{n["note"]}"><span class="road__dot"></span>{mark}<span class="road__label">{n["year"]}</span></li>'
+    return out
+
 def build():
     head = SHELL_HEAD.format(title="Home", desc="World of Hospitality operates five restaurant houses in Doha. Günaydın, Kumar, Al Beiruti, Eleven Green, Brunch &amp; Cake.")
     head = head.replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
@@ -110,7 +129,7 @@ def build():
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
     cuts = ''.join(f'<div class="veil__cut" data-house="{x["slug"]}"><img src="{x["poster"]}" alt=""><span class="veil__cutlogo">{x["logo"]}</span></div>' for x in H)
     head = head.replace('<div class="veil veil--quick" id="veil" aria-hidden="true"></div>', VEIL.replace('{CUTS}', cuts))
-    panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
+    nodes=road_nodes(); panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
     marq=''.join(f'<a href="{x["slug"]}.html" class="marquee__item proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a><span class="marquee__dot"></span>' for x in HOUSES) + '<a href="partnerships.html" class="marquee__item marquee__next">More houses to come<em>Yours, if it belongs here</em></a><span class="marquee__dot"></span>'
     logos=''.join(f'<a href="{x["slug"]}.html" class="proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a>' for x in HOUSES)
     body = f"""
@@ -119,14 +138,19 @@ def build():
 {panels}
 </section>
 
-<!-- ============ NUMBERS over film ============ -->
-<section class="numbers" id="ledger">
-  <div class="numbers__media"><img src="images/material/stone.jpg" alt="" loading="lazy"></div>
-  <div class="numbers__row">
-    <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">houses in Doha</span></div>
-    <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">cities brought to Qatar</span></div>
-    <div data-reveal><span class="numbers__num" data-count="10">0</span><span class="numbers__lab">houses by 2028</span></div>
-    <div data-reveal><span class="numbers__num" data-count="3">0</span><span class="numbers__lab">Gulf markets by 2030</span></div>
+<!-- ============ ROAD: 2019 to 2030 ============ -->
+<section class="road" id="road" aria-label="The road so far and the road ahead">
+  <div class="road__stage">
+    <div class="road__media"><img src="images/material/stone.jpg" alt=""></div>
+    <div class="road__head">
+      <span class="road__year" id="roadYear">2019</span>
+      <div class="road__count"><span class="road__num" id="roadNum">01</span><span class="road__unit" id="roadUnit">house in Doha</span></div>
+      <p class="road__note" id="roadNote">Günaydın opens. The first house.</p>
+    </div>
+    <div class="road__rail">
+      <div class="road__line"><span class="road__fill" id="roadFill"></span></div>
+      <ol class="road__nodes" id="roadNodes">{nodes}</ol>
+    </div>
   </div>
 </section>
 
