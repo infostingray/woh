@@ -216,7 +216,6 @@ FOOT = '''
     </div>
   </div>
   <div class="foot__bottom">
-    <span class="foot__motif">MOTIF_HERE</span>
     <span>© <span data-year>2026</span> World of Hospitality</span>
     <span>Doha, Qatar <span class="foot__ver">VERSION_HERE</span></span>
   </div>

@@ -122,12 +122,11 @@ def build():
 <!-- ============ NUMBERS over film ============ -->
 <section class="numbers" id="ledger">
   <div class="numbers__media"><img src="images/material/stone.jpg" alt="" loading="lazy"></div>
-  <div class="numbers__motif" data-reveal>{MOTIF}</div>
   <div class="numbers__row">
     <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">houses in Doha</span></div>
-    <div data-reveal><span class="numbers__num" data-count="2019">2000</span><span class="numbers__lab">first house, still open</span></div>
     <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">cities brought to Qatar</span></div>
-    <div data-reveal><span class="numbers__num" data-count="0">0</span><span class="numbers__lab">concepts closed</span></div>
+    <div data-reveal><span class="numbers__num" data-count="10">0</span><span class="numbers__lab">houses by 2028</span></div>
+    <div data-reveal><span class="numbers__num" data-count="3">0</span><span class="numbers__lab">Gulf markets by 2030</span></div>
   </div>
 </section>
 
