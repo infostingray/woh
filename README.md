@@ -62,7 +62,7 @@ Copy any block in `HOUSES` inside `tools/build_houses.py`, give it a new `slug`,
 The nodes live in `ROAD` inside `tools/build_home.py`: year, position, logo, running count, unit, note. Placeholders to confirm: Kumar's Doha opening year (set to 2024), and the two projections (10 houses by 2028, 3 Gulf markets by 2030).
 
 ### Materials
-`images/material/` holds three generated background plates (plaster, stone, bronze) used behind the numbers, story, visit and principle sections. Swap the files to change the mood; keep them dark.
+`images/material/` holds generated backgrounds: three plates (plaster, stone, bronze) and two hospitality scenes (room, stand) used on About used behind the numbers, story, visit and principle sections. Swap the files to change the mood; keep them dark.
 
 ## House style rules
 No em-dashes in visible copy. No numbered step markers. Every SVG has explicit width and height. Restraint over addition.

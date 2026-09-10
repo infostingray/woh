@@ -30,7 +30,7 @@ MINI_ALL = mini_wall(label="Five houses, one standard")
 # ---------------------------------------------------------------- ABOUT
 about = f"""
 <section class="open open--about">
-  <div class="open__media"><img src="images/brands/kumar-2.jpg" alt="The room at Kumar"><div class="open__grade"></div></div>
+  <div class="open__media"><img src="images/material/room.jpg" alt="An empty dining room before service"><div class="open__grade"></div></div>
   <div class="open__copy">
     <p class="open__kicker">World of Hospitality, Doha, since 2019</p>
     <h1 class="open__title open__title--lit lit" data-split>A restaurant is a thousand small promises, made nightly. Our job is to keep all of them.</h1>
@@ -39,7 +39,7 @@ about = f"""
 
 <section class="reel reel--chapters" aria-label="How we work">
   <div class="reel__slide reel__slide--static">
-    <div class="reel__media"><img src="images/brands/gunaydin-1.jpg" alt=""></div>
+    <div class="reel__media"><img src="images/material/plaster.jpg" alt=""></div>
     <div class="reel__copy">
       <span class="reel__kicker">How we work</span>
       <span class="reel__title">Origin first.</span>
@@ -48,7 +48,7 @@ about = f"""
     <span class="reel__count">1 / 3</span>
   </div>
   <div class="reel__slide reel__slide--static">
-    <div class="reel__media"><img src="images/brands/kumar-1.jpg" alt=""></div>
+    <div class="reel__media"><img src="images/material/stand.jpg" alt=""></div>
     <div class="reel__copy">
       <span class="reel__kicker">How we work</span>
       <span class="reel__title">Senior people, every shift.</span>
