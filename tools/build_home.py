@@ -104,7 +104,7 @@ def house_band(h):
 </article>'''
 
 def reel_slide(h, i):
-    media = (f'<video muted loop playsinline preload="none" poster="{h["poster"]}"><source src="{h["video"]}" type="video/mp4"></video>' if h['video'] else f'<img src="{h["poster"]}" alt="">')
+    media = f'<img src="{h["poster"]}" alt="" loading="lazy">'
     logo = h['logo'].replace('class="wall__logo--type"','class="reel__logo--type"')
     if '<img' in logo: logo = logo.replace('<img ', f'<img class="reel__logo reel__logo--{h["slug"]}" ')
     flag = '<span class="house__flag">Placeholder image</span>' if h.get('ph') else ''
@@ -134,16 +134,6 @@ def build():
 {panels}
 </section>
 
-<!-- ============ MARQUEE: the houses, and the next one ============ -->
-<section class="marquee" id="about" aria-label="The houses">
-  <div class="marquee__track">{marq}{marq}</div>
-</section>
-
-<!-- ============ REEL: each house, full screen ============ -->
-<section class="reel" id="houses" aria-label="The houses, one by one">
-{reel}
-</section>
-
 <!-- ============ NUMBERS over film ============ -->
 <section class="numbers" id="ledger">
   <div class="numbers__media"><img src="images/brands/kumar-3.jpg" alt="" loading="lazy"></div>
@@ -153,6 +143,16 @@ def build():
     <div data-reveal><span class="numbers__num" data-count="5">0</span><span class="numbers__lab">cities brought to Qatar</span></div>
     <div data-reveal><span class="numbers__num" data-count="0">0</span><span class="numbers__lab">concepts closed</span></div>
   </div>
+</section>
+
+<!-- ============ REEL: each house, full screen ============ -->
+<section class="reel" id="houses" aria-label="The houses, one by one">
+{reel}
+</section>
+
+<!-- ============ MARQUEE: the houses, and the next one ============ -->
+<section class="marquee" id="about" aria-label="The houses">
+  <div class="marquee__track">{marq}{marq}</div>
 </section>
 
 <!-- ============ CLOSE over film ============ -->
