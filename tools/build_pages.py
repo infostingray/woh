@@ -8,7 +8,7 @@ def shell(title, desc, current, body, extra_css=""):
     head = SHELL_HEAD.format(title=title, desc=desc).replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('CB_HERE', CB)
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>', '<a href="index.html#houses">Houses</a>')
     head = head.replace(f'<a href="{current}.html">', f'<a href="{current}.html" aria-current="page">', 1)
-    head = head.replace('<link rel="stylesheet" href="css/house.css">', '<link rel="stylesheet" href="css/house.css">\n<link rel="stylesheet" href="css/pages.css?v=CB_HERE">')
+    head = head.replace('<link rel="stylesheet" href="css/house.css?v=CB_HERE">', '<link rel="stylesheet" href="css/house.css?v=CB_HERE">\n<link rel="stylesheet" href="css/pages.css?v=CB_HERE">')
     head = head.replace('class="is-loading house-page"', 'class="is-loading house-page inner-page"')
     return head + body + FOOT.replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION).replace('CB_HERE', CB)
 
