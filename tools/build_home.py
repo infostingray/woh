@@ -2,7 +2,7 @@
 """Generates index.html. Run from repo root: python3 tools/build_home.py"""
 import re, ast, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF, VERSION
+from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF, VERSION, CB
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
@@ -127,7 +127,7 @@ def road_nodes():
 
 def build():
     head = SHELL_HEAD.format(title="Home", desc="World of Hospitality operates five restaurant houses in Doha. Günaydın, Kumar, Al Beiruti, Eleven Green, Brunch &amp; Cake.")
-    head = head.replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
+    head = head.replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('CB_HERE', CB).replace('<title>Home · World of Hospitality</title>','<title>World of Hospitality</title>')
     head = head.replace('class="is-loading house-page"','class="is-loading"')
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
     cuts = ''.join(f'<div class="veil__cut" data-house="{x["slug"]}"><img src="{x["poster"]}" alt=""><span class="veil__cutlogo">{x["logo"]}</span></div>' for x in H)
@@ -182,7 +182,7 @@ def build():
   <div class="finale__logos" data-reveal>{logos}</div>
 </section>
 """
-    return head + body + FOOT.replace('js/site.js','js/home.js').replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION)
+    return head + body + FOOT.replace('js/site.js?v=CB_HERE','js/home.js?v=CB_HERE').replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION).replace('CB_HERE', CB)
 
 if __name__ == "__main__":
     open("index.html","w").write(build()); print("wrote index.html")

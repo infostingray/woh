@@ -2,6 +2,7 @@
 """Generates the five house pages. Run from repo root."""
 import html, os
 VERSION = os.environ.get("WOH_VERSION", "dev")
+CB = VERSION.split(" ")[0].lstrip("v") or "dev"
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 DOHA = (25.29, 51.53)
@@ -153,8 +154,8 @@ SHELL_HEAD = '''<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/house.css">
+<link rel="stylesheet" href="css/home.css?v=CB_HERE">
+<link rel="stylesheet" href="css/house.css?v=CB_HERE">
 </head>
 <body class="is-loading house-page">
 
@@ -221,10 +222,10 @@ FOOT = '''
   </div>
 </footer>
 
-<script src="js/vendor/gsap.min.js"></script>
-<script src="js/vendor/ScrollTrigger.min.js"></script>
-<script src="js/vendor/lenis.min.js"></script>
-<script src="js/site.js"></script>
+<script src="js/vendor/gsap.min.js?v=CB_HERE"></script>
+<script src="js/vendor/ScrollTrigger.min.js?v=CB_HERE"></script>
+<script src="js/vendor/lenis.min.js?v=CB_HERE"></script>
+<script src="js/site.js?v=CB_HERE"></script>
 </body>
 </html>
 '''
@@ -306,8 +307,8 @@ def build(i, h, PH):
 <!-- ============ THE OTHER HOUSES ============ -->
 {mini_wall(exclude=h['slug'], label="The other houses")}
 '''
-    head = SHELL_HEAD.format(title=h['short'], desc=html.escape(desc)).replace('MENU_LOGOS_HERE', MENU_LOGOS)
-    return head + body + FOOT.replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION)
+    head = SHELL_HEAD.format(title=h['short'], desc=html.escape(desc)).replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('CB_HERE', CB)
+    return head + body + FOOT.replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION).replace('CB_HERE', CB)
 
 if __name__ == "__main__":
     import json, sys

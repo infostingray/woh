@@ -2,15 +2,15 @@
 """Generates about, partnerships, careers, contact. Run from repo root: python3 tools/build_pages.py"""
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, LOGO, mini_wall, MENU_LOGOS, MOTIF, VERSION
+from build_houses import SHELL_HEAD, FOOT, HOUSES, LOGO, mini_wall, MENU_LOGOS, MOTIF, VERSION, CB
 
 def shell(title, desc, current, body, extra_css=""):
-    head = SHELL_HEAD.format(title=title, desc=desc).replace('MENU_LOGOS_HERE', MENU_LOGOS)
+    head = SHELL_HEAD.format(title=title, desc=desc).replace('MENU_LOGOS_HERE', MENU_LOGOS).replace('CB_HERE', CB)
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>', '<a href="index.html#houses">Houses</a>')
     head = head.replace(f'<a href="{current}.html">', f'<a href="{current}.html" aria-current="page">', 1)
-    head = head.replace('<link rel="stylesheet" href="css/house.css">', '<link rel="stylesheet" href="css/house.css">\n<link rel="stylesheet" href="css/pages.css">')
+    head = head.replace('<link rel="stylesheet" href="css/house.css">', '<link rel="stylesheet" href="css/house.css">\n<link rel="stylesheet" href="css/pages.css?v=CB_HERE">')
     head = head.replace('class="is-loading house-page"', 'class="is-loading house-page inner-page"')
-    return head + body + FOOT.replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION)
+    return head + body + FOOT.replace('MOTIF_HERE', MOTIF).replace('VERSION_HERE', VERSION).replace('CB_HERE', CB)
 
 def opener(title_lines, lede, img, alt=""):
     lines = "".join(f'<span class="line"><span>{l}</span></span>' for l in title_lines)
