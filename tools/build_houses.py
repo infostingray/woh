@@ -5,6 +5,12 @@ VERSION = os.environ.get("WOH_VERSION", "dev")
 CB = VERSION.split(" ")[0].lstrip("v") or "dev"
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
+
+def live_tag(status):
+    """Recording-dot style status: pulsing for open houses, hollow standby for the rest."""
+    s = status.lower()
+    live = s in ("open", "just opened")
+    return f'<span class="live{"" if live else " live--soon"}"><i></i>{status}</span>'
 DOHA = (25.29, 51.53)
 
 HOUSES = [
@@ -110,7 +116,7 @@ def mini_wall(exclude=None, label=None):
         panels += f"""  <a class="wall__panel" href="{h['slug']}.html" data-house="{h['slug']}">
     <div class="wall__media"><img src="{STILL[h['slug']]}" alt="" loading="lazy"></div>
     <div class="wall__logo {cls}">{LOGO[h['slug']]}</div>
-    <div class="wall__foot"><span class="wall__name">{h['name']}</span><span class="wall__meta">{h['origin']}. {status}.</span></div>
+    <div class="wall__foot"><span class="wall__name">{h['name']}</span><span class="wall__meta">{h['origin']}. {live_tag(status)}</span></div>
   </a>\n"""
     head = f'<div class="wall__label">{label}</div>\n' if label else ''
     return f'<section class="wall wall--mini" aria-label="The houses">\n{head}{panels}</section>'
@@ -279,7 +285,7 @@ def build(i, h, PH):
   <div class="hero__copy">
     <h1 class="hero__name" data-chars>{h['name']}</h1>
     <p class="hero__line"><span class="line"><span>{h['line']}</span></span></p>
-    <p class="hero__meta"><span class="line"><span>{founded}<span class="hero__meta-item">{status}</span></span></span></p>
+    <p class="hero__meta"><span class="line"><span>{founded}<span class="hero__meta-item">{live_tag(status)}</span></span></span></p>
   </div>
   <div class="hero__cue" aria-hidden="true"><span></span></div>
 </section>

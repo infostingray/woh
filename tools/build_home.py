@@ -2,7 +2,7 @@
 """Generates index.html. Run from repo root: python3 tools/build_home.py"""
 import re, ast, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from build_houses import SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF, VERSION, CB
+from build_houses import live_tag, SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, MENU_LOGOS, MOTIF, VERSION, CB
 
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
@@ -64,7 +64,7 @@ def wall_panel(h):
     return f'''  <a class="wall__panel" href="{h['slug']}.html" data-house="{h['slug']}">
     <div class="wall__media">{media}</div>
     <div class="wall__logo {h['cls']}">{h['logo']}</div>
-    <div class="wall__foot"><span class="wall__name">{h['name']}</span><span class="wall__meta">{h['origin']}. {h['status']}.</span></div>
+    <div class="wall__foot"><span class="wall__name">{h['name']}</span><span class="wall__meta">{h['origin']}. {live_tag(h['status'])}</span></div>
   </a>'''
 
 def house_band(h):
@@ -97,7 +97,7 @@ def reel_slide(h, i):
     <div class="reel__copy">
       {logo}
       <span class="reel__line">{h['line']}</span>
-      <span class="reel__meta">{h['origin']}. {h['status']}.</span>
+      <span class="reel__meta">{h['origin']}. {live_tag(h['status'])}</span>
       <span class="reel__go">Enter the house</span>
     </div>
     <span class="reel__count">{i+1} / {len(H)}</span>
