@@ -192,34 +192,46 @@ SHELL_HEAD = '''<!doctype html>
 
 FOOT = '''
 <footer class="foot">
-  <div class="foot__grid">
-    <div class="foot__brand">
+  <div class="foot__top">
+    <a href="index.html" class="foot__brand" aria-label="World of Hospitality home">
       <img src="images/woh-logo.png" alt="World of Hospitality" width="150" height="50">
-      <p>Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha, Qatar</p>
+    </a>
+    <div class="foot__contact">
+      <span class="foot__eyebrow">Enquiries</span>
+      <a class="foot__mail" href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a>
+      <a class="foot__tel" href="tel:+97470323311">+974 7032 3311</a>
+    </div>
+  </div>
+  <div class="foot__grid">
+    <div class="foot__col foot__col--office">
+      <span class="foot__eyebrow">Office</span>
+      <address>Landmark Mall, 1st Floor<br>Building 442, Street 380, Zone 31<br>P.O. Box 785, Doha, Qatar</address>
     </div>
     <div class="foot__col">
+      <span class="foot__eyebrow">Group</span>
       <a href="about.html">About</a>
       <a href="index.html#houses">Houses</a>
       <a href="careers.html">Careers</a>
       <a href="partnerships.html">Partnerships</a>
+      <a href="contact.html">Contact</a>
     </div>
     <div class="foot__col">
-      <a href="tel:+97470323311">+974 7032 3311</a>
-      <a href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a>
-      <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-    <div class="foot__col">
+      <span class="foot__eyebrow">Houses</span>
       <a href="gunaydin.html">Günaydın</a>
       <a href="kumar.html">Kumar</a>
       <a href="al-beiruti.html">Al Beiruti</a>
       <a href="eleven-green.html">Eleven Green</a>
       <a href="brunch-cake.html">Brunch &amp; Cake</a>
     </div>
+    <div class="foot__col">
+      <span class="foot__eyebrow">Follow</span>
+      <a href="https://www.instagram.com/albeirutiqa" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.linkedin.com/company/worldofhospitalityqa" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
   <div class="foot__bottom">
     <span>© <span data-year>2026</span> World of Hospitality</span>
-    <span>Doha, Qatar <span class="foot__ver">VERSION_HERE</span></span>
+    <span class="foot__bottom-right">Doha, Qatar <span class="foot__ver">VERSION_HERE</span></span>
   </div>
 </footer>
 
