@@ -51,7 +51,7 @@ HOUSES = [
         "One hundred and eighty seats inside, more on the terrace. Just opened in Doha.",
       ],
       facts=[("Cuisine","Lebanese, Levantine"),("Origin","Beirut"),("Seating","180 and terrace"),("Address","Doha"),("Status","Just opened")],
-      video=VID+"2026/03/IMG_5377-3.mp4", poster="images/brands/al-beiruti-spread.jpg",
+      video="videos/al-beiruti.mp4", poster="images/brands/al-beiruti-poster.jpg",
       gallery=[("images/brands/al-beiruti-mezze.jpg","Mezze"),("images/brands/al-beiruti-spread.jpg","The spread")],
       links=[("Instagram","https://www.instagram.com/albeirutiqa")],
       cta=("Reserve a table","tel:+97470323311"),
@@ -79,11 +79,11 @@ HOUSES = [
         "Wholesome dishes, generous portions, interiors you recognise from the door. Coming to Doha at the end of 2026.",
       ],
       facts=[("Cuisine","All-day, Mediterranean"),("Origin","Barcelona, 2010"),("Worldwide","23 locations"),("Address","Doha"),("Status","Late 2026")],
-      video="", poster="images/brands/brunch-cake-1.jpg",
-      gallery=[("PH_BC_1","The room"),("PH_BC_2","The morning")],
+      video="", poster="images/brands/brunch-cake-hero.jpg",
+      gallery=[("images/brands/brunch-cake-4.jpg","The terrace"),("images/brands/brunch-cake-2.jpg","The room"),("images/brands/brunch-cake-3.jpg","The entrance")],
       links=[("Brunch & Cake","https://brunchandcake.com/")],
       cta=("Be first to know","mailto:info@worldofhospitality.com.qa?subject=Brunch%20%26%20Cake%20opening"),
-      placeholder=True),
+      placeholder=False),
 ]
 
 MOTIF = '''<svg class="motif" viewBox="0 0 220 120" width="220" height="120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

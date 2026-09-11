@@ -17,7 +17,7 @@ H = [
       text="India by region, not by stereotype. Coastal Kerala, Lucknowi dum biryani, Bombay street plates. Service trained to MK Group's Kuwait standards.",
       facts=[("Cuisine","Modern Indian"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The table","The room")),
  dict(slug="al-beiruti", name="Al Beiruti", logo=LOGO['al-beiruti'], cls="",
-      video=VID+"2026/03/IMG_5377-3.mp4", poster="images/brands/al-beiruti-spread.jpg", still="images/brands/al-beiruti-mezze.jpg",
+      video="videos/al-beiruti.mp4", poster="images/brands/al-beiruti-poster.jpg", still="images/brands/al-beiruti-mezze.jpg",
       origin="Beirut", status="Just opened", line="A Beirut neighbourhood story, coming home.",
       text="A long table for the city. Mezze the old way, bread out of the saj every twelve minutes, charcoal until late. One hundred and eighty seats and a terrace.",
       facts=[("Cuisine","Lebanese, Levantine"),("Seating","180 and terrace"),("Status","Just opened")], caps=("The spread","Mezze")),
@@ -30,7 +30,7 @@ H = [
       video="", poster="images/brands/brunch-cake-1.jpg", still="images/brands/brunch-cake-2.jpg",
       origin="Barcelona, 2010", status="Late 2026", line="Grandma's goodness, thoughtfully served.",
       text="Born in Barcelona in 2010, now in twenty-three destinations across Spain, the Gulf, Egypt and India. Wholesome plates, generous portions, unmistakable rooms.",
-      facts=[("Cuisine","All-day, Mediterranean"),("Worldwide","23 locations"),("Status","Late 2026")], caps=("The room","The morning"), ph=True),
+      facts=[("Cuisine","All-day, Mediterranean"),("Worldwide","23 locations"),("Status","Late 2026")], caps=("The room","The terrace")),
 ]
 
 def world_svg():
