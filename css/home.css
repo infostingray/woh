@@ -270,8 +270,8 @@ body.no-motion .route__logo { opacity: 1; }
 .road { position: relative; height: 320vh; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
 .road__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 7rem var(--gutter) 5rem; }
 .road__media { position: absolute; inset: 0; z-index: 0; }
-.road__strip { display: flex; height: 100%; width: 300%; will-change: transform; }
-.road__strip img { width: calc(100% / 3); height: 100%; object-fit: cover; flex: 0 0 auto; }
+.road__strip { height: 100%; width: 100%; will-change: transform; }
+.road__strip img { height: 100%; width: auto; max-width: none; min-width: 100%; object-fit: cover; }
 .road__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.92) 0%, rgba(14,12,10,0.45) 45%, rgba(14,12,10,0.35) 100%); }
 .road__head { position: relative; z-index: 1; }
 .road__kicker { display: block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); margin-bottom: 0.75rem; }

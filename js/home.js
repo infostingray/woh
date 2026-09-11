@@ -173,7 +173,8 @@
       const seg = p * (nodes.length - 1), i = Math.min(nodes.length - 2, Math.floor(seg)), f = seg - i;
       const x = pct[i] + (pct[i + 1] - pct[i]) * f;
       gsap.set(fill, { width: x + '%' }); gsap.set(cursor, { left: x + '%' });
-      gsap.set(strip, { xPercent: -p * (200 / 3) });
+      const img = strip.firstElementChild, over = Math.max(0, img.getBoundingClientRect().width - strip.getBoundingClientRect().width);
+      gsap.set(strip, { x: -p * over });
     }
     ScrollTrigger.create({
       trigger: road, start: 'top top', end: 'bottom bottom', scrub: 0.4,

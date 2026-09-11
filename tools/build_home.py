@@ -139,7 +139,7 @@ def build():
 <!-- ============ ROAD: 2019 to 2030 ============ -->
 <section class="road" id="road" aria-label="The road so far and the road ahead">
   <div class="road__stage">
-    <div class="road__media"><div class="road__strip" id="roadStrip"><img src="images/doha/corniche.jpg" alt=""><img src="images/doha/souq.jpg" alt=""><img src="images/doha/lusail.jpg" alt=""></div></div>
+    <div class="road__media"><div class="road__strip" id="roadStrip"><img src="images/doha/skyline.jpg" alt="The Doha skyline at blue hour"></div></div>
     <div class="road__head">
       <span class="road__kicker" id="roadKicker">Founded · Doha</span>
       <span class="road__year" id="roadYear">2019</span>
