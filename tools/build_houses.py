@@ -116,7 +116,7 @@ def mini_wall(exclude=None, label=None):
         panels += f"""  <a class="wall__panel" href="{h['slug']}.html" data-house="{h['slug']}">
     <div class="wall__media"><img src="{STILL[h['slug']]}" alt="" loading="lazy"></div>
     <div class="wall__logo {cls}">{LOGO[h['slug']]}</div>
-    <div class="wall__foot"><span class="wall__name">{h['name']}</span><span class="wall__meta">{h['origin']}. {live_tag(status)}</span></div>
+    <div class="wall__foot"><span class="wall__meta">{h['origin']}. {live_tag(status)}</span></div>
   </a>\n"""
     head = f'<div class="wall__label">{label}</div>\n' if label else ''
     return f'<section class="wall wall--mini" aria-label="The houses">\n{head}{panels}</section>'
