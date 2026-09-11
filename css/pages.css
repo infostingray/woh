@@ -166,6 +166,20 @@ body.no-motion .creed__text .w { color: var(--bone); }
 .proof--about .proof__logo .logo--gunaydin { width: 60px; } .proof--about .proof__logo .logo--kumar { width: 150px; } .proof--about .proof__logo .logo--al-beiruti { width: 92px; } .proof--about .proof__logo .logo--eleven-green { width: 180px; } .proof--about .proof__logo .logo--brunch-cake { width: 140px; }
 @media (max-width: 900px) { .open__mark { width: 170px; margin-bottom: 1.5rem; } .proof--about .proof__row { gap: 1.5rem 2rem; } .proof--about .proof__logo .logo--kumar { width: 110px; } .proof--about .proof__logo .logo--eleven-green { width: 130px; } .proof--about .proof__logo .logo--brunch-cake { width: 100px; } }
 
-.reel__media--drift img { width: 116%; max-width: none; transform: translateX(0) scale(1); will-change: transform; }
-.reel--chapters .reel__slide { pointer-events: auto; }
-.reel__place { position: absolute; right: var(--gutter); top: 6.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-2); opacity: 0.8; }
+
+/* ---------- The pan: one filmstrip across Doha ---------- */
+.pan { height: 340vh; position: relative; border-top: 1px solid var(--hair); }
+.pan__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.pan__track { display: flex; height: 100%; width: 300vw; will-change: transform; }
+.pan__panel { position: relative; width: 100vw; height: 100%; flex: 0 0 100vw; overflow: hidden; }
+.pan__panel img { width: 100%; height: 100%; object-fit: cover; }
+.pan__panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.9) 0%, rgba(14,12,10,0.25) 45%, rgba(14,12,10,0.2) 100%); }
+.pan__copy { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(3rem, 9vh, 6rem); z-index: 1; display: flex; flex-direction: column; opacity: 0; transform: translateY(24px); }
+.pan__kicker { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); }
+.pan__title { font-family: var(--serif); font-weight: 300; font-size: clamp(2.2rem, 5vw, 4.6rem); line-height: 1; letter-spacing: -0.01em; margin: 0.4rem 0 0.6rem; }
+.pan__line { font-size: clamp(0.95rem, 1.15vw, 1.1rem); max-width: 46ch; color: var(--bone-2); }
+.pan__place { position: absolute; right: var(--gutter); top: 6.5rem; z-index: 1; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-2); opacity: 0.85; }
+.pan__progress { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 1.5rem; height: 1px; background: rgba(244,239,230,0.18); z-index: 2; }
+.pan__progress span { display: block; height: 100%; width: 0; background: var(--brass); box-shadow: 0 0 12px rgba(196,150,91,0.6); }
+body.no-motion .pan { height: auto; } body.no-motion .pan__stage { position: static; height: auto; } body.no-motion .pan__track { flex-direction: column; width: 100%; } body.no-motion .pan__panel { width: 100%; height: 70vh; flex: none; } body.no-motion .pan__copy { opacity: 1; transform: none; }
+@media (max-width: 900px) { .pan { height: 300vh; } .pan__place { top: 5.5rem; } }

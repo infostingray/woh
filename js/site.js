@@ -109,15 +109,24 @@
     gsap.to(img, { scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top 95%', end: 'bottom 30%', scrub: true } });
   });
 
-  /* ---------- Reel chapters (about) ---------- */
-  const slides = gsap.utils.toArray('.reel__slide');
-  slides.forEach((s, i) => {
-    const next = slides[i + 1];
-    const drift = s.querySelector('.reel__media--drift img');
-    if (drift) gsap.fromTo(drift, { xPercent: 0 }, { xPercent: -14, ease: 'none', scrollTrigger: { trigger: s, start: 'top bottom', end: next ? 'bottom top' : 'bottom top', scrub: true } });
-    if (next) gsap.to(s.querySelector('.reel__media'), { scale: 0.94, opacity: 0.35, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } });
-    gsap.to(s.querySelector('.reel__copy'), { y: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: next || s, start: next ? 'top 60%' : 'bottom 40%', end: next ? 'top top' : 'bottom top', scrub: true } });
-  });
+  /* ---------- The pan: horizontal filmstrip driven by vertical scroll ---------- */
+  const pan = document.querySelector('.pan');
+  if (pan) {
+    const track = document.getElementById('panTrack'), bar = document.getElementById('panBar');
+    const panels = gsap.utils.toArray('.pan__panel'), copies = gsap.utils.toArray('.pan__copy');
+    const n = panels.length; let cur = -1;
+    ScrollTrigger.create({
+      trigger: pan, start: 'top top', end: 'bottom bottom', scrub: 0.5,
+      onUpdate(self) {
+        const p = self.progress;
+        gsap.set(track, { xPercent: -p * (100 * (n - 1) / n) });
+        gsap.set(bar, { width: (p * 100) + '%' });
+        const i = Math.min(n - 1, Math.round(p * (n - 1)));
+        if (i !== cur) { cur = i; copies.forEach((c, k) => gsap.to(c, { opacity: k === i ? 1 : 0, y: k === i ? 0 : 24, duration: 0.7, ease: 'power3.out', overwrite: true })); }
+      }
+    });
+    gsap.set(copies[0], { opacity: 1, y: 0 }); cur = 0;
+  }
 
   /* ---------- Section reveals ---------- */
   const revealEls = gsap.utils.toArray('.route__head, .story__more, .story__facts, .visit__col, [data-reveal], .wall--mini .wall__panel');
