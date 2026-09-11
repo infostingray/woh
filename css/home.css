@@ -274,12 +274,9 @@ body.no-motion .route__logo { opacity: 1; }
 .road__strip img { width: calc(100% / 3); height: 100%; object-fit: cover; flex: 0 0 auto; }
 .road__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.92) 0%, rgba(14,12,10,0.45) 45%, rgba(14,12,10,0.35) 100%); }
 .road__head { position: relative; z-index: 1; }
+.road__kicker { display: block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); margin-bottom: 0.75rem; }
 .road__year { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(2.6rem, 6vw, 5.5rem); line-height: 1; color: var(--bone); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
 .road__note { margin-top: 1rem; max-width: 44ch; color: var(--bone-2); min-height: 1.6em; font-family: var(--serif); font-style: italic; font-size: clamp(1.1rem, 1.6vw, 1.5rem); line-height: 1.3; }
-.road__marks { position: relative; height: 64px; margin-bottom: 1.5rem; }
-.road__mark { position: absolute; left: 0; bottom: 0; opacity: 0; display: flex; align-items: flex-end; }
-.road__mark img { height: auto; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.6)); }
-.road__mark .logo--gunaydin { width: 64px; } .road__mark .logo--kumar { width: 170px; } .road__mark .logo--al-beiruti { width: 100px; } .road__mark .logo--eleven-green { width: 200px; } .road__mark .logo--brunch-cake { width: 150px; }
 .road__rail { position: relative; z-index: 1; height: 132px; }
 .road__line { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(244,239,230,0.18); }
 .road__fill { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: var(--brass); box-shadow: 0 0 14px rgba(196,150,91,0.55); }
@@ -288,12 +285,9 @@ body.no-motion .route__logo { opacity: 1; }
 .road__node { position: absolute; top: 0; transform: translateX(-50%); width: 150px; opacity: 0.45; transition: opacity 0.5s; }
 .road__node.is-on { opacity: 0.75; }
 .road__node.is-active { opacity: 1; }
-.road__hit { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 100%; padding-top: 1.4rem; }
+.road__hit { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 100%; padding-top: 1.1rem; }
 .road__dot { position: absolute; top: 0; width: 1px; height: 0; background: var(--brass); transition: height 0.5s var(--ease); }
 .road__node.is-active .road__dot { height: 1.1rem; }
-.road__label { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--ash); font-variant-numeric: tabular-nums; text-align: center; }
-.road__label em { display: block; font-style: normal; color: var(--brass); font-size: 0.68rem; margin-top: 0.15rem; opacity: 0; transition: opacity 0.4s; letter-spacing: 0.04em; }
-.road__node.is-active .road__label em { opacity: 1; }
 .road__stop { display: block; margin-top: 0.4rem; font-family: var(--serif); font-size: clamp(1.1rem, 1.5vw, 1.5rem); color: var(--bone); white-space: nowrap; text-align: center; transition: color 0.4s, transform 0.5s var(--ease); }
 .road__node--future .road__stop { font-style: italic; }
 .road__node.is-active .road__stop { color: var(--brass); transform: translateY(-2px); }
@@ -321,8 +315,7 @@ body.no-motion .route__logo { opacity: 1; }
   .road__line, .road__nodes { width: 240vw; }
   .road__node { width: 120px; }
   .road__stop { font-size: 1rem; }
-  .road__marks { height: 48px; }
-  .road__mark .logo--kumar { width: 130px; } .road__mark .logo--eleven-green { width: 150px; } .road__mark .logo--brunch-cake { width: 110px; } .road__mark .logo--al-beiruti { width: 80px; } .road__mark .logo--gunaydin { width: 48px; }
+
   .finale { height: 80vh; }
   .finale__logos { display: none; }
 }

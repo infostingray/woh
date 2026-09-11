@@ -104,25 +104,20 @@ def reel_slide(h, i):
   </a>'''
 
 ROAD = [
- dict(year="2019", x=2019.0, logo="gunaydin", count=1, unit="house in Doha", note="Günaydın opens at Place Vendôme. The first house.", city="Istanbul", img="images/brands/gunaydin-1.jpg"),
- dict(year="2024", x=2024.0, logo="kumar", count=2, unit="houses in Doha", note="Kumar opens, with MK Group. Two houses.", city="Kuwait", img="images/brands/kumar-1.jpg"),
- dict(year="2026", x=2025.3, logo="al-beiruti", count=3, unit="houses in Doha", note="Al Beiruti opens. Beirut, the long table. Three houses.", city="Beirut", img="images/brands/al-beiruti-spread.jpg"),
- dict(year="2026", x=2026.6, logo="eleven-green", count=4, unit="houses in Doha", note="Eleven Green. The Bull Burger arrives from Dubai. Four houses.", city="Dubai", img="images/brands/eleven-green-1.jpg"),
- dict(year="2026", x=2027.9, logo="brunch-cake", count=5, unit="houses in Doha", note="Brunch &amp; Cake, from Barcelona. Five houses by the end of the year.", city="Barcelona", img="images/brands/brunch-cake-1.jpg"),
- dict(year="2028", x=2029.3, logo=None, count=10, unit="houses", note="Ten houses. The next five are in conversation now.", future=True, city="Doha"),
- dict(year="2030", x=2030.6, logo=None, count=3, unit="Gulf markets", note="Doha, then two more Gulf capitals.", future=True, city="The Gulf"),
+ dict(stop="Founded", big="2019", city="Doha", note="World of Hospitality opens its first house in Doha, and runs it, rather than licensing it."),
+ dict(stop="Concepts", big="Five", city="Four cuisines", note="Turkish, Indian, Lebanese, a burger bistro and an all-day Mediterranean table. Each brought from its home city."),
+ dict(stop="People", big="300+", city="On the floor and in the kitchen", note="Senior-led teams on every shift. Recruited for the brand, trained to its own standard."),
+ dict(stop="Head office", big="Landmark Mall", city="Doha", note="Finance, licensing, supply and reporting run centrally, so each house can concentrate on service."),
+ dict(stop="In development", big="Two", city="Opening 2026", note="Eleven Green and Brunch &amp; Cake are in fit-out now. Both open before the year ends.", future=True),
+ dict(stop="By 2028", big="Ten", city="Houses", note="The next five concepts are in conversation. Each one has to belong in Doha before it is signed.", future=True),
+ dict(stop="By 2030", big="Three", city="Gulf markets", note="Doha first, then two more Gulf capitals with the same operating model.", future=True),
 ]
 def road_nodes():
-    lo, hi = 2018.4, 2031.3
     out = ""
     for i, n in enumerate(ROAD):
         left = 5 + i*(90/(len(ROAD)-1))
-        title = {"gunaydin":"Günaydın","kumar":"Kumar","al-beiruti":"Al Beiruti","eleven-green":"Eleven Green","brunch-cake":"Brunch &amp; Cake"}.get(n['logo'], "Ten houses" if n['count']==10 else "Three markets")
-        mark = f'<span class="road__stop">{title}</span>'
         cls = "road__node" + (" road__node--future" if n.get('future') else "")
-        href = f' href="{n["logo"]}.html"' if n['logo'] else ''
-        tag = 'a' if n['logo'] else 'span'
-        out += f'<li class="{cls}" style="left:{left:.2f}%" data-i="{i}" data-yr="{n["year"]}" data-count="{n["count"]}" data-unit="{n["unit"]}" data-note="{n["note"]}" data-pct="{left:.2f}" data-logo="{n["logo"] or ""}"><{tag} class="road__hit"{href}><span class="road__label">{n["year"]}<em>{n["city"]}</em></span>{mark}<span class="road__dot"></span></{tag}></li>'
+        out += f'<li class="{cls}" style="left:{left:.2f}%" data-i="{i}" data-big="{n["big"]}" data-city="{n["city"]}" data-note="{n["note"]}" data-pct="{left:.2f}"><span class="road__hit"><span class="road__stop">{n["stop"]}</span><span class="road__dot"></span></span></li>'
     return out
 
 def build():
@@ -132,7 +127,7 @@ def build():
     head = head.replace('<a href="index.html#houses" aria-current="page">Houses</a>','<a href="index.html#houses">Houses</a>')
     cuts = ''.join(f'<div class="veil__cut" data-house="{x["slug"]}"><img src="{x["poster"]}" alt=""><span class="veil__cutlogo">{x["logo"]}</span></div>' for x in H)
     head = head.replace('<div class="veil veil--quick" id="veil" aria-hidden="true"></div>', VEIL.replace('{CUTS}', cuts))
-    marks=''.join(f'<span class="road__mark" data-logo="{s}">{LOGO[s]}</span>' for s in ['gunaydin','kumar','al-beiruti','eleven-green','brunch-cake']); nodes=road_nodes(); panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
+    nodes=road_nodes(); panels="\n".join(wall_panel(h) for h in H); reel="\n".join(reel_slide(h,i) for i,h in enumerate(H))
     marq=''.join(f'<a href="{x["slug"]}.html" class="marquee__item proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a><span class="marquee__dot"></span>' for x in HOUSES) + '<a href="partnerships.html" class="marquee__item marquee__next">More houses to come<em>Yours, if it belongs here</em></a><span class="marquee__dot"></span>'
     logos=''.join(f'<a href="{x["slug"]}.html" class="proof__logo proof__logo--{x["slug"]}">{LOGO[x["slug"]].replace("wall__logo--type","proof__type")}</a>' for x in HOUSES)
     body = f"""
@@ -146,9 +141,9 @@ def build():
   <div class="road__stage">
     <div class="road__media"><div class="road__strip" id="roadStrip"><img src="images/doha/corniche.jpg" alt=""><img src="images/doha/souq.jpg" alt=""><img src="images/doha/lusail.jpg" alt=""></div></div>
     <div class="road__head">
-      <div class="road__marks" id="roadMarks">{marks}</div>
+      <span class="road__kicker" id="roadKicker">Founded · Doha</span>
       <span class="road__year" id="roadYear">2019</span>
-      <p class="road__note" id="roadNote">Günaydın opens. The first house.</p>
+      <p class="road__note" id="roadNote">World of Hospitality opens its first house in Doha, and runs it, rather than licensing it.</p>
     </div>
     <div class="road__rail">
       <div class="road__line"><span class="road__fill" id="roadFill"></span><span class="road__cursor" id="roadCursor"></span></div>

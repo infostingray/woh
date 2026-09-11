@@ -157,16 +157,15 @@
   const road = document.getElementById('road');
   if (road) {
     const nodes = gsap.utils.toArray('.road__node');
-    const marks = gsap.utils.toArray('.road__mark');
-    const yr = document.getElementById('roadYear'), note = document.getElementById('roadNote'), fill = document.getElementById('roadFill'), cursor = document.getElementById('roadCursor'), strip = document.getElementById('roadStrip');
+    const yr = document.getElementById('roadYear'), kicker = document.getElementById('roadKicker'), note = document.getElementById('roadNote'), fill = document.getElementById('roadFill'), cursor = document.getElementById('roadCursor'), strip = document.getElementById('roadStrip');
     const pct = nodes.map(n => +n.dataset.pct);
     let active = -1, hovering = false;
     function show(i) {
       if (i === active) return; active = i;
       const n = nodes[i];
       nodes.forEach((el, k) => { el.classList.toggle('is-on', k <= i); el.classList.toggle('is-active', k === i); });
-      marks.forEach(m => gsap.to(m, { opacity: m.dataset.logo === n.dataset.logo ? 1 : 0, y: m.dataset.logo === n.dataset.logo ? 0 : 8, duration: 0.6, ease: 'power3.out', overwrite: true }));
-      gsap.fromTo(yr, { y: 14, opacity: 0.4 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', overwrite: true }); yr.textContent = n.dataset.yr;
+      gsap.fromTo(yr, { y: 14, opacity: 0.4 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', overwrite: true }); yr.textContent = n.dataset.big;
+      kicker.textContent = n.querySelector('.road__stop').textContent + ' · ' + n.dataset.city;
       gsap.fromTo(note, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.5, overwrite: true }); note.innerHTML = n.dataset.note;
     }
     function place(p) {

@@ -59,7 +59,7 @@ They appear in the footer of every page (`FOOT` in `tools/build_houses.py`), the
 Copy any block in `HOUSES` inside `tools/build_houses.py`, give it a new `slug`, fill in the fields, set `lat`/`lon` of its origin city, add its logo to `LOGO` and a photo to `STILL`. Then add a matching block to `H` in `tools/build_home.py`. Run all three scripts. The wall, the world map, the logo strips and the mini walls pick it up automatically.
 
 ### The road (homepage timeline)
-The nodes live in `ROAD` inside `tools/build_home.py`: year, position, logo, running count, unit, note. Placeholders to confirm: Kumar's Doha opening year (set to 2024), and the two projections (10 houses by 2028, 3 Gulf markets by 2030).
+The stops live in `ROAD` inside `tools/build_home.py`: stop name, the big figure, a sub-line, a sentence. Placeholders to confirm: 300+ people, ten houses by 2028, three Gulf markets by 2030.
 
 ### Materials
 `images/material/` holds generated backgrounds: three plates (plaster, stone, bronze) and two hospitality scenes (room, stand) used on About used behind the numbers, story, visit and principle sections. Swap the files to change the mood; keep them dark.
