@@ -67,7 +67,15 @@
     if (document.querySelector('.hero__mark')) tl.to('.hero__mark', { opacity: 1, duration: 0.8 }, 1.1);
     if (document.querySelector('.open')) tl.to('.open .line > span', { y: 0, duration: 1.1, stagger: 0.1, ease: 'power3.out' }, 0.4)
       .to('.open__lede', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.0);
-    tl.to(nav, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.1);
+    tl.add(() => {
+      gsap.set(nav, { opacity: 1, y: 0 });
+      gsap.timeline()
+        .fromTo('.nav__rule', { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: 'power3.inOut' }, 0)
+        .fromTo('.nav__logo', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.15)
+        .fromTo('.nav__links a', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out' }, 0.3)
+        .fromTo('.nav__cta', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.6)
+        .fromTo('.nav__toggle', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.35);
+    }, 0.6);
     if (document.querySelector('.hero__cue')) tl.to('.hero__cue', { opacity: 1, duration: 0.6 }, 1.6);
   }
   if (document.readyState === 'complete') reveal();

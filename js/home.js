@@ -60,6 +60,15 @@
   const veil = document.getElementById('veil');
   const nav = document.getElementById('nav');
   const navLogo = document.querySelector('.nav__logo');
+  function headerIn() {
+    gsap.set(nav, { opacity: 1, y: 0 });
+    gsap.timeline()
+      .fromTo('.nav__rule', { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: 'power3.inOut' }, 0)
+      .fromTo('.nav__logo', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.2)
+      .fromTo('.nav__links a', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07, ease: 'power3.out' }, 0.35)
+      .fromTo('.nav__cta', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.7)
+      .fromTo('.nav__toggle', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.4);
+  }
   function reveal() {
     if (!hasGsap || reduce) {
       document.body.classList.remove('is-loading');
@@ -73,26 +82,18 @@
     const cuts = gsap.utils.toArray('.veil__cut');
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Final act: the frame splits into five columns, mark travels to the nav.
+    // Final act: the frame splits into five columns; the mark punches out, the header draws itself in.
     const split = (at) => {
-      tl.to('.wall__panel', { clipPath: 'inset(0 0% 0 0%)', duration: 1.1, stagger: { each: 0.07, from: 'center' }, ease: 'power4.inOut' }, at)
+      tl.to(mark, { opacity: 0, scale: 1.12, duration: 0.35, ease: 'power3.in' }, at - 0.05)
+        .fromTo('.veil__flash', { opacity: 0 }, { opacity: 0.22, duration: 0.06, ease: 'none' }, at - 0.02)
+        .to('.veil__flash', { opacity: 0, duration: 0.4 }, at + 0.04)
+        .to('.wall__panel', { clipPath: 'inset(0 0% 0 0%)', duration: 1.1, stagger: { each: 0.07, from: 'center' }, ease: 'power4.inOut' }, at)
         .to(veil, { opacity: 0, duration: 0.6, ease: 'power2.inOut' }, at + 0.25)
         .fromTo('.wall__logo', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.9, stagger: { each: 0.06, from: 'center' }, ease: 'power3.out' }, at + 0.55)
-        .add(() => {
-          gsap.set(nav, { opacity: 1, y: 0 });
-          const r = navLogo.getBoundingClientRect(), m = mark.getBoundingClientRect();
-          gsap.set(mark, { xPercent: 0, yPercent: 0, left: 0, top: 0, x: m.left, y: m.top, width: m.width, translateX: 0, translateY: 0 });
-          gsap.to(mark, { x: r.left, y: r.top, width: r.width, duration: 0.9, ease: 'power3.inOut' });
-        }, at)
-        .add(() => { document.body.classList.remove('is-loading'); veil.remove(); }, at + 1.0);
+        .add(() => { document.body.classList.remove('is-loading'); veil.remove(); }, at + 0.9)
+        .add(headerIn, at + 0.7);
     };
-
-    if (quick) {
-      gsap.set(mark, { opacity: 1 });
-      gsap.set(veil, { backgroundColor: 'var(--ink)' });
-      split(0.15);
-      return;
-    }
+    if (quick) { gsap.set(mark, { opacity: 1 }); split(0.3); return; }
 
     // Act one: the mark, with a brass flash.
     tl.fromTo(mark, { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'power4.out' }, 0.15)

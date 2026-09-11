@@ -174,6 +174,7 @@ SHELL_HEAD = '''<!doctype html>
   </nav>
   <a href="partnerships.html" class="nav__cta">Partner with us</a>
   <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  <span class="nav__rule" aria-hidden="true"></span>
 </header>
 
 <div class="menu" id="menu" aria-hidden="true">
