@@ -124,7 +124,7 @@ partnerships = opener(
   </div>
 </section>
 
-<section class="svcs" id="services">
+<section class="svcs paper" id="services">
   <div class="svcs__head" data-reveal>
     <h2 class="sec__title">End to end. Same team.</h2>
     <p class="sec__lede">Nine disciplines, one point of contact, from the first conversation to the monthly P&amp;L.</p>
@@ -132,14 +132,14 @@ partnerships = opener(
   <ol class="svcs__list">{svc}</ol>
 </section>
 
-<section class="stages" id="journey">
+<section class="stages paper" id="journey">
   <div class="stages__head" data-reveal>
     <h2 class="sec__title">How a partnership unfolds.</h2>
   </div>
   <ol class="stages__list">{stg}</ol>
 </section>
 
-<section class="models" id="models">
+<section class="models paper" id="models">
   <div class="models__head" data-reveal><h2 class="sec__title">Three ways to work together.</h2></div>
   <div class="models__grid">{mdl}</div>
 </section>
@@ -179,7 +179,7 @@ careers = opener(
     "Five houses in Doha, all of them growing. If hospitality is a craft to you, we want to hear from you.",
     "images/brands/gunaydin-3.jpg", "Günaydın, the cut") + f'''
 
-<section class="roles" id="roles">
+<section class="roles paper" id="roles">
   <div class="roles__head" data-reveal>
     <h2 class="sec__title">Open roles.</h2>
     <p class="sec__lede">Senior-led teams, every shift. We reply to every application within two working days.</p>
@@ -193,7 +193,7 @@ careers = opener(
   </ol>
 </section>
 
-<section class="apply" id="apply">
+<section class="apply paper" id="apply">
   <div class="apply__head" data-reveal>
     <h2 class="sec__title">Apply.</h2>
     <p class="sec__lede">Tell us who you are and which role you are after.</p>
@@ -228,7 +228,7 @@ contact = opener(
     "Brand owner, future colleague, curious guest. The right person will get back to you within two working days.",
     "images/brands/al-beiruti-mezze.jpg", "Al Beiruti, mezze") + f'''
 
-<section class="reach">
+<section class="reach paper">
   <div class="reach__col" data-reveal>
     <a class="reach__big" href="tel:+97470323311">+974 7032 3311</a>
     <a class="reach__big reach__big--mail" href="mailto:info@worldofhospitality.com.qa">info@worldofhospitality.com.qa</a>

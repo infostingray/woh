@@ -183,3 +183,27 @@ body.no-motion .creed__text .w { color: var(--bone); }
 .pan__progress span { display: block; height: 100%; width: 0; background: var(--brass); box-shadow: 0 0 12px rgba(196,150,91,0.6); }
 body.no-motion .pan { height: auto; } body.no-motion .pan__stage { position: static; height: auto; } body.no-motion .pan__track { flex-direction: column; width: 100%; } body.no-motion .pan__panel { width: 100%; height: 70vh; flex: none; } body.no-motion .pan__copy { opacity: 1; transform: none; }
 @media (max-width: 900px) { .pan { height: 300vh; } .pan__place { top: 5.5rem; } }
+
+/* ---------- Paper: the working sections sit on bone ---------- */
+.paper { background: var(--bone); color: var(--ink); border-color: rgba(14,12,10,0.12); }
+.paper + .paper { border-top: 1px solid rgba(14,12,10,0.12); }
+.paper .sec__title, .paper h3, .paper .role h3, .paper .svc h3, .paper .stage h3, .paper .model h3, .paper .reach__big { color: var(--ink); }
+.paper .sec__lede, .paper .svc p, .paper .stage p, .paper .model p, .paper .role p, .paper .role__meta, .paper .field > span, .paper .form__legal, .paper .form__status, .paper .visit__hours, .paper .field--file small { color: rgba(14,12,10,0.62); }
+.paper .role__meta span:first-child { color: var(--ink); }
+.paper .stage__when { color: #9a7238; }
+.paper .svcs__list, .paper .svc, .paper .stages__list, .paper .stage, .paper .roles__list, .paper .role, .paper .story__facts, .paper .story__facts div { border-color: rgba(14,12,10,0.14); }
+.paper .model { border-top-color: #9a7238; }
+.paper .field input, .paper .field select, .paper .field textarea, .paper .field--file em { color: var(--ink); border-bottom-color: rgba(14,12,10,0.28); }
+.paper .field input::placeholder, .paper .field textarea::placeholder { color: rgba(14,12,10,0.35); }
+.paper .field select option { color: var(--ink); }
+.paper .field select { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%239a7238' stroke-width='1'/></svg>"); }
+.paper .field input:focus, .paper .field select:focus, .paper .field textarea:focus, .paper .field--file:focus-within em { border-color: #9a7238; }
+.paper .visit__cta { background: var(--ink); color: var(--bone); border-color: var(--ink); }
+.paper .visit__cta:hover { background: transparent; color: var(--ink); }
+.paper .link, .paper .role__apply { color: var(--ink); }
+.paper .role__apply { border-color: #9a7238; }
+.paper .role__apply:hover { background: var(--ink); border-color: var(--ink); color: var(--bone); }
+.paper .role__logo .logo--kumar, .paper .role__logo .logo--al-beiruti { filter: invert(1) brightness(0.15); }
+.paper .story__facts dt { color: rgba(14,12,10,0.5); }
+.paper .story__facts dd { color: var(--ink); }
+.paper .form__status a { color: var(--ink); }
