@@ -113,6 +113,8 @@
   const slides = gsap.utils.toArray('.reel__slide');
   slides.forEach((s, i) => {
     const next = slides[i + 1];
+    const drift = s.querySelector('.reel__media--drift img');
+    if (drift) gsap.fromTo(drift, { xPercent: 0 }, { xPercent: -14, ease: 'none', scrollTrigger: { trigger: s, start: 'top bottom', end: next ? 'bottom top' : 'bottom top', scrub: true } });
     if (next) gsap.to(s.querySelector('.reel__media'), { scale: 0.94, opacity: 0.35, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } });
     gsap.to(s.querySelector('.reel__copy'), { y: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: next || s, start: next ? 'top 60%' : 'bottom 40%', end: next ? 'top top' : 'bottom top', scrub: true } });
   });
