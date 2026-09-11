@@ -59,7 +59,7 @@ HOUSES = [
         "Ranked third best burger in the world at Dallas, 2022. Now days away from Doha, with the same kitchen rules it left with.",
       ],
       facts=[("Cuisine","Burger bistro"),("Origin","Dubai, 2023"),("Signature","The Bull Burger"),("Address","Doha"),("Status","Opening soon")],
-      video=VID+"2026/05/IMG_7763-1.mp4", poster="images/brands/eleven-green-1.jpg",
+      video="videos/eleven-green.mp4", poster="images/brands/eleven-green-poster.jpg",
       gallery=[("PH_EG_1","The Bull"),("PH_EG_2","The cut")],
       links=[],
       cta=("Be first to know","mailto:info@worldofhospitality.com.qa?subject=Eleven%20Green%20opening"),
