@@ -22,7 +22,7 @@ H = [
       text="A long table for the city. Mezze the old way, bread out of the saj every twelve minutes, charcoal until late. One hundred and eighty seats and a terrace.",
       facts=[("Cuisine","Lebanese, Levantine"),("Seating","180 and terrace"),("Status","Just opened")], caps=("The spread","The room")),
  dict(slug="eleven-green", name="Eleven Green", logo=LOGO['eleven-green'], cls="",
-      video="videos/eleven-green.mp4", poster="images/brands/eleven-green-poster.jpg", still="images/brands/eleven-green-2.jpg",
+      video="videos/eleven-green.mp4", poster="images/brands/eleven-green-1.jpg", still="images/brands/eleven-green-2.jpg",
       origin="Dubai, 2023", status="Opening soon", line="The Bull Burger is in town.",
       text="A homegrown burger bistro from Dubai's Chatila family. Hand-pressed patties ground fresh daily, Hokkaido milk bun, house bacon jam, the signature Bull sauce.",
       facts=[("Cuisine","Burger bistro"),("Signature","The Bull Burger"),("Status","Opening soon")], caps=("The Bull","The tray")),
