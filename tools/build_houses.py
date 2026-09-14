@@ -66,7 +66,7 @@ HOUSES = [
       ],
       facts=[("Cuisine","Burger bistro"),("Origin","Dubai, 2023"),("Signature","The Bull Burger"),("Address","Doha, location to be announced"),("Status","Opening soon")],
       video="videos/eleven-green.mp4", poster="images/brands/eleven-green-poster.jpg",
-      gallery=[("images/brands/eleven-green-1.jpg","The double"),("images/brands/eleven-green-2.jpg","The Bull"),("images/brands/eleven-green-3.jpg","The counter")],
+      gallery=[("images/brands/eleven-green-1.jpg","The double"),("images/brands/eleven-green-6.jpg","The counter"),("images/brands/eleven-green-3.jpg","The counter")],
       links=[],
       cta=("Be first to know","mailto:info@worldofhospitality.com.qa?subject=Eleven%20Green%20opening"),
       placeholder=False),
