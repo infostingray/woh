@@ -26,8 +26,8 @@ HOUSES = [
       video=VID+"2026/03/Gunaydin-Website-Video-1-1.mp4", poster="images/brands/gunaydin-1.jpg",
       gallery=[("images/brands/gunaydin-4.jpg","The service"),("images/brands/gunaydin-2.jpg","The cut"),("images/brands/gunaydin-3.jpg","The table")],
       links=[("Günaydın Et","https://gunaydinet.com/")],
-      cta=("Reserve a table","tel:+97470323311"),
-      placeholder=False),
+      cta=("Reserve a table","tel:+97440013383"),
+      place=("Place Vendôme, Lusail","https://www.google.com/maps/place/?q=place_id:ChIJR3x4rm3DRT4RwQK58Zrg-MY","+974 4001 3383"), placeholder=False),
  dict(slug="kumar", name="Kumar", short="Kumar",
       logo="kumar",
       origin="Kuwait", founded="MK Group", lat=29.38, lon=47.99,
@@ -40,8 +40,8 @@ HOUSES = [
       video=VID+"2026/03/Kumar-Website-Video-1-1.mp4", poster="images/brands/kumar-1.jpg",
       gallery=[("images/brands/kumar-4.jpg","The thali"),("images/brands/kumar-2.jpg","The table"),("images/brands/kumar-3.jpg","The butter chicken")],
       links=[("MK Group","https://www.mkgroup.com.kw/")],
-      cta=("Reserve a table","tel:+97470323311"),
-      placeholder=False),
+      cta=("Reserve a table","tel:+97441429519"),
+      place=("Place Vendôme, Lusail","https://www.google.com/maps/place/?q=place_id:ChIJ75TZrdLDRT4R-sH78AmbAZg","+974 4142 9519"), placeholder=False),
  dict(slug="al-beiruti", name="Al Beiruti", short="Al Beiruti",
       logo="al-beiruti",
       origin="Beirut", founded="", lat=33.89, lon=35.50,
@@ -50,12 +50,12 @@ HOUSES = [
         "A long table for the city. Mezze the old way, bread out of the saj every twelve minutes, charcoal until late.",
         "One hundred and eighty seats inside, more on the terrace. Just opened in Doha.",
       ],
-      facts=[("Cuisine","Lebanese, Levantine"),("Origin","Beirut"),("Seating","180 and terrace"),("Address","Doha"),("Status","Just opened")],
+      facts=[("Cuisine","Lebanese, Levantine"),("Origin","Beirut"),("Seating","180 and terrace"),("Address","Doha, location to be announced"),("Status","Just opened")],
       video="videos/al-beiruti.mp4", poster="images/brands/al-beiruti-poster.jpg",
       gallery=[("images/brands/al-beiruti-mezze.jpg","Mezze"),("images/brands/al-beiruti-spread.jpg","The spread")],
       links=[("Instagram","https://www.instagram.com/albeirutiqa")],
-      cta=("Reserve a table","tel:+97470323311"),
-      placeholder=False),
+      cta=("Reserve a table","tel:+97440011100"),
+      place=("Lusail Marina, Lusail","https://www.google.com/maps/place/?q=place_id:ChIJ18cIsIjDRT4RtOlWgel7JAg","+974 4001 1100"), placeholder=False),
  dict(slug="eleven-green", name="Eleven Green", short="Eleven Green",
       logo="eleven-green",
       origin="Dubai", founded="2023", lat=25.20, lon=55.27,
@@ -64,7 +64,7 @@ HOUSES = [
         "A homegrown burger bistro from Dubai's Chatila family. Hand-pressed patties, ground fresh every day. Hokkaido milk bun, house bacon jam, the signature Bull sauce.",
         "Ranked third best burger in the world at Dallas, 2022. Now days away from Doha, with the same kitchen rules it left with.",
       ],
-      facts=[("Cuisine","Burger bistro"),("Origin","Dubai, 2023"),("Signature","The Bull Burger"),("Address","Doha"),("Status","Opening soon")],
+      facts=[("Cuisine","Burger bistro"),("Origin","Dubai, 2023"),("Signature","The Bull Burger"),("Address","Doha, location to be announced"),("Status","Opening soon")],
       video="videos/eleven-green.mp4", poster="images/brands/eleven-green-poster.jpg",
       gallery=[("images/brands/eleven-green-1.jpg","The double"),("images/brands/eleven-green-2.jpg","The Bull"),("images/brands/eleven-green-3.jpg","The counter")],
       links=[],
@@ -78,7 +78,7 @@ HOUSES = [
         "Born in Barcelona in 2010. Now in twenty-three destinations across Spain, the UAE, Saudi Arabia, Bahrain, Egypt, Kuwait and India.",
         "Wholesome dishes, generous portions, interiors you recognise from the door. Coming to Doha at the end of 2026.",
       ],
-      facts=[("Cuisine","All-day, Mediterranean"),("Origin","Barcelona, 2010"),("Worldwide","23 locations"),("Address","Doha"),("Status","Late 2026")],
+      facts=[("Cuisine","All-day, Mediterranean"),("Origin","Barcelona, 2010"),("Worldwide","23 locations"),("Address","Doha, location to be announced"),("Status","Late 2026")],
       video="", poster="images/brands/brunch-cake-hero.jpg",
       gallery=[("images/brands/brunch-cake-4.jpg","The terrace"),("images/brands/brunch-cake-2.jpg","The room"),("images/brands/brunch-cake-3.jpg","The entrance")],
       links=[("Brunch & Cake","https://brunchandcake.com/")],
@@ -257,6 +257,15 @@ def media_block(h, cls):
                 f'<img class="{cls} {cls}--mob" src="{mob}" alt="">')
     return f'<picture><source media="(max-width: 900px)" srcset="{mob}"><img class="{cls}" src="{h["poster"]}" alt=""></picture>'
 
+def visit_place(h):
+    p = h.get('place')
+    if not p:
+        return '<p class="visit__addr">Doha, Qatar</p><p class="visit__hours">Location and opening hours announced closer to opening.</p>'
+    addr, url, tel = p
+    return (f'<p class="visit__addr">{addr}, Qatar</p>'
+            f'<p class="visit__hours"><a class="link" href="{url}" target="_blank" rel="noopener">Open in Google Maps</a>'
+            f'<span class="visit__sep"></span><a class="link" href="tel:{tel.replace(" ","")}">{tel}</a></p>')
+
 def logo_block(h, cls):
     return f'<span class="{cls}">{LOGO[h["logo"]]}</span>'
 
@@ -285,9 +294,8 @@ def build(i, h, PH):
   </div>
   <div class="hero__mark">{logo_block(h, "hero__logo")}</div>
   <div class="hero__copy">
-    <h1 class="hero__name" data-chars>{h['name']}</h1>
-    <p class="hero__line"><span class="line"><span>{h['line']}</span></span></p>
-    <p class="hero__meta"><span class="line"><span>{founded}<span class="hero__meta-item">{live_tag(status)}</span></span></span></p>
+    <h1 class="sr-only">{h['name']}</h1>
+    <p class="hero__meta"><span class="line"><span><span class="hero__meta-item">{live_tag(status)}</span></span></span></p>
   </div>
   <div class="hero__cue" aria-hidden="true"><span></span></div>
 </section>
@@ -314,8 +322,7 @@ def build(i, h, PH):
   <div class="visit__inner">
     <div class="visit__col" data-reveal>
       {logo_block(h, "visit__logo")}
-      <p class="visit__addr">{dict(h['facts'])['Address']}, Doha</p>
-      <p class="visit__hours">Opening hours to be confirmed</p>
+      {visit_place(h)}
       {ph_note}
     </div>
     <div class="visit__col visit__col--act" data-reveal>

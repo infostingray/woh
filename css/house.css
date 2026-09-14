@@ -26,7 +26,9 @@ body.house-page .nav__logo { opacity: 1; }
 .hero__name .wd { display: inline-block; white-space: nowrap; }
 .hero__name .ch { display: inline-block; transform: translateY(60%); opacity: 0; }
 .hero__line { margin-top: 0.9rem; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: clamp(1.05rem, 1.3vw, 1.3rem); color: var(--bone-2); max-width: 34ch; }
-.hero__meta { margin-top: 1.5rem; font-size: 0.85rem; color: var(--ash); }
+.hero__meta { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.visit__sep { display: inline-block; width: 1px; height: 0.9em; background: var(--hair); vertical-align: middle; margin: 0 1rem; }
 .hero__meta-item + .hero__meta-item::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--hair); vertical-align: middle; margin: 0 0.9rem; }
 .hero__cue { position: absolute; right: var(--gutter); bottom: 2.5rem; width: 1px; height: 64px; overflow: hidden; opacity: 0; }
 .hero__cue span { display: block; width: 100%; height: 100%; background: var(--brass); transform: translateY(-100%); animation: cue 2.2s var(--ease) infinite; }

@@ -63,7 +63,7 @@
       .set(veil, { display: 'none' });
     if (document.querySelector('.hero__film')) tl.fromTo('.hero__film', { scale: 1.16 }, { scale: 1.08, duration: 2.4, ease: 'power2.out' }, 0.1);
     if (name) tl.to('.hero__name .ch', { y: 0, opacity: 1, duration: 1, stagger: 0.03, ease: 'power3.out' }, 0.45);
-    if (document.querySelector('.hero__line')) tl.to('.hero__line .line > span, .hero__meta .line > span', { y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' }, 0.9);
+    if (document.querySelector('.hero__meta')) tl.to('.hero__line .line > span, .hero__meta .line > span', { y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' }, 0.9);
     if (document.querySelector('.hero__mark')) tl.to('.hero__mark', { opacity: 1, duration: 0.8 }, 1.1);
     if (document.querySelector('.open')) tl.to('.open .line > span', { y: 0, duration: 1.1, stagger: 0.1, ease: 'power3.out' }, 0.4)
       .to('.open__lede', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.0);
