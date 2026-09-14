@@ -52,7 +52,7 @@ HOUSES = [
       ],
       facts=[("Cuisine","Lebanese, Levantine"),("Origin","Beirut"),("Seating","180 and terrace"),("Address","Doha, location to be announced"),("Status","Just opened")],
       video="videos/al-beiruti.mp4", poster="images/brands/al-beiruti-poster.jpg",
-      gallery=[("images/brands/al-beiruti-mezze.jpg","Mezze"),("images/brands/al-beiruti-spread.jpg","The spread")],
+      gallery=[("images/brands/al-beiruti-table.jpg","The table"),("images/brands/al-beiruti-bar.jpg","The bar"),("images/brands/al-beiruti-spread.jpg","Mezze")],
       links=[("Instagram","https://www.instagram.com/albeirutiqa")],
       cta=("Reserve a table","tel:+97440011100"),
       place=("Lusail Marina, Lusail","https://www.google.com/maps/place/?q=place_id:ChIJ18cIsIjDRT4RtOlWgel7JAg","+974 4001 1100"), placeholder=False),
@@ -102,7 +102,7 @@ LOGO = {
  "brunch-cake": '<img class="logo logo--brunch-cake" src="images/brands/brunch-cake.png" alt="Brunch &amp; Cake" width="1200" height="404">',
 }
 WIDE = {"kumar", "eleven-green", "brunch-cake"}
-STILL = {"gunaydin":"images/brands/gunaydin-1.jpg","kumar":"images/brands/kumar-1.jpg","al-beiruti":"images/brands/al-beiruti-spread.jpg","eleven-green":"images/brands/eleven-green-1.jpg","brunch-cake":"images/brands/brunch-cake-1.jpg"}
+STILL = {"gunaydin":"images/brands/gunaydin-1.jpg","kumar":"images/brands/kumar-1.jpg","al-beiruti":"images/brands/al-beiruti-m.jpg","eleven-green":"images/brands/eleven-green-1.jpg","brunch-cake":"images/brands/brunch-cake-1.jpg"}
 
 MENU_LOGOS = "".join(f'<a href="{s}.html" class="proof__logo proof__logo--{s}">{LOGO[s].replace("wall__logo--type","proof__type")}</a>' for s in ["gunaydin","kumar","al-beiruti","eleven-green","brunch-cake"])
 
