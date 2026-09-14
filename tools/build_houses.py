@@ -250,10 +250,12 @@ FOOT = '''
 '''
 
 def media_block(h, cls):
+    mob = f'images/brands/{h["slug"]}-m.jpg'
     if h['video']:
         poster = f' poster="{h["poster"]}"' if h['poster'] else ''
-        return f'<video class="{cls}" muted loop playsinline autoplay preload="auto"{poster}><source src="{h["video"]}" type="video/mp4"></video>'
-    return f'<img class="{cls}" src="{h["poster"]}" alt="">'
+        return (f'<video class="{cls} {cls}--desk" muted loop playsinline autoplay preload="auto"{poster}><source src="{h["video"]}" type="video/mp4"></video>'
+                f'<img class="{cls} {cls}--mob" src="{mob}" alt="">')
+    return f'<picture><source media="(max-width: 900px)" srcset="{mob}"><img class="{cls}" src="{h["poster"]}" alt=""></picture>'
 
 def logo_block(h, cls):
     return f'<span class="{cls}">{LOGO[h["logo"]]}</span>'

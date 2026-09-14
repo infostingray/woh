@@ -89,7 +89,7 @@ def house_band(h):
 </article>'''
 
 def reel_slide(h, i):
-    media = f'<img src="{h["still"]}" alt="" loading="lazy">'
+    media = f'<picture><source media="(max-width: 900px)" srcset="images/brands/{h["slug"]}-m.jpg"><img src="{h["still"]}" alt="" loading="lazy"></picture>'
     logo = f'<span class="reel__logo">{h["logo"]}</span>'
     flag = '<span class="house__flag">Placeholder image</span>' if h.get('ph') else ''
     return f'''  <a class="reel__slide" href="{h['slug']}.html" data-house="{h['slug']}">

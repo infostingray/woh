@@ -272,6 +272,7 @@ body.no-motion .route__logo { opacity: 1; }
 .reel__slide { position: absolute; inset: 0; display: block; opacity: 0; pointer-events: none; will-change: opacity; }
 .reel__slide.is-active { pointer-events: auto; }
 .reel__media { position: absolute; inset: 0; will-change: transform; }
+.reel__media picture { display: block; width: 100%; height: 100%; }
 .reel__media img, .reel__media video { width: 100%; height: 100%; object-fit: cover; transform: none; }
 .reel__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.8) 0%, rgba(14,12,10,0.2) 45%, rgba(14,12,10,0.05) 100%); }
 .reel__media .house__flag { z-index: 2; top: auto; bottom: 1rem; right: 1rem; left: auto; }
