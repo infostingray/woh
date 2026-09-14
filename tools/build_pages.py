@@ -107,7 +107,7 @@ mdl = "".join(f'<div class="model" data-reveal><h3>{t}</h3><p>{d}</p></div>' for
 partnerships = opener(
     ["Your brand, in Doha,", "exactly as it is."],
     "We partner with established concepts looking at Qatar and the wider Gulf. If the idea is proven at home, we handle the rest of the journey.",
-    "images/brands/al-beiruti-spread.jpg", "Al Beiruti, the spread") + f'''
+    "images/brands/al-beiruti-mezze.jpg", "Al Beiruti, mezze") + f'''
 
 <section class="proof" data-reveal>
   <p class="proof__label">Trusted with</p>
