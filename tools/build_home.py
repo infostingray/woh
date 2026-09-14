@@ -100,7 +100,6 @@ def reel_slide(h, i):
       <span class="reel__meta">{h['origin']}. {live_tag(h['status'])}</span>
       <span class="reel__go">Enter the house</span>
     </div>
-    <span class="reel__count">{i+1} / {len(H)}</span>
   </a>'''
 
 ROAD = [
@@ -153,8 +152,11 @@ def build():
 </section>
 
 <!-- ============ REEL: each house, full screen ============ -->
-<section class="reel" id="houses" aria-label="The houses, one by one">
+<section class="reel" id="houses" aria-label="The houses, one by one" style="--n:{len(H)}">
+<div class="reel__stage">
 {reel}
+<span class="reel__count"><span class="reel__idx">1</span> / {len(H)}</span>
+</div>
 </section>
 
 <!-- ============ MARQUEE: the houses, and the next one ============ -->

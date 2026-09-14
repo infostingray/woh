@@ -267,10 +267,12 @@ body.no-motion .route__logo { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
 
 /* ---------- Reel: one house per screen, stacked ---------- */
-.reel { position: relative; }
-.reel__slide { position: sticky; top: 0; display: block; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); }
-.reel__media { position: absolute; inset: 0; }
-.reel__media img, .reel__media video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
+.reel { position: relative; height: calc(var(--n) * 100vh); height: calc(var(--n) * 100svh); background: var(--ink); }
+.reel__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.reel__slide { position: absolute; inset: 0; display: block; opacity: 0; pointer-events: none; will-change: opacity; }
+.reel__slide.is-active { pointer-events: auto; }
+.reel__media { position: absolute; inset: 0; will-change: transform; }
+.reel__media img, .reel__media video { width: 100%; height: 100%; object-fit: cover; transform: none; }
 .reel__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,12,10,0.8) 0%, rgba(14,12,10,0.2) 45%, rgba(14,12,10,0.05) 100%); }
 .reel__media .house__flag { z-index: 2; top: auto; bottom: 1rem; right: 1rem; left: auto; }
 .reel__copy { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
@@ -280,7 +282,7 @@ body.no-motion .route__logo { opacity: 1; }
 .reel__meta { font-size: 0.85rem; color: var(--bone); opacity: 0.8; }
 .reel__go { margin-top: 1rem; font-size: 0.85rem; padding-bottom: 0.2em; border-bottom: 1px solid var(--brass); color: var(--bone); transition: color 0.4s; }
 .reel__slide:hover .reel__go { color: var(--brass); }
-.reel__count { position: absolute; right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); font-size: 0.8rem; color: var(--bone-2); font-variant-numeric: tabular-nums; }
+.reel__count { position: absolute; z-index: 3; right: var(--gutter); bottom: clamp(2.5rem, 7vh, 5rem); font-size: 0.8rem; color: var(--bone-2); font-variant-numeric: tabular-nums; }
 
 /* ---------- The road: scroll-driven timeline ---------- */
 .road { position: relative; height: 320vh; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
@@ -322,7 +324,7 @@ body.no-motion .route__logo { opacity: 1; }
 
 @media (max-width: 900px) {
   .marquee__track { animation-duration: 30s; }
-  .reel__slide { height: 82vh; min-height: 520px; }
+  .reel { height: calc(var(--n) * 100svh); }
   .reel__logo--kumar,   .reel__count { display: none; }
   .road { height: 260vh; }
   .road__stage { padding: 5.5rem var(--gutter) 3rem; }

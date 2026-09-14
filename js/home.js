@@ -130,15 +130,39 @@
   });
 
 
-  /* ---------- Reel: the slide underneath settles back as the next covers it ---------- */
+  /* ---------- Reel: pinned stage, scroll drives a crossfade between houses ---------- */
+  const reel = document.querySelector('.reel');
   const slides = gsap.utils.toArray('.reel__slide');
-  slides.forEach((s, i) => {
-    const next = slides[i + 1];
-    if (next) gsap.to(s.querySelector('.reel__media'), { scale: 0.94, opacity: 0.35, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: true } });
-    gsap.to(s.querySelector('.reel__copy'), { y: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: next || s, start: next ? 'top 60%' : 'bottom 40%', end: next ? 'top top' : 'bottom top', scrub: true } });
-  });
-  const reelIO = new IntersectionObserver(en => en.forEach(e => { const v = e.target.querySelector('video'); if (!v) return; if (e.isIntersecting) { if (v.preload === 'none') v.load(); v.play().catch(() => {}); } else v.pause(); }), { threshold: 0.35 });
-  slides.forEach(s => reelIO.observe(s));
+  const idxEl = document.querySelector('.reel__idx');
+  const n = slides.length;
+  const setActive = (k) => {
+    slides.forEach((s, i) => s.classList.toggle('is-active', i === k));
+    if (idxEl) idxEl.textContent = k + 1;
+    slides.forEach((s, i) => { const v = s.querySelector('video'); if (!v) return; if (i === k) { if (v.preload === 'none') v.load(); v.play().catch(() => {}); } else v.pause(); });
+  };
+  const render = (p) => {
+    const pos = p * (n - 1);
+    const k = Math.min(n - 1, Math.floor(pos));
+    const t = Math.min(1, Math.max(0, (pos - k) / 0.55));           /* the fade lives in the first 55% of each stretch, then it holds */
+    const e = t * t * (3 - 2 * t);
+    slides.forEach((s, i) => {
+      const media = s.querySelector('.reel__media'), copy = s.querySelector('.reel__copy');
+      let op = 0, sc = 1.08, cy = 0, cop = 0;
+      if (i === k)      { const c = Math.min(1, e / 0.4); op = 1 - e; sc = 1.0 + 0.04 * e; cy = -24 * c; cop = 1 - c; }
+      else if (i === k + 1) { const c = Math.max(0, (e - 0.5) / 0.5); op = e; sc = 1.08 - 0.08 * e; cy = 24 * (1 - c); cop = c; }
+      if (i === k && k === n - 1) { op = 1; sc = 1; cy = 0; cop = 1; }
+      s.style.opacity = op;
+      media.style.transform = `scale(${sc.toFixed(4)})`;
+      copy.style.transform = `translateY(${cy.toFixed(1)}px)`;
+      copy.style.opacity = cop;
+    });
+    setActive(t < 0.5 ? k : Math.min(n - 1, k + 1));
+  };
+  if (reel && n) {
+    gsap.set(slides[0], { opacity: 1 });
+    ScrollTrigger.create({ trigger: reel, start: 'top top', end: 'bottom bottom', scrub: true, onUpdate: self => render(self.progress), onRefresh: self => render(self.progress) });
+    render(0);
+  }
   const fin = document.querySelector('.finale video');
   if (fin) new IntersectionObserver(en => { if (en[0].isIntersecting) { fin.load(); fin.play().catch(() => {}); } else fin.pause(); }, { threshold: 0.2 }).observe(fin);
 
