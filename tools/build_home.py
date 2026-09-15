@@ -10,7 +10,7 @@ H = [
       video="videos/gunaydin.mp4", poster="images/brands/gunaydin-1.jpg", still="images/brands/gunaydin-2.jpg",
       origin="Istanbul, 1961", status="Open", line="Istanbul's celebrated et lokantası, plated in Doha.",
       text="A meat house before it was a restaurant. Dry-aged in its own rooms, butchered by hand, finished over charcoal. The first house we opened in Doha, in 2019, and still open.",
-      facts=[("Cuisine","Turkish steakhouse"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The cut","The plate")),
+      facts=[("Cuisine","Turkish steakhouse"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The cut","The board")),
  dict(slug="kumar", name="Kumar", logo=LOGO['kumar'], cls="",
       video="videos/kumar.mp4", poster="images/brands/kumar-1.jpg", still="images/brands/kumar-2.jpg",
       origin="Kuwait, with MK Group", status="Open", line="A modern Indian table. Regional, warm, considered.",
