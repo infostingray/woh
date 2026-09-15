@@ -11,6 +11,14 @@ def live_tag(status):
     s = status.lower()
     live = s in ("open", "just opened")
     return f'<span class="live{"" if live else " live--soon"}"><i></i>{status}</span>'
+CUISINE = {"gunaydin":"Turkish grill","kumar":"Indian","al-beiruti":"Lebanese","eleven-green":"Burgers","brunch-cake":"All-day brunch"}
+SHORT = {"open":"Open","just opened":"Just opened","opening soon":"Soon","late 2026":"Late 2026"}
+
+def wall_tag(slug, status):
+    """Cuisine, live dot, short status: 'Lebanese ● Just opened', 'Burgers ○ Soon'."""
+    live = status.lower() in ("open", "just opened")
+    short = SHORT.get(status.lower(), status)
+    return f'<span class="live{"" if live else " live--soon"}">{CUISINE[slug]}<i></i>{short}</span>'
 DOHA = (25.29, 51.53)
 
 HOUSES = [
@@ -116,7 +124,7 @@ def mini_wall(exclude=None, label=None):
         panels += f"""  <a class="wall__panel" href="{h['slug']}.html" data-house="{h['slug']}">
     <div class="wall__media"><img src="{STILL[h['slug']]}" alt="" loading="lazy"></div>
     <div class="wall__logo {cls}">{LOGO[h['slug']]}</div>
-    <div class="wall__foot"><span class="wall__meta">{h['origin']}. {live_tag(status)}</span></div>
+    <div class="wall__foot"><span class="wall__meta">{wall_tag(h['slug'], status)}</span></div>
   </a>\n"""
     head = f'<div class="wall__label">{label}</div>\n' if label else ''
     return f'<section class="wall wall--mini" aria-label="The houses">\n{head}{panels}</section>'

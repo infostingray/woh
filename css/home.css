@@ -355,7 +355,9 @@ body.no-motion .route__logo { opacity: 1; }
 .foot__ver { margin-left: 1rem; color: var(--ash); opacity: 0.6; font-variant-numeric: tabular-nums; }
 
 /* ---------- Live dot (recording indicator) ---------- */
-.live { display: inline-flex; align-items: center; gap: 0.45em; white-space: nowrap; }
+.live { display: inline-flex; align-items: center; gap: 0.55em; white-space: nowrap; }
+.wall__meta .live { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.wall__meta .live i { margin: 0 0.15em; }
 .live i { position: relative; display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%; background: #d84a3a; box-shadow: 0 0 0 0 rgba(216,74,58,0.55); animation: liveDot 2.2s ease-out infinite; }
 .live i::after { content: ""; position: absolute; inset: -0.35em; border-radius: 50%; border: 1px solid rgba(216,74,58,0.5); opacity: 0; animation: liveRing 2.2s ease-out infinite; }
 .live--soon i { background: transparent; border: 1px solid rgba(244,239,230,0.7); box-shadow: none; animation: none; }
