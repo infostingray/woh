@@ -7,12 +7,12 @@ from build_houses import live_tag, SHELL_HEAD, FOOT, HOUSES, proj, DOHA, LOGO, M
 VID = "https://worldofhospitality.com.qa/wp-content/uploads/"
 H = [
  dict(slug="gunaydin", name="Günaydın", logo=LOGO['gunaydin'], cls="",
-      video=VID+"2026/03/Gunaydin-Website-Video-1-1.mp4", poster="images/brands/gunaydin-1.jpg", still="images/brands/gunaydin-2.jpg",
+      video="videos/gunaydin.mp4", poster="images/brands/gunaydin-1.jpg", still="images/brands/gunaydin-2.jpg",
       origin="Istanbul, 1961", status="Open", line="Istanbul's celebrated et lokantası, plated in Doha.",
       text="A meat house before it was a restaurant. Dry-aged in its own rooms, butchered by hand, finished over charcoal. The first house we opened in Doha, in 2019, and still open.",
       facts=[("Cuisine","Turkish steakhouse"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The cut","The plate")),
  dict(slug="kumar", name="Kumar", logo=LOGO['kumar'], cls="",
-      video=VID+"2026/03/Kumar-Website-Video-1-1.mp4", poster="images/brands/kumar-1.jpg", still="images/brands/kumar-2.jpg",
+      video="videos/kumar.mp4", poster="images/brands/kumar-1.jpg", still="images/brands/kumar-2.jpg",
       origin="Kuwait, with MK Group", status="Open", line="A modern Indian table. Regional, warm, considered.",
       text="India by region, not by stereotype. Coastal Kerala, Lucknowi dum biryani, Bombay street plates. Service trained to MK Group's Kuwait standards.",
       facts=[("Cuisine","Modern Indian"),("Address","Place Vendôme, Lusail"),("Status","Open")], caps=("The table","The room")),
